@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 use ClubEstoril2\Novedad;
+use ClubEstoril2\PrimeraImagen;
 
 defined('ABSPATH') || exit;
 
@@ -162,7 +163,10 @@ function ce_meta_entrada(?WP_Post $post = null): void
 }
 
 /**
- * Imagen de la entrada para listados, o el escudo si no tiene.
+ * Imagen de la entrada para listados.
+ *
+ * Por orden: la imagen destacada, la primera imagen del contenido o, si no
+ * hay ninguna, el escudo del club.
  */
 function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 {
@@ -174,6 +178,32 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
         echo get_the_post_thumbnail($post, $tamano, ['class' => 'ce-miniatura', 'loading' => 'lazy']);
         return;
     }
+
+    $imagen = PrimeraImagen::buscar($post->post_content);
+    if ($imagen !== null) {
+        // Imagen de la biblioteca de medios: se usa el tamaño pedido con srcset.
+        if ($imagen['id'] !== null && wp_attachment_is_image($imagen['id'])) {
+            $html = wp_get_attachment_image(
+                $imagen['id'],
+                $tamano,
+                false,
+                ['class' => 'ce-miniatura', 'loading' => 'lazy']
+            );
+            if ($html !== '') {
+                // HTML generado y escapado por WordPress.
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo $html;
+                return;
+            }
+        }
+        // Imagen externa o adjunto ya borrado: se usa la URL tal cual.
+        $src = $imagen['src'] ?? '';
+        if (esc_url($src) !== '') {
+            printf('<img class="ce-miniatura" src="%1$s" alt="" loading="lazy">', esc_url($src));
+            return;
+        }
+    }
+
     printf(
         '<img class="ce-miniatura ce-miniatura--respaldo" src="%1$s" alt="" width="150" height="150" loading="lazy">',
         esc_url(CE_URI . '/assets/img/escudo-150.png')
