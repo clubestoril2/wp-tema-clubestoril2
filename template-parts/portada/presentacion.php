@@ -2,9 +2,9 @@
 
 /**
  * Presentación del club en la portada, entre el carrusel y «Destacado»:
- * titular, tres motivos para venir con enlace a su categoría y los botones
- * de la cabecera, sobre un fondo de iconos de deporte y cultura
- * (assets/img/patron-presentacion.svg).
+ * titular, tres motivos para venir (con enlace a la cuota de socios o a su
+ * categoría) y los botones de la cabecera, sobre un fondo de iconos de
+ * deporte y cultura (assets/img/patron-presentacion.svg).
  *
  * @package ClubEstoril2
  */
@@ -26,11 +26,12 @@ $ce_motivos = [
         'imagen' => 'ofertas',
         'titulo' => __('Para niños y familias', 'clubestoril2'),
         'texto' => __(
-            'Consulta nuestras ofertas para niños y familias y aprovecha las ventajas de ser socio.',
+            'Consulta las ofertas de la cuota de socios para niños y familias, también monoparentales.',
             'clubestoril2'
         ),
-        'enlace' => __('Ver ofertas', 'clubestoril2'),
-        'url' => $ce_url_categoria('ofertas'),
+        'enlace' => __('Ver cuotas', 'clubestoril2'),
+        // La página de cuotas: la misma que el botón «Tarifas y socios».
+        'url' => ce_opcion_url('boton_socios_url'),
     ],
     [
         'imagen' => 'deportes',
