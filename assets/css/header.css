@@ -129,8 +129,13 @@
 .ce-marca__logo img,
 .custom-logo {
     display: block;
+    box-sizing: content-box;
     width: auto;
     height: 64px;
+    /* En modo oscuro el aro negro y el contorno del escudo se perdían. */
+    padding: 6px;
+    background: var(--ce-logo-fondo);
+    border-radius: var(--ce-radius);
 }
 
 .ce-marca__textos {
@@ -166,6 +171,7 @@
     .ce-marca__logo img,
     .custom-logo {
         height: 44px;
+        padding: 4px;
     }
 
     .ce-marca__lema {
