@@ -245,7 +245,7 @@ ul.clubestoril2-album li a {
     width: 80px;
     height: 80px;
     margin: -40px 0 0 -40px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='rgba(0,0,0,0.55)' stroke='white' stroke-width='5'/%3E%3Cpath d='M41 31 L71 50 L41 69 Z' fill='white' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    background: var(--ce-icono-reproducir) center / contain no-repeat;
     filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.4));
     transition: transform 0.2s ease;
     pointer-events: none;

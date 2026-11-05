@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Arranque del tema Club Estoril II.
+ * Arranque del tema Club Deportivo Estoril II.
  *
  * La lógica pura (sin dependencias de WordPress) vive en src/ bajo el espacio
  * de nombres ClubEstoril2 y se prueba con PHPUnit. El código que se integra con
@@ -21,5 +21,6 @@ define('CE_URI', get_template_directory_uri());
 require_once CE_DIR . '/inc/autoload.php';
 require_once CE_DIR . '/inc/options.php';
 require_once CE_DIR . '/inc/setup.php';
+require_once CE_DIR . '/inc/meta.php';
 require_once CE_DIR . '/inc/enqueue.php';
 require_once CE_DIR . '/inc/template-tags.php';

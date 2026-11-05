@@ -42,6 +42,15 @@ function ce_encolar_recursos(): void
         $anterior = [$handle];
     }
 
+    $relativa = 'assets/js/navigation.js';
+    wp_enqueue_script(
+        'clubestoril2-navegacion',
+        CE_URI . '/' . $relativa,
+        [],
+        ce_version_recurso($relativa),
+        ['strategy' => 'defer', 'in_footer' => true]
+    );
+
     if (ce_opcion_booleano('mostrar_conmutador')) {
         $relativa = 'assets/js/theme-toggle.js';
         wp_enqueue_script(

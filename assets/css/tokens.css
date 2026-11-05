@@ -1,5 +1,5 @@
 /*
- * Tokens de diseño del tema Club Estoril II.
+ * Tokens de diseño del tema Club Deportivo Estoril II.
  *
  * Colores tomados del escudo: franja roja, contorno negro, fondo blanco,
  * aros olímpicos (azul, verde, amarillo) y crema de los gallos.
@@ -58,6 +58,9 @@
     --ce-width-narrow: 760px;
     --ce-radius: 8px;
     --ce-radius-small: 4px;
+
+    /* Botón de reproducción sobre los fotogramas de vídeo */
+    --ce-icono-reproducir: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='rgba(0,0,0,0.55)' stroke='white' stroke-width='5'/%3E%3Cpath d='M41 31 L71 50 L41 69 Z' fill='white' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E");
 
     /* Animación */
     --ce-transition: 150ms ease;

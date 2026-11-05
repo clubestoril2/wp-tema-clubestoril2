@@ -53,9 +53,10 @@ function ce_configurar_tema(): void
     );
 
     // Tamaños de imagen de los listados: apertura de portada, tarjeta y fila.
-    add_image_size('ce-apertura', 1200, 675, true);
-    add_image_size('ce-tarjeta', 640, 360, true);
-    add_image_size('ce-fila', 320, 240, true);
+    // Todos en 1,91:1, la proporción de las vistas previas en redes sociales.
+    add_image_size('ce-apertura', 1200, 630, true);
+    add_image_size('ce-tarjeta', 600, 315, true);
+    add_image_size('ce-fila', 400, 210, true);
 }
 
 add_action('widgets_init', 'ce_registrar_widgets');

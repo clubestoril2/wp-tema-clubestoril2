@@ -44,7 +44,7 @@ $ce_reparto  = Novedad::repartir(array_values($ce_consulta->posts), $ce_destacad
             <h2 id="ce-titulo-destacadas" class="ce-titulo-seccion">
                 <?php esc_html_e('Destacado', 'clubestoril2'); ?>
             </h2>
-            <div class="ce-rejilla ce-rejilla--tarjetas">
+            <div class="ce-rejilla ce-rejilla--tarjetas ce-rejilla--carrusel">
                 <?php ce_mostrar_entradas($ce_reparto['destacadas'], 'card-tarjeta', ['dias' => $ce_dias]); ?>
             </div>
         </section>

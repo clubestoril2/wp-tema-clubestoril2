@@ -98,7 +98,7 @@ final class Opciones
         'cache_minutos' => ['tipo' => self::ENTERO, 'defecto' => 15, 'min' => 0, 'max' => 1440],
 
         // Pie.
-        'pie_texto' => ['tipo' => self::TEXTO, 'defecto' => 'Club Estoril II'],
+        'pie_texto' => ['tipo' => self::TEXTO, 'defecto' => 'Club Deportivo Estoril II'],
     ];
 
     /**

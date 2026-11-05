@@ -1,4 +1,4 @@
-# Tema WordPress «Club Estoril II»
+# Tema WordPress «Club Deportivo Estoril II»
 
 Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPress (≥ 6.6, PHP ≥ 8.1).
 
@@ -7,6 +7,7 @@ Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPre
 | Ruta | Contenido |
 |---|---|
 | `style.css` | Cabecera del tema (sin estilos). |
+| `screenshot.png` | Vista previa en Apariencia › Temas (1200 × 900, captura de la portada). |
 | `functions.php` | Arranque: constantes y carga de `inc/`. |
 | `inc/` | Integración con WordPress: soportes, menús, recursos, opciones y funciones de plantilla. |
 | `src/` | Lógica pura sin WordPress (espacio de nombres `ClubEstoril2`), probada con PHPUnit. |
@@ -21,6 +22,29 @@ Convenciones: funciones y variables de plantilla con prefijo `ce_`, clases CSS `
 ## Opciones
 
 Las opciones del tema se guardan como `theme_mod`. Sus valores por defecto y su saneamiento están en `src/Opciones.php`; se leen con `ce_opcion_entero()`, `ce_opcion_texto()` y similares. El panel del Personalizador se añadirá en una fase posterior.
+
+## Metadatos
+
+| Clave | Valor | Por defecto |
+|---|---|---|
+| `ce_revisado` | Fecha de la última revisión en UTC, `AAAA-MM-DDTHH:MM:SSZ` (p. ej. `2026-11-05T11:30:00Z`). | `""`: nunca revisado. |
+
+Está registrado para todos los tipos de contenido y se puede leer y escribir por la API REST (campo `meta.ce_revisado`, con permiso de edición de la publicación). Al guardarlo, las fechas con desplazamiento horario (`2026-11-05T12:30:00+01:00`) se pasan a UTC, y cualquier otro valor (`0`, `"0"`, `-1`, `false`, una fecha imposible) se guarda como `""`. Desde PHP: `ce_revisado()` devuelve la fecha o `null`, y `ce_marcar_revisado($id)` guarda la fecha actual.
+
+## Imágenes de las entradas
+
+La imagen destacada (o, si no hay, la primera del contenido) se recorta en los listados a **1,91:1**. Es la proporción de las vistas previas de enlaces en Facebook, X/Twitter, WhatsApp, Telegram y LinkedIn, así que la misma imagen sirve para la web y para compartir.
+
+| | Recomendación |
+|---|---|
+| Proporción | 1,91:1 |
+| Resolución | **1200 × 630 px** (mínimo 600 × 315) |
+| Formato | JPG o WebP, menos de 1 MB |
+| Contenido importante | Centrado, con margen: algunos sitios recortan los bordes |
+
+Tamaños que genera el tema: `ce-apertura` (1200 × 630), `ce-tarjeta` (600 × 315) y `ce-fila` (400 × 210). Las imágenes subidas antes de instalar el tema no los tienen: se pueden generar con un plugin como «Regenerate Thumbnails». Mientras tanto se usa el tamaño más cercano recortado por CSS.
+
+Instagram no muestra vistas previas de enlaces; para publicaciones en su feed conviene una versión aparte en 4:5 (1080 × 1350) o 1:1 (1080 × 1080).
 
 ## Desarrollo
 

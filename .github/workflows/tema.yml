@@ -120,7 +120,7 @@ jobs:
             gh release upload "$ETIQUETA" "dist/${NOMBRE}.zip" --clobber
           else
             gh release create "$ETIQUETA" "dist/${NOMBRE}.zip" \
-              --title "Tema Club Estoril II ${ETIQUETA}" \
+              --title "Tema Club Deportivo Estoril II ${ETIQUETA}" \
               --generate-notes \
               --verify-tag
           fi

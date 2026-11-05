@@ -17,15 +17,18 @@ final class PrimeraImagen
      * - «id»: identificador del adjunto si la imagen viene de la biblioteca de
      *   medios (clase «wp-image-N» que añaden los editores de WordPress).
      * - «src»: URL de la imagen, con las entidades HTML decodificadas.
+     * - «video»: si la imagen es el fotograma de un vídeo, es decir, está
+     *   dentro de un enlace con la clase «video» (sincronizador de Facebook).
      *
-     * @return array{id: ?int, src: ?string}|null Null si no hay ninguna imagen.
+     * @return array{id: ?int, src: ?string, video: bool}|null Null si no hay ninguna imagen.
      */
     public static function buscar(string $html): ?array
     {
-        if (preg_match('/<img\b[^>]*>/i', $html, $etiqueta) !== 1) {
+        if (preg_match('/<img\b[^>]*>/i', $html, $etiqueta, PREG_OFFSET_CAPTURE) !== 1) {
             return null;
         }
-        $img = $etiqueta[0];
+        $img = $etiqueta[0][0];
+        $video = self::dentroDeEnlaceDeVideo(substr($html, 0, $etiqueta[0][1]));
 
         $id = null;
         if (
@@ -46,7 +49,24 @@ final class PrimeraImagen
         if ($id === null && $src === null) {
             return null;
         }
-        return ['id' => $id, 'src' => $src];
+        return ['id' => $id, 'src' => $src, 'video' => $video];
+    }
+
+    /**
+     * Indica si el HTML anterior a una imagen deja abierto un enlace con la
+     * clase «video».
+     */
+    private static function dentroDeEnlaceDeVideo(string $anterior): bool
+    {
+        if (preg_match_all('/<a\b[^>]*>/i', $anterior, $enlaces, PREG_OFFSET_CAPTURE) === 0) {
+            return false;
+        }
+        $ultimo = end($enlaces[0]);
+        $cierre = strripos($anterior, '</a>');
+        if ($cierre !== false && $cierre > $ultimo[1]) {
+            return false;
+        }
+        return preg_match('/\bclass\s*=\s*(["\'])(?:[^"\']*\s)?video(?:\s[^"\']*)?\1/i', $ultimo[0]) === 1;
     }
 
     /**

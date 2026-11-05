@@ -1,8 +1,8 @@
 /*
  * Cabecera: barra de información rápida, franja de marca y navegación.
  *
- * Estructura base. El mega-menú de escritorio y el panel lateral móvil se
- * implementan en la fase de cabecera y navegación.
+ * En pantallas estrechas el menú se pliega tras el botón «Menú»
+ * (assets/js/navigation.js).
  */
 
 /* Barra superior */
@@ -199,6 +199,14 @@
     gap: var(--ce-space-2);
 }
 
+.ce-nav__panel {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ce-space-2);
+}
+
 .ce-nav .ce-menu,
 .ce-nav .ce-menu ul {
     margin: 0;
@@ -284,4 +292,125 @@
 
 .ce-nav .ce-buscador__campo {
     border-color: transparent;
+}
+
+/* Botones del menú plegable: ocultos en pantallas anchas. */
+.ce-nav__boton,
+.ce-nav__desplegar {
+    display: none;
+}
+
+@media (max-width: 899px) {
+    .ce-nav--plegable .ce-nav__boton {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ce-space-2);
+        min-height: 44px;
+        padding: 0 var(--ce-space-2);
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .ce-nav__boton .ce-icono {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .ce-nav__icono-cerrar,
+    .ce-nav--abierta .ce-nav__icono-abrir {
+        display: none;
+    }
+
+    .ce-nav--abierta .ce-nav__icono-cerrar {
+        display: block;
+    }
+
+    .ce-nav--plegable .ce-nav__panel {
+        display: none;
+        flex-basis: 100%;
+        padding-bottom: var(--ce-space-3);
+    }
+
+    .ce-nav--abierta .ce-nav__panel {
+        display: block;
+    }
+
+    .ce-nav--plegable .ce-menu {
+        flex-direction: column;
+    }
+
+    .ce-nav--plegable .ce-menu li {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        border-top: 1px solid rgb(255 255 255 / 0.15);
+    }
+
+    .ce-nav--plegable .ce-menu li > a {
+        padding-inline: var(--ce-space-2);
+    }
+
+    /* Submenús: dentro del panel, solo los que se han desplegado. */
+    .ce-nav--plegable .ce-menu li > .sub-menu,
+    .ce-nav--plegable .ce-menu li > .children {
+        grid-column: 1 / -1;
+        position: static;
+        min-width: 0;
+        padding: 0 0 0 var(--ce-space-3);
+        background: var(--ce-primary-dark);
+        color: inherit;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .ce-nav--plegable .ce-menu li:not(.ce-nav__elemento--abierto) > .sub-menu,
+    .ce-nav--plegable .ce-menu li:not(.ce-nav__elemento--abierto) > .children {
+        display: none;
+    }
+
+    .ce-nav--plegable .ce-menu .ce-nav__elemento--abierto > .sub-menu,
+    .ce-nav--plegable .ce-menu .ce-nav__elemento--abierto > .children {
+        display: block;
+    }
+
+    .ce-nav--plegable .ce-menu .sub-menu a:hover,
+    .ce-nav--plegable .ce-menu .children a:hover {
+        background: rgb(0 0 0 / 0.15);
+    }
+
+    .ce-nav--plegable .ce-nav__desplegar {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+    }
+
+    /* Flecha hacia abajo; hacia arriba con el submenú desplegado. */
+    .ce-nav__desplegar::before {
+        content: "";
+        width: 0.6rem;
+        height: 0.6rem;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: translateY(-25%) rotate(45deg);
+        transition: transform var(--ce-transition);
+    }
+
+    .ce-nav__desplegar[aria-expanded="true"]::before {
+        transform: translateY(25%) rotate(-135deg);
+    }
+
+    .ce-nav--plegable .ce-nav__buscar {
+        margin: 0;
+        padding: var(--ce-space-3) var(--ce-space-2) 0;
+    }
 }

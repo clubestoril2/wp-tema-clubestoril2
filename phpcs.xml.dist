@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Club Estoril II">
+<ruleset name="Club Deportivo Estoril II">
     <description>Estilo PSR-12 y reglas de seguridad de WordPress para el tema.
 
     Prefijo propio: funciones y variables globales de plantilla ce_*, clases en el
