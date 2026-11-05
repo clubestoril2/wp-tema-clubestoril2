@@ -41,7 +41,7 @@ final class Opciones
         'portada_destacadas' => ['tipo' => self::ENTERO, 'defecto' => 4, 'min' => 1, 'max' => 6],
         'portada_anteriores' => ['tipo' => self::ENTERO, 'defecto' => 8, 'min' => 0, 'max' => 24],
         'portada_dias_novedad' => ['tipo' => self::ENTERO, 'defecto' => 14, 'min' => 1, 'max' => 365],
-        'portada_excluir' => ['tipo' => self::SLUGS, 'defecto' => ['menu-del-dia']],
+        'portada_excluir' => ['tipo' => self::SLUGS, 'defecto' => []],
         'portada_menu_dia' => ['tipo' => self::BOOLEANO, 'defecto' => true],
         'portada_facebook' => ['tipo' => self::BOOLEANO, 'defecto' => true],
 
@@ -96,7 +96,7 @@ final class Opciones
             'defecto' => 'fecha_corta',
             'opciones' => ['fecha_completa', 'fecha_corta', 'primera_frase'],
         ],
-        'listados_excluir' => ['tipo' => self::SLUGS, 'defecto' => ['menu-del-dia']],
+        'listados_excluir' => ['tipo' => self::SLUGS, 'defecto' => []],
 
         // Rendimiento.
         'cache_minutos' => ['tipo' => self::ENTERO, 'defecto' => 15, 'min' => 0, 'max' => 1440],

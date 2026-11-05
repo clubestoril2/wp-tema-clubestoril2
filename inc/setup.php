@@ -116,7 +116,7 @@ add_action('pre_get_posts', 'ce_excluir_de_publicaciones');
 
 /**
  * Quita de la página de entradas las categorías de la opción
- * «listados_excluir» (por defecto, «Menú del día»).
+ * «listados_excluir» (por defecto, ninguna).
  */
 function ce_excluir_de_publicaciones(WP_Query $consulta): void
 {
