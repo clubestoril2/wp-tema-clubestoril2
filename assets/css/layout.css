@@ -69,8 +69,11 @@
 }
 
 .ce-portada__mas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--ce-space-3);
     margin: var(--ce-space-4) 0 0;
-    text-align: center;
 }
 
 .ce-portada > section + section {
@@ -83,8 +86,33 @@
     border-bottom: 3px solid var(--ce-primary);
 }
 
+/* Título del listado y, a su derecha, «Ver categorías». */
+.ce-listado__encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ce-space-3);
+}
+
 .ce-listado__titulo {
     margin: 0;
+}
+
+/* Página «Categorías» */
+.ce-rejilla--categorias {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+    gap: var(--ce-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media (min-width: 600px) {
+    .ce-rejilla--categorias {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: var(--ce-space-4);
+    }
 }
 
 .ce-listado__descripcion {

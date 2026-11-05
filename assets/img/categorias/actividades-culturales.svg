@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Actividades culturales">
+  <circle cx="60" cy="60" r="56" fill="#0a7bc2"/>
+  <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 44c-9-6-20-7-30-5v44c10-2 21-1 30 5 9-6 20-7 30-5V39c-10-2-21-1-30 5z"/>
+    <path d="M60 44v44"/>
+  </g>
+</svg>

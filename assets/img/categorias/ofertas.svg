@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Ofertas">
+  <circle cx="60" cy="60" r="56" fill="#c8102e"/>
+  <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M34 44v14l30 30 24-24-30-30H40a6 6 0 0 0-6 6z"/>
+    <circle cx="47" cy="47" r="4"/>
+    <path d="M58 76l16-16"/>
+    <circle cx="58" cy="62" r="2.5"/>
+    <circle cx="74" cy="74" r="2.5"/>
+  </g>
+</svg>

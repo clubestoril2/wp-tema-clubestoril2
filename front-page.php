@@ -7,7 +7,8 @@
  * «Últimas publicaciones», todas las demás, de cualquier categoría (también
  * destacadas que no han cabido arriba). Las cantidades y las categorías
  * excluidas son opciones del tema. Al final, «Ver más publicaciones» enlaza
- * a la página de entradas si está elegida en Ajustes › Lectura.
+ * a la página de entradas si está elegida en Ajustes › Lectura y «Ver
+ * categorías», a la página «Categorías» si existe.
  *
  * @package ClubEstoril2
  */
@@ -40,12 +41,22 @@ $ce_anteriores = ce_entradas_portada(false, ce_opcion_entero('portada_anteriores
             <div class="ce-filas">
                 <?php ce_mostrar_entradas($ce_anteriores, 'card-fila', ['dias' => $ce_dias]); ?>
             </div>
-            <?php $ce_url_mas = ce_url_publicaciones(); ?>
-            <?php if ($ce_url_mas !== '') : ?>
+            <?php
+            $ce_url_mas        = ce_url_publicaciones();
+            $ce_url_categorias = ce_url_categorias();
+            ?>
+            <?php if ($ce_url_mas !== '' || $ce_url_categorias !== '') : ?>
                 <p class="ce-portada__mas">
-                    <a class="ce-boton ce-boton--secundario" href="<?php echo esc_url($ce_url_mas); ?>">
-                        <?php esc_html_e('Ver más publicaciones', 'clubestoril2'); ?>
-                    </a>
+                    <?php if ($ce_url_mas !== '') : ?>
+                        <a class="ce-boton ce-boton--secundario" href="<?php echo esc_url($ce_url_mas); ?>">
+                            <?php esc_html_e('Ver más publicaciones', 'clubestoril2'); ?>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ($ce_url_categorias !== '') : ?>
+                        <a class="ce-boton ce-boton--secundario" href="<?php echo esc_url($ce_url_categorias); ?>">
+                            <?php esc_html_e('Ver categorías', 'clubestoril2'); ?>
+                        </a>
+                    <?php endif; ?>
                 </p>
             <?php endif; ?>
         </section>

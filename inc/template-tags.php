@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use ClubEstoril2\Categorias;
 use ClubEstoril2\Novedad;
 use ClubEstoril2\PrimeraImagen;
 
@@ -310,6 +311,70 @@ function ce_url_publicaciones(): string
     }
     $url = get_permalink($pagina);
     return is_string($url) ? $url : '';
+}
+
+/**
+ * Slug de la página con el listado de categorías (plantilla page-categorias.php).
+ */
+const CE_PAGINA_CATEGORIAS = 'categorias';
+
+/**
+ * URL de la página «Categorías», o cadena vacía si no existe o no está
+ * publicada.
+ */
+function ce_url_categorias(): string
+{
+    $pagina = get_page_by_path(CE_PAGINA_CATEGORIAS);
+    if (!$pagina instanceof WP_Post || $pagina->post_status !== 'publish') {
+        return '';
+    }
+    $url = get_permalink($pagina);
+    return is_string($url) ? $url : '';
+}
+
+/**
+ * Categorías con entradas, sin las de la opción «categorias_ocultas» y en
+ * orden alfabético.
+ *
+ * @return list<array{slug: string, nombre: string, total: int, url: string}>
+ */
+function ce_categorias_visibles(): array
+{
+    $terminos = get_terms(['taxonomy' => 'category', 'hide_empty' => true]);
+    if (!is_array($terminos)) {
+        return [];
+    }
+    $categorias = [];
+    $urls = [];
+    foreach ($terminos as $termino) {
+        if (!$termino instanceof WP_Term) {
+            continue;
+        }
+        $url = get_term_link($termino);
+        if (!is_string($url)) {
+            continue;
+        }
+        $categorias[] = ['slug' => $termino->slug, 'nombre' => $termino->name, 'total' => $termino->count];
+        $urls[$termino->slug] = $url;
+    }
+    $listado = [];
+    foreach (Categorias::listado($categorias, ce_opcion_lista('categorias_ocultas')) as $categoria) {
+        $listado[] = $categoria + ['url' => $urls[$categoria['slug']]];
+    }
+    return $listado;
+}
+
+/**
+ * URL de la imagen de una categoría: assets/img/categorias/<slug>.svg o, si
+ * no existe, generica.svg.
+ */
+function ce_imagen_categoria(string $slug): string
+{
+    $fichero = 'assets/img/categorias/' . sanitize_file_name($slug) . '.svg';
+    if (!is_readable(CE_DIR . '/' . $fichero)) {
+        $fichero = 'assets/img/categorias/generica.svg';
+    }
+    return add_query_arg('ver', ce_version_recurso($fichero), CE_URI . '/' . $fichero);
 }
 
 /**

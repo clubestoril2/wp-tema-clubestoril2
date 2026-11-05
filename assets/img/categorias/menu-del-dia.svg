@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Menú del día">
+  <circle cx="60" cy="60" r="56" fill="#c8102e"/>
+  <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="60" cy="62" r="17"/>
+    <circle cx="60" cy="62" r="9"/>
+    <path d="M30 34v54M24 34v14c0 6 12 6 12 0V34"/>
+    <path d="M90 34c-8 7-8 22 0 27v27"/>
+  </g>
+</svg>

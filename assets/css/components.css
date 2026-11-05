@@ -155,6 +155,51 @@
     background: var(--ce-bg-alt);
 }
 
+/* Tarjeta de categoría (página «Categorías») */
+.ce-categoria {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ce-space-2);
+    height: 100%;
+    padding: var(--ce-space-4) var(--ce-space-3);
+    background: var(--ce-surface);
+    border: 1px solid var(--ce-border);
+    border-radius: var(--ce-radius);
+    box-shadow: var(--ce-shadow);
+    color: var(--ce-text);
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow var(--ce-transition), transform var(--ce-transition);
+}
+
+.ce-categoria:hover {
+    box-shadow: var(--ce-shadow-hover);
+    color: var(--ce-text);
+    transform: translateY(-2px);
+}
+
+.ce-categoria__imagen {
+    width: 96px;
+    height: 96px;
+    margin-bottom: var(--ce-space-1);
+}
+
+.ce-categoria__nombre {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.ce-categoria:hover .ce-categoria__nombre {
+    text-decoration: underline;
+}
+
+.ce-categoria__total {
+    color: var(--ce-text-muted);
+    font-size: var(--ce-font-size-small);
+}
+
 /* Tarjeta vertical */
 .ce-tarjeta {
     display: flex;

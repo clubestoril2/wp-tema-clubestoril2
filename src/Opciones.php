@@ -97,6 +97,7 @@ final class Opciones
             'opciones' => ['fecha_completa', 'fecha_corta', 'primera_frase'],
         ],
         'listados_excluir' => ['tipo' => self::SLUGS, 'defecto' => []],
+        'categorias_ocultas' => ['tipo' => self::SLUGS, 'defecto' => ['facebook', 'destacado', 'sin-categoria']],
 
         // Rendimiento.
         'cache_minutos' => ['tipo' => self::ENTERO, 'defecto' => 15, 'min' => 0, 'max' => 1440],

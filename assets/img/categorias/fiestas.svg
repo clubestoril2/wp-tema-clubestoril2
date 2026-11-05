@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Fiestas">
+  <circle cx="60" cy="60" r="56" fill="#f2c818"/>
+  <g fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="55" cy="50" rx="16" ry="20"/>
+    <path d="M52 70h6l-3 4z"/>
+    <path d="M55 74c-6 8 6 12 0 22"/>
+    <path d="M80 34l6-5M84 54l8 2M79 75l5 6M33 78l-5 4M30 40l-5-4"/>
+  </g>
+</svg>

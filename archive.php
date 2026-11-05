@@ -3,8 +3,8 @@
 /**
  * Listados de categorías, etiquetas, fechas y autores.
  *
- * Estructura base: la apertura con destacadas por sección se añade en la
- * fase de listados.
+ * En las categorías, «Ver categorías» junto al título enlaza a la página
+ * «Categorías» si existe.
  *
  * @package ClubEstoril2
  */
@@ -13,7 +13,15 @@ get_header();
 ?>
 <div class="ce-contenedor ce-listado">
     <header class="ce-listado__cabecera">
-        <?php the_archive_title('<h1 class="ce-listado__titulo">', '</h1>'); ?>
+        <div class="ce-listado__encabezado">
+            <?php the_archive_title('<h1 class="ce-listado__titulo">', '</h1>'); ?>
+            <?php $ce_url_categorias = is_category() ? ce_url_categorias() : ''; ?>
+            <?php if ($ce_url_categorias !== '') : ?>
+                <a class="ce-boton ce-boton--secundario" href="<?php echo esc_url($ce_url_categorias); ?>">
+                    <?php esc_html_e('Ver categorías', 'clubestoril2'); ?>
+                </a>
+            <?php endif; ?>
+        </div>
         <?php the_archive_description('<div class="ce-listado__descripcion">', '</div>'); ?>
     </header>
 

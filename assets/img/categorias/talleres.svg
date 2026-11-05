@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Talleres">
+  <circle cx="60" cy="60" r="56" fill="#0a7bc2"/>
+  <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="42" cy="80" r="9"/>
+    <circle cx="78" cy="80" r="9"/>
+    <path d="M48 73l34-40M72 73L38 33"/>
+  </g>
+</svg>
