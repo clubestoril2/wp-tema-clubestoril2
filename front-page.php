@@ -3,7 +3,8 @@
 /**
  * Portada.
  *
- * Bajo el menú, el carrusel con las imágenes de la página «carrusel».
+ * Bajo el menú, el carrusel con las imágenes de la página «carrusel» y la
+ * presentación del club.
  * «Destacado» muestra las últimas entradas de la categoría «Destacado» y
  * «Últimas publicaciones», todas las demás, de cualquier categoría (también
  * destacadas que no han cabido arriba). Las cantidades y las categorías
@@ -16,6 +17,7 @@
 
 get_header();
 get_template_part('template-parts/portada/carrusel');
+get_template_part('template-parts/portada/presentacion');
 
 $ce_dias    = ce_opcion_entero('portada_dias_novedad');
 $ce_excluir = ce_opcion_lista('portada_excluir');

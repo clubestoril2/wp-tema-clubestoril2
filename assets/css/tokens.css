@@ -25,6 +25,9 @@
     --ce-text: #1a1a1a;
     --ce-text-muted: #5a5a5a;
     --ce-border: #dadada;
+    /* Presentación de la portada: fondo y, más claros, sus iconos. */
+    --ce-presentacion-fondo: #f1eee6;
+    --ce-presentacion-iconos: #fbfaf6;
     --ce-link: #a30d25;
     --ce-link-hover: #8a0a1f;
     --ce-focus: #0a7bc2;
@@ -79,6 +82,8 @@
         --ce-text: #ececec;
         --ce-text-muted: #a8a8ac;
         --ce-border: #3a3a3f;
+        --ce-presentacion-fondo: #18181b;
+        --ce-presentacion-iconos: #26262b;
         --ce-link: #ff6b7e;
         --ce-link-hover: #ff97a4;
         --ce-focus: #4db3f5;
@@ -102,6 +107,8 @@
     --ce-text: #ececec;
     --ce-text-muted: #a8a8ac;
     --ce-border: #3a3a3f;
+    --ce-presentacion-fondo: #18181b;
+    --ce-presentacion-iconos: #26262b;
     --ce-link: #ff6b7e;
     --ce-link-hover: #ff97a4;
     --ce-focus: #4db3f5;
