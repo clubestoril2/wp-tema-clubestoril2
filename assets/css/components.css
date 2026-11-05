@@ -99,7 +99,10 @@
     font-size: var(--ce-font-size-small);
 }
 
-/* Imágenes de listados */
+/*
+ * Imágenes de listados: proporción 1,91:1 (1200 × 630), la de las vistas
+ * previas de enlaces en Facebook, X, WhatsApp, Telegram y LinkedIn.
+ */
 .ce-miniatura {
     display: block;
     width: 100%;
@@ -131,7 +134,7 @@
 
 .ce-tarjeta__imagen {
     display: block;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 1200 / 630;
     overflow: hidden; /* sin él, una imagen alta estira la caja y rompe la proporción */
     background: var(--ce-bg-alt);
 }
@@ -189,7 +192,7 @@
 /* Fila de listado */
 .ce-fila {
     display: grid;
-    grid-template-columns: minmax(96px, 160px) 1fr;
+    grid-template-columns: minmax(128px, 200px) 1fr;
     gap: var(--ce-space-3);
     align-items: start;
     padding-bottom: var(--ce-space-3);
@@ -198,7 +201,7 @@
 
 .ce-fila__imagen {
     display: block;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1200 / 630;
     overflow: hidden;
     border-radius: var(--ce-radius-small);
     background: var(--ce-bg-alt);
@@ -213,7 +216,7 @@
 
 @media (max-width: 479px) {
     .ce-fila {
-        grid-template-columns: 96px 1fr;
+        grid-template-columns: 128px 1fr;
     }
 
     .ce-fila__extracto {

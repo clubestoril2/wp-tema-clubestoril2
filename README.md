@@ -22,6 +22,21 @@ Convenciones: funciones y variables de plantilla con prefijo `ce_`, clases CSS `
 
 Las opciones del tema se guardan como `theme_mod`. Sus valores por defecto y su saneamiento están en `src/Opciones.php`; se leen con `ce_opcion_entero()`, `ce_opcion_texto()` y similares. El panel del Personalizador se añadirá en una fase posterior.
 
+## Imágenes de las entradas
+
+La imagen destacada (o, si no hay, la primera del contenido) se recorta en los listados a **1,91:1**. Es la proporción de las vistas previas de enlaces en Facebook, X/Twitter, WhatsApp, Telegram y LinkedIn, así que la misma imagen sirve para la web y para compartir.
+
+| | Recomendación |
+|---|---|
+| Proporción | 1,91:1 |
+| Resolución | **1200 × 630 px** (mínimo 600 × 315) |
+| Formato | JPG o WebP, menos de 1 MB |
+| Contenido importante | Centrado, con margen: algunos sitios recortan los bordes |
+
+Tamaños que genera el tema: `ce-apertura` (1200 × 630), `ce-tarjeta` (600 × 315) y `ce-fila` (400 × 210). Las imágenes subidas antes de instalar el tema no los tienen: se pueden generar con un plugin como «Regenerate Thumbnails». Mientras tanto se usa el tamaño más cercano recortado por CSS.
+
+Instagram no muestra vistas previas de enlaces; para publicaciones en su feed conviene una versión aparte en 4:5 (1080 × 1350) o 1:1 (1080 × 1080).
+
 ## Desarrollo
 
 Requisitos: Docker con Compose. Opcionalmente PHP 8.1+ y Composer en local.
