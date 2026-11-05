@@ -75,15 +75,26 @@
     color: var(--ce-on-yellow);
 }
 
-/* Chip de sección */
+/* Chip de sección, con una línea de su color hasta el final del renglón. */
 .ce-chip {
-    display: inline-block;
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: var(--ce-space-2);
     color: var(--ce-link);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.03em;
     text-decoration: none;
     text-transform: uppercase;
+}
+
+.ce-chip::after {
+    content: "";
+    flex: 1;
+    min-width: 1.5rem;
+    height: 2px;
+    background: currentColor;
 }
 
 .ce-chip:hover {
