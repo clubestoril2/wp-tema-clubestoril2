@@ -105,7 +105,8 @@ function ce_distintivo_novedad(int $dias, ?WP_Post $post = null): void
 }
 
 /**
- * Sección (término) principal de una entrada: la primera categoría.
+ * Sección (término) principal de una entrada: la primera categoría, sin
+ * contar la de destacados salvo que sea la única.
  */
 function ce_seccion(?WP_Post $post = null): ?WP_Term
 {
@@ -116,6 +117,11 @@ function ce_seccion(?WP_Post $post = null): ?WP_Term
     $terminos = get_the_terms($post, 'category');
     if (!is_array($terminos) || $terminos === []) {
         return null;
+    }
+    foreach ($terminos as $termino) {
+        if ($termino->slug !== CE_CATEGORIA_DESTACADO) {
+            return $termino;
+        }
     }
     return $terminos[0];
 }
@@ -220,16 +226,15 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 }
 
 /**
- * Slug de la etiqueta que lleva una entrada a «Destacado» en la portada.
+ * Slug de la categoría que lleva una entrada a «Destacado» en la portada.
  */
-const CE_ETIQUETA_DESTACADOS = 'destacados';
+const CE_CATEGORIA_DESTACADO = 'destacado';
 
 /**
- * Entradas de la portada: las que tienen la etiqueta de destacados o las que
- * no la tienen, sin las categorías excluidas y de la más reciente a la más
- * antigua.
+ * Entradas de la portada: las de la categoría de destacados o las demás, sin
+ * las categorías excluidas y de la más reciente a la más antigua.
  *
- * @param bool $destacadas Entradas con la etiqueta (true) o sin ella (false).
+ * @param bool $destacadas Entradas de la categoría (true) o fuera de ella (false).
  * @param int $cantidad Número máximo de entradas; 0 o menos no devuelve ninguna.
  * @param string[] $excluir Slugs de categorías excluidas.
  * @return array<mixed>
@@ -239,14 +244,17 @@ function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir): a
     if ($cantidad <= 0) {
         return [];
     }
-    $tax_query = [
-        [
-            'taxonomy' => 'post_tag',
+    $tax_query = [];
+    if ($destacadas) {
+        $tax_query[] = [
+            'taxonomy' => 'category',
             'field' => 'slug',
-            'terms' => [CE_ETIQUETA_DESTACADOS],
-            'operator' => $destacadas ? 'IN' : 'NOT IN',
-        ],
-    ];
+            'terms' => [CE_CATEGORIA_DESTACADO],
+            'operator' => 'IN',
+        ];
+    } else {
+        $excluir[] = CE_CATEGORIA_DESTACADO;
+    }
     if ($excluir !== []) {
         $tax_query[] = [
             'taxonomy' => 'category',

@@ -3,7 +3,7 @@
 /**
  * Portada.
  *
- * «Destacado» muestra las entradas con la etiqueta «Destacados» y «Últimas
+ * «Destacado» muestra las entradas de la categoría «Destacado» y «Últimas
  * publicaciones», el resto. Las cantidades y las categorías excluidas son
  * opciones del tema.
  *
