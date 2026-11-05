@@ -29,6 +29,40 @@
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
 }
 
+/*
+ * Carrusel: a partir de 600 px las tarjetas van en una sola fila; las que no
+ * caben se ven con scroll horizontal. En móvil se apilan como la rejilla.
+ */
+@media (min-width: 600px) {
+    .ce-rejilla--carrusel {
+        --ce-visibles: 2;
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: calc((100% - (var(--ce-visibles) - 1) * var(--ce-space-4)) / var(--ce-visibles));
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        /* Hueco para las sombras de las tarjetas y la barra de desplazamiento. */
+        padding-block: var(--ce-space-1) var(--ce-space-3);
+    }
+
+    .ce-rejilla--carrusel > * {
+        scroll-snap-align: start;
+    }
+}
+
+@media (min-width: 900px) {
+    .ce-rejilla--carrusel {
+        --ce-visibles: 3;
+    }
+}
+
+@media (min-width: 1200px) {
+    .ce-rejilla--carrusel {
+        --ce-visibles: 4;
+    }
+}
+
 .ce-filas {
     display: grid;
     gap: var(--ce-space-3);
