@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Arranque del tema Club Estoril II.
+ * Arranque del tema Club Deportivo Estoril II.
  *
  * La lógica pura (sin dependencias de WordPress) vive en src/ bajo el espacio
  * de nombres ClubEstoril2 y se prueba con PHPUnit. El código que se integra con

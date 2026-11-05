@@ -1,4 +1,4 @@
-# Tema WordPress «Club Estoril II»
+# Tema WordPress «Club Deportivo Estoril II»
 
 Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPress (≥ 6.6, PHP ≥ 8.1).
 
@@ -7,6 +7,7 @@ Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPre
 | Ruta | Contenido |
 |---|---|
 | `style.css` | Cabecera del tema (sin estilos). |
+| `screenshot.png` | Vista previa en Apariencia › Temas (1200 × 900, captura de la portada). |
 | `functions.php` | Arranque: constantes y carga de `inc/`. |
 | `inc/` | Integración con WordPress: soportes, menús, recursos, opciones y funciones de plantilla. |
 | `src/` | Lógica pura sin WordPress (espacio de nombres `ClubEstoril2`), probada con PHPUnit. |
