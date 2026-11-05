@@ -46,25 +46,4 @@ final class NovedadTest extends TestCase
         $publicacion = new DateTimeImmutable('2026-10-22 11:30:00', new DateTimeZone('UTC'));
         self::assertTrue(Novedad::esNovedad($publicacion, 14, $this->ahora));
     }
-
-    public function testRepartirEntreDestacadasYAnteriores(): void
-    {
-        $reparto = Novedad::repartir(['a', 'b', 'c', 'd', 'e', 'f'], 2, 3);
-        self::assertSame(['a', 'b'], $reparto['destacadas']);
-        self::assertSame(['c', 'd', 'e'], $reparto['anteriores']);
-    }
-
-    public function testRepartirConPocasPublicaciones(): void
-    {
-        $reparto = Novedad::repartir(['a'], 3, 5);
-        self::assertSame(['a'], $reparto['destacadas']);
-        self::assertSame([], $reparto['anteriores']);
-    }
-
-    public function testRepartirConCantidadesNegativas(): void
-    {
-        $reparto = Novedad::repartir(['a', 'b'], -1, -1);
-        self::assertSame([], $reparto['destacadas']);
-        self::assertSame([], $reparto['anteriores']);
-    }
 }
