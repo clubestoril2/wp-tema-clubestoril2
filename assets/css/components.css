@@ -75,12 +75,9 @@
     color: var(--ce-on-yellow);
 }
 
-/* Chip de sección, con una línea de su color hasta el final del renglón. */
+/* Chip de sección */
 .ce-chip {
-    display: flex;
-    flex: 1 1 auto;
-    align-items: center;
-    gap: var(--ce-space-2);
+    display: inline-block;
     color: var(--ce-link);
     font-size: 0.8rem;
     font-weight: 700;
@@ -89,7 +86,14 @@
     text-transform: uppercase;
 }
 
-.ce-chip::after {
+/* Sobre el título de un artículo, con una línea de su color hasta el final. */
+.ce-articulo__cabecera .ce-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--ce-space-2);
+}
+
+.ce-articulo__cabecera .ce-chip::after {
     content: "";
     flex: 1;
     min-width: 1.5rem;
