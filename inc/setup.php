@@ -150,4 +150,3 @@ function ce_envolver_tablas(mixed $contenido): mixed
 {
     return is_string($contenido) ? \ClubEstoril2\Contenido::envolverTablas($contenido) : $contenido;
 }
-
