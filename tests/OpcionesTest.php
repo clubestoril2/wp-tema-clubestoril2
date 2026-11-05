@@ -95,8 +95,13 @@ final class OpcionesTest extends TestCase
         $tarifas = '/informacion-general/tarifas/';
         self::assertSame($tarifas, Opciones::sanear('boton_socios_url', $tarifas));
         self::assertSame('', Opciones::sanear('red_instagram', ''));
-        self::assertSame('', Opciones::sanear('red_instagram', 'javascript:alert(1)'));
-        self::assertSame('', Opciones::sanear('red_instagram', '//evil.example/'));
+        // Una URL no válida se sustituye por el valor por defecto de la opción.
+        self::assertSame('', Opciones::sanear('red_youtube', 'javascript:alert(1)'));
+        self::assertSame('', Opciones::sanear('red_youtube', '//evil.example/'));
+        self::assertSame(
+            'https://www.instagram.com/clubestoril2/',
+            Opciones::sanear('red_instagram', 'javascript:alert(1)')
+        );
         self::assertSame(
             '/informacion-general/cuota-de-socios/',
             Opciones::sanear('boton_socios_url', 'ftp://ejemplo.es/')
