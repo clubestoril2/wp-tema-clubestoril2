@@ -25,14 +25,19 @@ concurrency:
 
 jobs:
   pruebas:
-    name: Pruebas (PHPUnit, PHPCS y Phan)
+    name: Pruebas en PHP ${{ matrix.php }} (PHPUnit, PHPCS y Phan)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 8.1: versión mínima soportada. 8.3: versión del servidor.
+        php: ["8.1", "8.3"]
     steps:
       - uses: actions/checkout@v5
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.3"
+          php-version: ${{ matrix.php }}
           extensions: ast, mbstring, intl
           coverage: none
           tools: composer:v2
