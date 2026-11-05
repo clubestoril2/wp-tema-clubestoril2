@@ -186,14 +186,16 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
         if ($imagen['id'] !== null && wp_attachment_is_image($imagen['id'])) {
             $html = wp_get_attachment_image($imagen['id'], $tamano, false, $atributos);
             if ($html !== '') {
-                echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML generado y escapado por WordPress.
+                // HTML generado y escapado por WordPress.
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo $html;
                 return;
             }
         }
         // Imagen externa o adjunto ya borrado: se usa la URL tal cual.
-        $src = $imagen['src'] !== null ? esc_url($imagen['src']) : '';
-        if ($src !== '') {
-            printf('<img class="ce-miniatura" src="%1$s" alt="" loading="lazy">', $src);
+        $src = $imagen['src'] ?? '';
+        if (esc_url($src) !== '') {
+            printf('<img class="ce-miniatura" src="%1$s" alt="" loading="lazy">', esc_url($src));
             return;
         }
     }
