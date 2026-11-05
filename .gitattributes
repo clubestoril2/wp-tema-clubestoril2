@@ -1,0 +1,14 @@
+# Ficheros de desarrollo que no forman parte del tema instalable
+# (git archive --format=zip --prefix=clubestoril2/ HEAD > clubestoril2.zip).
+/.phan               export-ignore
+/bin                 export-ignore
+/tests               export-ignore
+/.editorconfig       export-ignore
+/.env.example        export-ignore
+/.gitattributes      export-ignore
+/.gitignore          export-ignore
+/composer.json       export-ignore
+/composer.lock       export-ignore
+/docker-compose.yml  export-ignore
+/phpcs.xml.dist      export-ignore
+/phpunit.xml.dist    export-ignore

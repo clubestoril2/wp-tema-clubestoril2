@@ -1,0 +1,17 @@
+/*
+Theme Name: Club Estoril II
+Theme URI: https://www.clubestoril2.es/
+Author: Óscar García
+Description: Tema oficial del Club Deportivo Estoril II de Móstoles. Portada de noticias, menús de varios niveles adaptados a móviles y modo claro y oscuro con los colores del escudo del club. Solo depende del núcleo de WordPress.
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 8.1
+Version: 0.1.0
+License: GNU General Public License v3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: clubestoril2
+Tags: news, blog, custom-logo, custom-menu, featured-images, translation-ready, accessibility-ready, block-styles, wide-blocks
+
+Los estilos del tema están en assets/css/. Este fichero solo contiene la
+cabecera que WordPress necesita para reconocer el tema.
+*/

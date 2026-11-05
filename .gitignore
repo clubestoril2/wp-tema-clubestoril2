@@ -1,0 +1,12 @@
+# Dependencias y cachés de desarrollo
+/vendor/
+/.phpunit.cache/
+.phpcs-cache
+
+# Entorno local
+.env
+/dist/
+
+# IDEs
+.vscode/
+.idea/

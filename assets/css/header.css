@@ -1,0 +1,287 @@
+/*
+ * Cabecera: barra de información rápida, franja de marca y navegación.
+ *
+ * Estructura base. El mega-menú de escritorio y el panel lateral móvil se
+ * implementan en la fase de cabecera y navegación.
+ */
+
+/* Barra superior */
+.ce-topbar {
+    background: var(--ce-bg-alt);
+    border-bottom: 1px solid var(--ce-border);
+    font-size: var(--ce-font-size-small);
+    color: var(--ce-text-muted);
+}
+
+.ce-topbar__interior {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ce-space-2) var(--ce-space-4);
+    min-height: 2.5rem;
+    padding-block: var(--ce-space-1);
+}
+
+.ce-topbar__eslogan {
+    margin: 0;
+    font-weight: 600;
+    color: var(--ce-text);
+}
+
+.ce-topbar__datos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ce-space-1) var(--ce-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ce-topbar__dato {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ce-space-1);
+}
+
+.ce-topbar a {
+    color: inherit;
+}
+
+.ce-topbar__datos {
+    flex: 1 1 auto;
+}
+
+/* Redes sociales */
+.ce-redes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ce-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ce-redes__enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ce-space-1);
+    min-height: 44px;
+    padding-inline: var(--ce-space-1);
+    text-decoration: none;
+}
+
+.ce-redes__enlace:hover {
+    text-decoration: underline;
+}
+
+/* Conmutador de modo de color */
+.ce-conmutador {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--ce-border);
+    border-radius: 50%;
+    background: var(--ce-surface);
+    color: var(--ce-text);
+    cursor: pointer;
+}
+
+.ce-conmutador[hidden] {
+    display: none;
+}
+
+.ce-conmutador .ce-icono {
+    width: 1.25rem;
+    height: 1.25rem;
+    grid-area: 1 / 1;
+}
+
+.ce-conmutador__sol,
+.ce-conmutador[aria-pressed="true"] .ce-conmutador__luna {
+    display: none;
+}
+
+.ce-conmutador[aria-pressed="true"] .ce-conmutador__sol {
+    display: block;
+}
+
+/* Franja de marca */
+.ce-marca {
+    background: var(--ce-bg);
+}
+
+.ce-marca__interior {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ce-space-3);
+    padding-block: var(--ce-space-3);
+}
+
+.ce-marca__logo,
+.custom-logo-link {
+    display: block;
+    flex-shrink: 0;
+}
+
+.ce-marca__logo img,
+.custom-logo {
+    display: block;
+    width: auto;
+    height: 64px;
+}
+
+.ce-marca__textos {
+    flex: 1 1 14rem;
+    min-width: 0;
+}
+
+.ce-marca__nombre {
+    margin: 0;
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 1.875rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.ce-marca__nombre a {
+    color: var(--ce-text);
+    text-decoration: none;
+}
+
+.ce-marca__lema {
+    margin: var(--ce-space-1) 0 0;
+    color: var(--ce-text-muted);
+    font-size: var(--ce-font-size-small);
+}
+
+.ce-marca__botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ce-space-2);
+}
+
+@media (max-width: 599px) {
+    .ce-marca__logo img,
+    .custom-logo {
+        height: 44px;
+    }
+
+    .ce-marca__lema {
+        display: none;
+    }
+
+    .ce-marca__botones {
+        width: 100%;
+    }
+
+    .ce-marca__botones .ce-boton {
+        flex: 1 1 0;
+    }
+
+    .ce-topbar__eslogan,
+    .ce-topbar__dato--direccion {
+        display: none;
+    }
+}
+
+/* Navegación */
+.ce-nav {
+    background: var(--ce-primary);
+    color: var(--ce-primary-contrast);
+}
+
+.ce-nav__interior {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ce-space-2);
+}
+
+.ce-nav .ce-menu,
+.ce-nav .ce-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ce-nav .ce-menu {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+}
+
+.ce-nav .ce-menu > li {
+    position: relative;
+}
+
+.ce-nav .ce-menu a {
+    display: block;
+    padding: 0.75rem 0.9rem;
+    color: inherit;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ce-nav .ce-menu > li > a:hover,
+.ce-nav .ce-menu > .current-menu-item > a,
+.ce-nav .ce-menu > .current-menu-ancestor > a,
+.ce-nav .ce-menu > .current_page_item > a,
+.ce-nav .ce-menu > .current_page_ancestor > a {
+    background: var(--ce-primary-dark);
+}
+
+.ce-nav .ce-menu .sub-menu,
+.ce-nav .ce-menu .children {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    min-width: 16rem;
+    padding: var(--ce-space-2) 0;
+    background: var(--ce-surface);
+    color: var(--ce-text);
+    border: 1px solid var(--ce-border);
+    border-radius: 0 0 var(--ce-radius) var(--ce-radius);
+    box-shadow: var(--ce-shadow-hover);
+}
+
+.ce-nav .ce-menu > li:hover > .sub-menu,
+.ce-nav .ce-menu > li:focus-within > .sub-menu,
+.ce-nav .ce-menu > li:hover > .children,
+.ce-nav .ce-menu > li:focus-within > .children {
+    display: block;
+}
+
+.ce-nav .ce-menu .sub-menu a,
+.ce-nav .ce-menu .children a {
+    padding: 0.4rem 1rem;
+    font-weight: 400;
+}
+
+.ce-nav .ce-menu .sub-menu a:hover,
+.ce-nav .ce-menu .children a:hover {
+    background: var(--ce-bg-alt);
+}
+
+/* Niveles 3 y 4: sangrados dentro del desplegable. */
+.ce-nav .ce-menu .sub-menu .sub-menu,
+.ce-nav .ce-menu .children .children {
+    display: block;
+    position: static;
+    min-width: 0;
+    padding: 0 0 0 var(--ce-space-3);
+    border: 0;
+    box-shadow: none;
+}
+
+.ce-nav__buscar {
+    margin-left: auto;
+    padding-block: var(--ce-space-2);
+}
+
+.ce-nav .ce-buscador__campo {
+    border-color: transparent;
+}

@@ -1,0 +1,34 @@
+/*
+ * Estilos del editor de bloques. La paleta y la tipografía llegan desde
+ * theme.json; aquí solo se añaden las clases propias del contenido.
+ */
+
+.editor-styles-wrapper .ce-aviso {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border: 2px solid #c8102e;
+    border-radius: 8px;
+    background: #fbe7ea;
+}
+
+.editor-styles-wrapper table.tabla thead {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.editor-styles-wrapper ul.clubestoril2-album {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.editor-styles-wrapper ul.clubestoril2-album li {
+    display: inline-block;
+    margin: 0 6px 12px;
+}
+
+.editor-styles-wrapper img.album {
+    height: 150px;
+    width: auto;
+    border-radius: 10px;
+}

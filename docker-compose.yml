@@ -1,0 +1,91 @@
+# Entorno de desarrollo del tema.
+#
+#   docker compose up -d wordpress          WordPress en http://localhost:8080 con el tema montado
+#   docker compose run --rm wpcli ...       WP-CLI contra ese WordPress
+#   bin/preparar-wp.sh                      instala WordPress, activa el tema y crea contenido de prueba
+#   docker compose run -e UID=$UID --rm instalacion   composer install
+#   docker compose run -e UID=$UID --rm pruebas       PHPUnit + PHPCS + Phan
+
+x-wordpress-entorno: &wordpress-entorno
+  WORDPRESS_DB_HOST: bd
+  WORDPRESS_DB_NAME: ${WP_BD_NOMBRE:-wordpress}
+  WORDPRESS_DB_USER: ${WP_BD_USUARIO:-wordpress}
+  WORDPRESS_DB_PASSWORD: ${WP_BD_CLAVE:-wordpress-local}
+
+services:
+  bd:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: ${WP_BD_NOMBRE:-wordpress}
+      MARIADB_USER: ${WP_BD_USUARIO:-wordpress}
+      MARIADB_PASSWORD: ${WP_BD_CLAVE:-wordpress-local}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - bd_datos:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:php8.3-apache
+    depends_on:
+      bd:
+        condition: service_healthy
+    ports:
+      - ${WP_PUERTO:-8080}:80
+    environment:
+      <<: *wordpress-entorno
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', true);
+        define('WP_ENVIRONMENT_TYPE', 'local');
+    volumes:
+      - wp_datos:/var/www/html
+      - ./:/var/www/html/wp-content/themes/clubestoril2:ro
+
+  wpcli:
+    image: wordpress:cli-php8.3
+    profiles: ["herramientas"]
+    user: "33:33"
+    depends_on:
+      - wordpress
+    environment:
+      <<: *wordpress-entorno
+      WP_CLI_CACHE_DIR: /tmp/wp-cli-cache
+    volumes:
+      - wp_datos:/var/www/html
+      - ./:/var/www/html/wp-content/themes/clubestoril2:ro
+
+  instalacion:
+    image: redstar/php:8.5
+    profiles: ["herramientas"]
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    command:
+      - sh
+      - -c
+      - >
+        phpenmod $php_extensiones zip phar iconv curl ast tokenizer simplexml xmlwriter dom
+        && useradd --no-create-home --home /tmp --uid "${UID:-1000}" pruebas
+        && su pruebas -c "composer install"
+
+  pruebas:
+    image: redstar/php:8.5
+    profiles: ["herramientas"]
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    command:
+      - sh
+      - -c
+      - >
+        phpenmod $php_extensiones zip phar iconv curl ast tokenizer simplexml xmlwriter dom
+        && useradd --no-create-home --home /tmp --uid "${UID:-1000}" pruebas
+        && su pruebas -c "composer test"
+
+volumes:
+  bd_datos:
+  wp_datos:

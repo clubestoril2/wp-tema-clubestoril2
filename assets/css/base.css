@@ -1,0 +1,146 @@
+/* Base: normalización mínima, tipografía, enlaces y foco. */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+body {
+    margin: 0;
+    background: var(--ce-bg);
+    color: var(--ce-text);
+    font-family: var(--ce-font);
+    font-size: var(--ce-font-size);
+    line-height: var(--ce-line-height);
+    overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 0.5em;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 { font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); }
+h2 { font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem); }
+h3 { font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.4rem); }
+h4 { font-size: 1.125rem; }
+
+p,
+ul,
+ol,
+dl,
+figure,
+table,
+blockquote {
+    margin: 0 0 1em;
+}
+
+img,
+svg,
+video,
+iframe {
+    max-width: 100%;
+}
+
+img,
+video {
+    height: auto;
+}
+
+a {
+    color: var(--ce-link);
+    text-underline-offset: 0.15em;
+}
+
+a:hover {
+    color: var(--ce-link-hover);
+}
+
+:focus-visible {
+    outline: 3px solid var(--ce-focus);
+    outline-offset: 2px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--ce-border);
+    margin: var(--ce-space-5) 0;
+}
+
+input,
+button,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+/* Texto solo para lectores de pantalla. */
+.ce-oculto,
+.screen-reader-text {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Enlace «Saltar al contenido», visible al recibir el foco. */
+.ce-saltar {
+    position: absolute;
+    top: -100px;
+    left: var(--ce-gutter);
+    z-index: 1000;
+    padding: var(--ce-space-2) var(--ce-space-3);
+    background: var(--ce-primary);
+    color: var(--ce-primary-contrast);
+    border-radius: 0 0 var(--ce-radius-small) var(--ce-radius-small);
+}
+
+.ce-saltar:focus {
+    top: 0;
+    color: var(--ce-primary-contrast);
+}
+
+.ce-icono {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    fill: currentColor;
+    vertical-align: -0.125em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    @view-transition {
+        navigation: none;
+    }
+}

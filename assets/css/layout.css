@@ -1,0 +1,114 @@
+/* Maquetación: contenedores, rejillas y zonas principales. */
+
+.ce-contenedor {
+    width: 100%;
+    max-width: calc(var(--ce-width) + 2 * var(--ce-gutter));
+    margin-inline: auto;
+    padding-inline: var(--ce-gutter);
+}
+
+.ce-contenedor--estrecho {
+    max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-gutter));
+}
+
+.ce-principal {
+    display: block;
+    padding-block: var(--ce-space-5) var(--ce-space-6);
+}
+
+.ce-principal:focus {
+    outline: none;
+}
+
+.ce-rejilla {
+    display: grid;
+    gap: var(--ce-space-4);
+}
+
+.ce-rejilla--tarjetas {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+}
+
+.ce-filas {
+    display: grid;
+    gap: var(--ce-space-3);
+}
+
+.ce-portada > section + section {
+    margin-top: var(--ce-space-6);
+}
+
+.ce-listado__cabecera {
+    margin-bottom: var(--ce-space-5);
+    padding-bottom: var(--ce-space-3);
+    border-bottom: 3px solid var(--ce-primary);
+}
+
+.ce-listado__titulo {
+    margin: 0;
+}
+
+.ce-listado__descripcion {
+    color: var(--ce-text-muted);
+}
+
+/* Pie */
+.ce-pie {
+    background: var(--ce-bg-alt);
+    border-top: 4px solid var(--ce-primary);
+    font-size: var(--ce-font-size-small);
+}
+
+.ce-pie__columnas {
+    display: grid;
+    gap: var(--ce-space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    padding-block: var(--ce-space-5);
+}
+
+.ce-pie__club img {
+    width: 72px;
+    height: auto;
+}
+
+.ce-pie__nombre {
+    margin: var(--ce-space-2) 0 0;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.ce-pie__menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ce-pie__menu li + li {
+    margin-top: var(--ce-space-2);
+}
+
+.ce-pie__info {
+    border-top: 1px solid var(--ce-border);
+    color: var(--ce-text-muted);
+}
+
+.ce-pie__info-interior {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--ce-space-2) var(--ce-space-4);
+    padding-block: var(--ce-space-3);
+}
+
+.ce-pie__info p {
+    margin: 0;
+}
+
+.ce-error {
+    text-align: center;
+}
+
+.ce-error .ce-buscador {
+    margin: var(--ce-space-4) auto;
+    max-width: 420px;
+}

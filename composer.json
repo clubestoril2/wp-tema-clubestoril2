@@ -1,0 +1,44 @@
+{
+  "name": "clubestoril2/wp-tema-clubestoril2",
+  "description": "Tema WordPress del Club Deportivo Estoril II (herramientas de calidad para desarrollo)",
+  "type": "wordpress-theme",
+  "license": "GPL-3.0-or-later",
+  "require": {
+    "php": ">=8.1"
+  },
+  "require-dev": {
+    "phan/phan": "^5.4",
+    "phpunit/phpunit": "^11.5",
+    "squizlabs/php_codesniffer": "^3.13",
+    "wp-coding-standards/wpcs": "^3.1",
+    "php-stubs/wordpress-stubs": "^6.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "ClubEstoril2\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ClubEstoril2\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "scripts": {
+    "test": [
+      "@phpunit",
+      "@phpcs",
+      "@phan"
+    ],
+    "pruebas": "@test",
+    "phpunit": "vendor/bin/phpunit",
+    "phpcs": "vendor/bin/phpcs",
+    "phpcbf": "vendor/bin/phpcbf",
+    "phan": "vendor/bin/phan --no-progress-bar --strict-type-checking --minimum-target-php-version 8.1 --target-php-version native --unused-variable-detection --constant-variable-detection --output-mode verbose --analyze-twice"
+  }
+}
