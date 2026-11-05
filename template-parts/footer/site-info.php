@@ -3,6 +3,8 @@
 /**
  * Línea final del pie: derechos y política de privacidad.
  *
+ * «© año • autor • club»; sin autor (opción «pie_autor» vacía), «© año club».
+ *
  * @package ClubEstoril2
  */
 
@@ -11,6 +13,9 @@
     <div class="ce-contenedor ce-pie__info-interior">
         <p>
             &copy; <?php echo esc_html((string) wp_date('Y')); ?>
+            <?php if (ce_opcion_texto('pie_autor') !== '') : ?>
+                &bull; <?php echo esc_html(ce_opcion_texto('pie_autor')); ?> &bull;
+            <?php endif; ?>
             <?php echo esc_html(ce_opcion_texto('pie_texto')); ?>
         </p>
         <?php the_privacy_policy_link('<p>', '</p>'); ?>
