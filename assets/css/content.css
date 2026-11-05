@@ -417,7 +417,7 @@ figcaption {
 .ce-contenido [style*="#FFA0A0"] {
     position: relative;
     margin: var(--ce-space-4) 0 !important;
-    padding: var(--ce-space-3) var(--ce-space-4) var(--ce-space-3) 3.5rem !important;
+    padding: var(--ce-space-3) var(--ce-space-4) !important;
     border: 2px solid var(--ce-primary) !important;
     border-radius: var(--ce-radius);
     background: color-mix(in srgb, var(--ce-primary) 10%, var(--ce-bg)) !important;
@@ -428,9 +428,9 @@ figcaption {
 .ce-contenido [style*="#FFA0A0"]::before,
 .ce-aviso::before {
     content: "!";
-    position: absolute;
-    top: var(--ce-space-3);
-    left: var(--ce-space-3);
+    /* Flota arriba a la izquierda: el texto la rodea y usa todo el ancho. */
+    float: left;
+    margin: 0.15rem var(--ce-space-3) var(--ce-space-1) 0;
     display: grid;
     place-items: center;
     width: 1.75rem;
@@ -453,11 +453,19 @@ figcaption {
     margin-bottom: 0;
 }
 
+.ce-contenido [style*="#ffa0a0"]::after,
+.ce-contenido [style*="#FFA0A0"]::after,
+.ce-aviso::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
 /* Caja de aviso */
 .ce-aviso {
     position: relative;
     margin: var(--ce-space-4) 0;
-    padding: var(--ce-space-3) var(--ce-space-4) var(--ce-space-3) 3.5rem;
+    padding: var(--ce-space-3) var(--ce-space-4);
     border: 2px solid var(--ce-primary);
     border-radius: var(--ce-radius);
     background: color-mix(in srgb, var(--ce-primary) 10%, var(--ce-bg));
