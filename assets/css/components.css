@@ -220,10 +220,6 @@
         grid-template-columns: 1fr;
         gap: var(--ce-space-2);
     }
-
-    .ce-fila__extracto {
-        display: none;
-    }
 }
 
 /* Buscador */
