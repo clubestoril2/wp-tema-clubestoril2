@@ -174,9 +174,8 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
     if (!$post instanceof WP_Post) {
         return;
     }
-    $atributos = ['class' => 'ce-miniatura', 'loading' => 'lazy'];
     if (has_post_thumbnail($post)) {
-        echo get_the_post_thumbnail($post, $tamano, $atributos);
+        echo get_the_post_thumbnail($post, $tamano, ['class' => 'ce-miniatura', 'loading' => 'lazy']);
         return;
     }
 
@@ -184,7 +183,12 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
     if ($imagen !== null) {
         // Imagen de la biblioteca de medios: se usa el tamaño pedido con srcset.
         if ($imagen['id'] !== null && wp_attachment_is_image($imagen['id'])) {
-            $html = wp_get_attachment_image($imagen['id'], $tamano, false, $atributos);
+            $html = wp_get_attachment_image(
+                $imagen['id'],
+                $tamano,
+                false,
+                ['class' => 'ce-miniatura', 'loading' => 'lazy']
+            );
             if ($html !== '') {
                 // HTML generado y escapado por WordPress.
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
