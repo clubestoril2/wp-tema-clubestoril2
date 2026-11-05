@@ -22,12 +22,6 @@
     padding-block: var(--ce-space-1);
 }
 
-.ce-topbar__eslogan {
-    margin: 0;
-    font-weight: 600;
-    color: var(--ce-text);
-}
-
 .ce-topbar__datos {
     display: flex;
     flex-wrap: wrap;
@@ -191,7 +185,6 @@
         flex: 1 1 0;
     }
 
-    .ce-topbar__eslogan,
     .ce-topbar__dato--direccion {
         display: none;
     }
@@ -201,15 +194,25 @@
         column-gap: var(--ce-space-1);
     }
 
-    /* Solo el icono de cada red; el nombre queda para lectores de pantalla. */
+    /* Más especificidad que la regla de 1023 px, que va después. */
+    .ce-topbar .ce-redes__enlace {
+        min-width: 32px;
+    }
+}
+
+/*
+ * Hasta 1023 px (móviles, también en apaisado, y tabletas) cada red muestra
+ * solo su icono, para que la barra superior no pase a dos líneas. El nombre
+ * queda para los lectores de pantalla.
+ */
+@media (max-width: 1023px) {
     .ce-redes {
         gap: 0;
     }
 
     .ce-redes__enlace {
         justify-content: center;
-        min-width: 32px;
-        min-height: 44px;
+        min-width: 44px;
         padding-inline: 0;
     }
 

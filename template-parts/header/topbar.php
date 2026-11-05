@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Barra superior de información rápida: eslogan, datos de contacto, redes
- * sociales y conmutador de modo de color.
+ * Barra superior de información rápida: datos de contacto, redes sociales y
+ * conmutador de modo de color. El eslogan no se muestra aquí para no repetir
+ * la identidad del club, que ya está en la franja de marca; sigue en el pie.
  *
  * @package ClubEstoril2
  */
 
-$ce_eslogan   = ce_opcion_texto('cabecera_eslogan');
 $ce_horario   = ce_opcion_texto('cabecera_horario');
 $ce_telefono  = ce_opcion_texto('cabecera_telefono');
 $ce_direccion = ce_opcion_texto('cabecera_direccion');
@@ -15,10 +15,6 @@ $ce_mapa      = ce_opcion_url('cabecera_mapa_url');
 ?>
 <div class="ce-topbar">
     <div class="ce-contenedor ce-topbar__interior">
-        <?php if ($ce_eslogan !== '') : ?>
-            <p class="ce-topbar__eslogan"><?php echo esc_html($ce_eslogan); ?></p>
-        <?php endif; ?>
-
         <ul class="ce-topbar__datos">
             <?php if ($ce_horario !== '') : ?>
                 <li class="ce-topbar__dato">
