@@ -139,3 +139,15 @@ function ce_excluir_de_publicaciones(WP_Query $consulta): void
         ]
     );
 }
+
+add_filter('the_content', 'ce_envolver_tablas', 20);
+
+/**
+ * Envuelve las tablas del contenido para que se desplacen en horizontal solo
+ * si no caben (estilos en content.css, «.ce-tabla»).
+ */
+function ce_envolver_tablas(mixed $contenido): mixed
+{
+    return is_string($contenido) ? \ClubEstoril2\Contenido::envolverTablas($contenido) : $contenido;
+}
+

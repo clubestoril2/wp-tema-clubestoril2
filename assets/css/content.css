@@ -34,15 +34,152 @@
     margin-top: 1.5em;
 }
 
-.ce-contenido li + li {
-    margin-top: 0.2em;
-}
-
 .ce-contenido blockquote {
     margin-inline: 0;
     padding: var(--ce-space-2) var(--ce-space-4);
     border-left: 4px solid var(--ce-primary);
     background: var(--ce-bg-alt);
+}
+
+/* Un <h1> dentro del contenido se ve como subtítulo: el título es el de la página. */
+.ce-contenido h1 {
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+}
+
+/* Subtítulos con una marca roja, a juego con los títulos de la portada. */
+.ce-contenido > h1,
+.ce-contenido > h2,
+.ce-contenido > h3 {
+    padding-left: 0.65rem;
+    border-left: 4px solid var(--ce-primary);
+}
+
+.ce-contenido > * + h1 {
+    margin-top: 1.5em;
+}
+
+/* Las direcciones largas se parten en vez de desbordar en móvil. */
+.ce-contenido a {
+    overflow-wrap: anywhere;
+}
+
+.ce-contenido hr,
+.ce-contenido .wp-block-separator {
+    width: 6rem;
+    margin: var(--ce-space-5) auto;
+    border: 0;
+    border-top: 3px solid var(--ce-primary);
+    opacity: 1;
+}
+
+.ce-contenido .wp-block-separator.is-style-wide {
+    width: 100%;
+    border-top-width: 1px;
+    border-top-color: var(--ce-border);
+}
+
+.ce-contenido .wp-block-separator.is-style-dots {
+    width: auto;
+    border: 0;
+}
+
+/* Cita destacada */
+.ce-contenido .wp-block-pullquote {
+    margin: var(--ce-space-5) 0;
+    padding: var(--ce-space-4) 0;
+    border-block: 3px solid var(--ce-primary);
+    text-align: center;
+}
+
+.ce-contenido .wp-block-pullquote blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.ce-contenido .wp-block-pullquote cite {
+    color: var(--ce-text-muted);
+    font-size: var(--ce-font-size-small);
+}
+
+/* Desplegables (<details>) */
+.ce-contenido details {
+    margin: 0 0 var(--ce-space-2);
+    border: 1px solid var(--ce-border);
+    border-radius: var(--ce-radius);
+    background: var(--ce-surface);
+}
+
+.ce-contenido summary {
+    padding: var(--ce-space-2) var(--ce-space-3);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ce-contenido summary::marker {
+    color: var(--ce-link);
+}
+
+.ce-contenido details[open] > summary {
+    border-bottom: 1px solid var(--ce-border);
+}
+
+.ce-contenido details > :not(summary) {
+    margin-inline: var(--ce-space-3);
+}
+
+/* Código */
+.ce-contenido code,
+.ce-contenido kbd {
+    padding: 0.1em 0.35em;
+    border-radius: var(--ce-radius-small);
+    background: var(--ce-bg-alt);
+    font-size: 0.9em;
+}
+
+.ce-contenido pre {
+    overflow-x: auto;
+    padding: var(--ce-space-3);
+    border: 1px solid var(--ce-border);
+    border-radius: var(--ce-radius);
+    background: var(--ce-bg-alt);
+}
+
+.ce-contenido pre code {
+    padding: 0;
+    background: none;
+}
+
+/* Bloque «Archivo»: nombre y botón de descarga. */
+.ce-contenido .wp-block-file {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ce-space-2) var(--ce-space-3);
+    padding: var(--ce-space-3);
+    border: 1px solid var(--ce-border);
+    border-radius: var(--ce-radius);
+    background: var(--ce-surface);
+}
+
+.ce-contenido .wp-block-file__button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    background: var(--ce-primary);
+    color: var(--ce-primary-contrast);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.ce-contenido .wp-block-file__button:hover {
+    background: var(--ce-primary-dark);
+    color: var(--ce-primary-contrast);
 }
 
 /* Alineaciones clásicas */
@@ -82,57 +219,245 @@ figcaption {
     text-align: center;
 }
 
-/* Tablas: desplazamiento horizontal en pantallas estrechas */
-.ce-contenido table {
-    display: block;
-    width: 100%;
-    max-width: 100%;
+/*
+ * Tablas. El tema envuelve cada una en .ce-tabla (inc/setup.php), que pone
+ * el borde redondeado y el desplazamiento horizontal si no cabe. Los !important
+ * anulan los bordes y anchos escritos a mano en el contenido antiguo.
+ */
+.ce-tabla {
+    margin: 0 0 var(--ce-space-4);
     overflow-x: auto;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+    border: 1px solid var(--ce-border);
+    border-radius: var(--ce-radius);
+    background: var(--ce-surface);
+    box-shadow: var(--ce-shadow);
 }
 
-@media (min-width: 760px) {
-    .ce-contenido table {
-        display: table;
-    }
+.ce-contenido table {
+    width: 100% !important;
+    margin: 0;
+    border: 0 !important;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Sin el envoltorio (contenido que no pasa por the_content): solo desplazamiento. */
+.ce-contenido > table {
+    display: block;
+    overflow-x: auto;
 }
 
 .ce-contenido th,
 .ce-contenido td {
-    padding: 0.4rem 0.6rem;
-    border: 1px solid var(--ce-border);
+    padding: 0.55rem 0.75rem;
+    border: 0;
+    border-bottom: 1px solid var(--ce-border);
     vertical-align: top;
+    text-align: left;
 }
 
+.ce-contenido th + th,
+.ce-contenido td + td,
+.ce-contenido th + td,
+.ce-contenido td + th {
+    border-left: 1px solid var(--ce-border);
+}
+
+.ce-contenido tr:last-child > td,
+.ce-contenido tr:last-child > th {
+    border-bottom: 0;
+}
+
+.ce-contenido thead tr:last-child > th,
+.ce-contenido thead tr:last-child > td {
+    border-bottom: 0;
+}
+
+/* Cabecera en el rojo del club. */
 .ce-contenido thead th,
-.ce-contenido thead td,
-table.tabla thead {
-    background: var(--ce-text);
-    color: var(--ce-bg);
+.ce-contenido thead td {
+    background: var(--ce-primary);
+    color: var(--ce-primary-contrast);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.ce-contenido thead th + th,
+.ce-contenido thead td + td {
+    border-left-color: rgb(255 255 255 / 0.25);
 }
 
 .ce-contenido tbody tr:nth-child(even) {
     background: var(--ce-bg-alt);
 }
 
-/* Tablas existentes con la clase «tabla» (antes con colores fijos). */
-table.tabla {
-    border: 2px solid var(--ce-text);
+.ce-contenido tbody tr:hover {
+    background: color-mix(in srgb, var(--ce-primary) 7%, var(--ce-surface));
 }
 
-table.tabla thead th {
+/*
+ * Tablas de dos columnas (concepto y precio): la segunda, estrecha, en
+ * negrita y sin partir, para comparar los importes de un vistazo.
+ */
+.ce-contenido td:nth-child(2):last-child,
+.ce-contenido th:nth-child(2):last-child {
+    width: 1%;
+    white-space: nowrap;
     text-align: center;
 }
 
-table.tabla tbody tr:nth-child(odd) {
-    background: var(--ce-surface);
+.ce-contenido tbody td:nth-child(2):last-child {
+    font-weight: 700;
+}
+
+/* Tablas del editor de bloques. */
+.wp-block-table {
+    margin: 0 0 var(--ce-space-4);
+}
+
+.wp-block-table .ce-tabla {
+    margin-bottom: var(--ce-space-1);
+}
+
+.wp-block-table figcaption,
+.ce-contenido table caption {
+    padding: var(--ce-space-1) 0;
+    color: var(--ce-text-muted);
+    font-size: var(--ce-font-size-small);
+    text-align: center;
+}
+
+.wp-block-table.is-style-stripes tbody tr:nth-child(odd) {
+    background: transparent;
+}
+
+/* Listas: viñetas en el rojo del club y números en un círculo. */
+.ce-contenido ul,
+.ce-contenido ol {
+    margin: 0 0 var(--ce-space-3);
+    padding-left: 1.6rem;
+}
+
+.ce-contenido li + li {
+    margin-top: 0.35em;
+}
+
+.ce-contenido ul > li::marker {
+    color: var(--ce-link);
+    font-size: 1.1em;
+}
+
+.ce-contenido ul ul > li {
+    list-style-type: circle;
+}
+
+.ce-contenido li > ul,
+.ce-contenido li > ol {
+    margin: 0.35em 0 0;
+}
+
+/* counter(list-item) respeta «start» y «reversed» de la lista. */
+.ce-contenido ol {
+    padding-left: 0;
+    list-style: none;
+}
+
+.ce-contenido ol > li {
+    position: relative;
+    min-height: 1.6rem;
+    padding-left: 2.3rem;
+}
+
+.ce-contenido ol > li::before {
+    content: counter(list-item);
+    position: absolute;
+    top: 0.05em;
+    left: 0;
+    display: grid;
+    place-items: center;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    padding: 0 0.3rem;
+    border-radius: 999px;
+    background: var(--ce-primary);
+    color: var(--ce-primary-contrast);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* Segundo nivel numerado: letras, sin círculo. */
+.ce-contenido ol ol > li {
+    padding-left: 1.6rem;
+}
+
+.ce-contenido ol ol > li::before {
+    content: counter(list-item, lower-alpha) ")";
+    min-width: 0;
+    padding: 0;
+    background: none;
+    color: var(--ce-link);
+    font-size: 1em;
+}
+
+.ce-contenido dt {
+    font-weight: 700;
+}
+
+.ce-contenido dd {
+    margin: 0 0 var(--ce-space-2) var(--ce-space-4);
+}
+
+/*
+ * Caja de aviso. También se aplica a los avisos antiguos escritos a mano con
+ * fondo rosa (#ffa0a0) y texto rojo fijos, que en modo oscuro desentonaban.
+ */
+.ce-contenido [style*="#ffa0a0"],
+.ce-contenido [style*="#FFA0A0"] {
+    position: relative;
+    margin: var(--ce-space-4) 0 !important;
+    padding: var(--ce-space-3) var(--ce-space-4) var(--ce-space-3) 3.5rem !important;
+    border: 2px solid var(--ce-primary) !important;
+    border-radius: var(--ce-radius);
+    background: color-mix(in srgb, var(--ce-primary) 10%, var(--ce-bg)) !important;
+    color: var(--ce-text) !important;
+}
+
+.ce-contenido [style*="#ffa0a0"]::before,
+.ce-contenido [style*="#FFA0A0"]::before,
+.ce-aviso::before {
+    content: "!";
+    position: absolute;
+    top: var(--ce-space-3);
+    left: var(--ce-space-3);
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--ce-primary);
+    color: var(--ce-primary-contrast);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.ce-contenido [style*="#ffa0a0"] :is(h1, h2, h3, h4),
+.ce-contenido [style*="#FFA0A0"] :is(h1, h2, h3, h4) {
+    margin-top: 0;
+    color: var(--ce-link);
+}
+
+.ce-contenido [style*="#ffa0a0"] > :last-child,
+.ce-contenido [style*="#FFA0A0"] > :last-child {
+    margin-bottom: 0;
 }
 
 /* Caja de aviso */
 .ce-aviso {
+    position: relative;
     margin: var(--ce-space-4) 0;
-    padding: var(--ce-space-3) var(--ce-space-4);
+    padding: var(--ce-space-3) var(--ce-space-4) var(--ce-space-3) 3.5rem;
     border: 2px solid var(--ce-primary);
     border-radius: var(--ce-radius);
     background: color-mix(in srgb, var(--ce-primary) 10%, var(--ce-bg));
