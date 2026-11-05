@@ -335,6 +335,92 @@
     display: none;
 }
 
+/* Lupa del buscador desplegable: solo en pantallas anchas. */
+.ce-nav__lupa {
+    display: none;
+}
+
+@media (min-width: 900px) {
+    /* El buscador ocupa solo la lupa: nunca baja de línea. */
+    .ce-nav--buscador-plegable .ce-nav__panel {
+        flex-wrap: nowrap;
+    }
+
+    .ce-nav--buscador-plegable .ce-nav__buscar {
+        position: relative;
+        flex: none;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        padding-block: 0;
+    }
+
+    .ce-nav--buscador-plegable .ce-nav__lupa {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        transition: background-color var(--ce-transition);
+    }
+
+    .ce-nav--buscador-plegable .ce-nav__lupa:hover,
+    .ce-nav--buscando .ce-nav__lupa {
+        background: var(--ce-primary-dark);
+    }
+
+    .ce-nav__lupa .ce-icono {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    /* El campo se despliega a la izquierda de la lupa, sobre el menú. */
+    .ce-nav--buscador-plegable .ce-nav__buscador {
+        position: absolute;
+        top: 50%;
+        right: calc(100% + var(--ce-space-1));
+        z-index: 110;
+        width: 0;
+        overflow: hidden;
+        border-radius: 6px;
+        box-shadow: var(--ce-shadow-hover);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-50%);
+        /* Al plegar, se oculta (y deja de recibir el foco) al terminar. */
+        transition:
+            width 250ms ease,
+            opacity 250ms ease,
+            visibility 0s linear 250ms;
+    }
+
+    .ce-nav--buscando .ce-nav__buscador {
+        width: min(24rem, 50vw);
+        opacity: 1;
+        visibility: visible;
+        /* Al desplegar, visible desde el principio para poder darle el foco. */
+        transition:
+            width 250ms ease,
+            opacity 250ms ease,
+            visibility 0s;
+    }
+
+    .ce-nav--buscador-plegable .ce-buscador__campo {
+        border-right: 1px solid transparent;
+        border-radius: 6px;
+    }
+
+    /* Intro busca; el botón del formulario sobra junto a la lupa. */
+    .ce-nav--buscador-plegable .ce-buscador__boton {
+        display: none;
+    }
+}
+
 @media (max-width: 899px) {
     .ce-nav--plegable .ce-nav__boton {
         display: inline-flex;

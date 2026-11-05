@@ -4,8 +4,9 @@
  * Barra de navegación principal.
  *
  * En pantallas estrechas el menú y el buscador se pliegan tras el botón
- * «Menú» (lo gestiona assets/js/navigation.js). Sin JavaScript el botón no
- * aparece y el menú se muestra completo.
+ * «Menú»; en pantallas anchas el buscador se reduce a una lupa que despliega
+ * el campo sobre el menú. Lo gestiona assets/js/navigation.js: sin
+ * JavaScript no aparece ninguno de los dos botones y todo se ve completo.
  *
  * @package ClubEstoril2
  */
@@ -43,7 +44,20 @@
             );
             ?>
             <div class="ce-nav__buscar">
-                <?php get_search_form(); ?>
+                <button
+                    type="button"
+                    class="ce-nav__lupa"
+                    data-ce-lupa
+                    aria-expanded="false"
+                    aria-controls="ce-nav-buscador"
+                    hidden
+                >
+                    <?php ce_icono('buscar'); ?>
+                    <span class="ce-oculto"><?php esc_html_e('Buscar en la web', 'clubestoril2'); ?></span>
+                </button>
+                <div class="ce-nav__buscador" id="ce-nav-buscador">
+                    <?php get_search_form(); ?>
+                </div>
             </div>
         </div>
     </div>

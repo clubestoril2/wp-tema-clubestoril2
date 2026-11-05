@@ -1,11 +1,14 @@
 /**
- * Menú principal plegable en pantallas estrechas.
+ * Menú principal plegable en pantallas estrechas y buscador desplegable en
+ * pantallas anchas.
  *
  * Muestra el botón «Menú», que abre y cierra el panel con el menú y el
  * buscador, y añade a cada elemento con submenú un botón para desplegarlo.
- * Los estilos (header.css) solo pliegan el panel cuando la navegación lleva
- * la clase ce-nav--plegable, que pone este script: sin JavaScript el menú se
- * ve completo.
+ * En pantallas anchas muestra la lupa, que despliega el campo de búsqueda
+ * sobre el menú. Los estilos (header.css) solo pliegan el panel y el buscador
+ * cuando la navegación lleva las clases ce-nav--plegable y
+ * ce-nav--buscador-plegable, que pone este script: sin JavaScript todo se ve
+ * completo.
  */
 (function () {
     'use strict';
@@ -35,6 +38,47 @@
             boton.focus();
         }
     });
+
+    // Lupa (pantallas anchas): despliega el campo sobre el menú. Se pliega al
+    // pulsarla otra vez, al pulsar fuera, con Escape o al salir con el foco.
+    var lupa = nav.querySelector('[data-ce-lupa]');
+    var buscar = lupa && lupa.parentElement;
+    var campo = buscar && buscar.querySelector('input[type="search"]');
+    if (lupa && campo) {
+        var abrirBuscador = function (abrir) {
+            lupa.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+            nav.classList.toggle('ce-nav--buscando', abrir);
+            if (abrir) {
+                campo.focus();
+            }
+        };
+        var buscadorAbierto = function () {
+            return lupa.getAttribute('aria-expanded') === 'true';
+        };
+
+        nav.classList.add('ce-nav--buscador-plegable');
+        lupa.hidden = false;
+        lupa.addEventListener('click', function () {
+            abrirBuscador(!buscadorAbierto());
+        });
+        document.addEventListener('click', function (evento) {
+            if (buscadorAbierto() && !buscar.contains(evento.target)) {
+                abrirBuscador(false);
+            }
+        });
+        buscar.addEventListener('keydown', function (evento) {
+            if (evento.key === 'Escape' && buscadorAbierto()) {
+                evento.stopPropagation();
+                abrirBuscador(false);
+                lupa.focus();
+            }
+        });
+        buscar.addEventListener('focusout', function (evento) {
+            if (buscadorAbierto() && evento.relatedTarget && !buscar.contains(evento.relatedTarget)) {
+                abrirBuscador(false);
+            }
+        });
+    }
 
     // Botón para desplegar cada submenú (menús de WordPress y de páginas).
     var etiqueta = nav.getAttribute('data-ce-submenu') || 'Submenú';
