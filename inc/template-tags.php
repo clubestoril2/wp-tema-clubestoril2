@@ -284,6 +284,24 @@ function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir): a
 }
 
 /**
+ * URL de la página de entradas (Ajustes › Lectura › Página de entradas), o
+ * cadena vacía si la portada no es una página estática o no hay ninguna
+ * elegida.
+ */
+function ce_url_publicaciones(): string
+{
+    if (get_option('show_on_front') !== 'page') {
+        return '';
+    }
+    $pagina = (int) get_option('page_for_posts');
+    if ($pagina <= 0 || get_post_status($pagina) !== 'publish') {
+        return '';
+    }
+    $url = get_permalink($pagina);
+    return is_string($url) ? $url : '';
+}
+
+/**
  * Muestra una lista de entradas con una pieza de plantilla.
  *
  * Prepara cada entrada como la actual (para the_title(), the_permalink()...)

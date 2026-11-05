@@ -111,3 +111,31 @@ function ce_atributo_modo_color(string $atributos): string
 }
 
 add_filter('get_the_archive_title_prefix', '__return_empty_string');
+
+add_action('pre_get_posts', 'ce_excluir_de_publicaciones');
+
+/**
+ * Quita de la página de entradas las categorías de la opción
+ * «listados_excluir» (por defecto, «Menú del día»).
+ */
+function ce_excluir_de_publicaciones(WP_Query $consulta): void
+{
+    if (is_admin() || !$consulta->is_main_query() || !$consulta->is_home()) {
+        return;
+    }
+    $excluir = ce_opcion_lista('listados_excluir');
+    if ($excluir === []) {
+        return;
+    }
+    $consulta->set(
+        'tax_query', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+        [
+            [
+                'taxonomy' => 'category',
+                'field' => 'slug',
+                'terms' => $excluir,
+                'operator' => 'NOT IN',
+            ],
+        ]
+    );
+}

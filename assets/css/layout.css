@@ -68,6 +68,11 @@
     gap: var(--ce-space-3);
 }
 
+.ce-portada__mas {
+    margin: var(--ce-space-4) 0 0;
+    text-align: center;
+}
+
 .ce-portada > section + section {
     margin-top: var(--ce-space-6);
 }

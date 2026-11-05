@@ -5,7 +5,8 @@
  *
  * «Destacado» muestra las entradas de la categoría «Destacado» y «Últimas
  * publicaciones», el resto. Las cantidades y las categorías excluidas son
- * opciones del tema.
+ * opciones del tema. Al final, «Ver más publicaciones» enlaza a la página de
+ * entradas si está elegida en Ajustes › Lectura.
  *
  * @package ClubEstoril2
  */
@@ -38,6 +39,14 @@ $ce_anteriores = ce_entradas_portada(false, ce_opcion_entero('portada_anteriores
             <div class="ce-filas">
                 <?php ce_mostrar_entradas($ce_anteriores, 'card-fila', ['dias' => $ce_dias]); ?>
             </div>
+            <?php $ce_url_mas = ce_url_publicaciones(); ?>
+            <?php if ($ce_url_mas !== '') : ?>
+                <p class="ce-portada__mas">
+                    <a class="ce-boton ce-boton--secundario" href="<?php echo esc_url($ce_url_mas); ?>">
+                        <?php esc_html_e('Ver más publicaciones', 'clubestoril2'); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         </section>
     <?php endif; ?>
 
