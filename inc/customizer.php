@@ -50,6 +50,18 @@ function ce_personalizador_secciones(): array
                 ],
             ],
         ],
+        'carrusel' => [
+            'titulo' => __('Carrusel', 'clubestoril2'),
+            'opciones' => [
+                'carrusel_avance' => [
+                    __('Avance (% del ancho medio de las imágenes)', 'clubestoril2'),
+                    __('100 avanza una imagen media; 200, el doble.', 'clubestoril2'),
+                ],
+                'carrusel_segundos' => [
+                    __('Segundos entre avances', 'clubestoril2'),
+                ],
+            ],
+        ],
         'listados' => [
             'titulo' => __('Listados de publicaciones', 'clubestoril2'),
             'opciones' => [

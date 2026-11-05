@@ -41,6 +41,10 @@
     <rect x="6" y="5" width="4" height="14" rx="1"/>
     <rect x="14" y="5" width="4" height="14" rx="1"/>
   </symbol>
+  <symbol id="siguiente" viewBox="0 0 24 24">
+    <path d="M5 5.5v13a1 1 0 0 0 1.5.86l9-6.5a1 1 0 0 0 0-1.72l-9-6.5A1 1 0 0 0 5 5.5z"/>
+    <rect x="16.5" y="5" width="3" height="14" rx="1"/>
+  </symbol>
   <symbol id="reproducir" viewBox="0 0 24 24">
     <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/>
   </symbol>

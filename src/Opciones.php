@@ -102,6 +102,10 @@ final class Opciones
         // Rendimiento.
         'cache_minutos' => ['tipo' => self::ENTERO, 'defecto' => 15, 'min' => 0, 'max' => 1440],
 
+        // Carrusel de la portada.
+        'carrusel_avance' => ['tipo' => self::ENTERO, 'defecto' => 200, 'min' => 25, 'max' => 500],
+        'carrusel_segundos' => ['tipo' => self::ENTERO, 'defecto' => 5, 'min' => 2, 'max' => 60],
+
         // Pie.
         'pie_autor' => ['tipo' => self::TEXTO, 'defecto' => 'Óscar Javier García Baudet'],
         'pie_texto' => ['tipo' => self::TEXTO, 'defecto' => 'Club Deportivo Estoril II'],
