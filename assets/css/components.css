@@ -214,9 +214,11 @@
     min-width: 0;
 }
 
+/* En móvil la imagen ocupa todo el ancho encima del texto. */
 @media (max-width: 479px) {
     .ce-fila {
-        grid-template-columns: 128px 1fr;
+        grid-template-columns: 1fr;
+        gap: var(--ce-space-2);
     }
 
     .ce-fila__extracto {
