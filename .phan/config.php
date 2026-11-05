@@ -25,9 +25,14 @@ return [
         'template-parts/',
         'vendor/php-stubs/wordpress-stubs/',
     ],
-    'file_list' => $plantillas,
+    // Con PHP < 8.2 falta el atributo AllowDynamicProperties que usan los
+    // stubs de WordPress: se declara para Phan, sin analizarlo.
+    'file_list' => PHP_VERSION_ID < 80200
+        ? array_merge($plantillas, ['.phan/stubs/AllowDynamicProperties.php'])
+        : $plantillas,
     'exclude_analysis_directory_list' => [
         'vendor/',
+        '.phan/stubs/',
     ],
     // Variables globales que WordPress pone a disposición de las plantillas.
     'globals_type_map' => [

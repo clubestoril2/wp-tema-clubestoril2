@@ -208,12 +208,11 @@ function ce_personalizador_control(string $clave, string $tipo): array
 
 function ce_personalizador_recursos(): void
 {
-    $relativa = 'assets/js/customizer-categorias.js';
     wp_enqueue_script(
         'clubestoril2-personalizador',
-        CE_URI . '/' . $relativa,
+        CE_URI . '/assets/js/customizer-categorias.js',
         [],
-        ce_version_recurso($relativa),
+        ce_version_recurso('assets/js/customizer-categorias.js'),
         ['in_footer' => true]
     );
 }
