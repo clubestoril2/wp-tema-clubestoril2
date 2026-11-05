@@ -372,6 +372,11 @@
         display: none;
     }
 
+    .ce-nav--plegable .ce-menu .ce-nav__elemento--abierto > .sub-menu,
+    .ce-nav--plegable .ce-menu .ce-nav__elemento--abierto > .children {
+        display: block;
+    }
+
     .ce-nav--plegable .ce-menu .sub-menu a:hover,
     .ce-nav--plegable .ce-menu .children a:hover {
         background: rgb(0 0 0 / 0.15);
