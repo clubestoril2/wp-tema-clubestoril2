@@ -3,10 +3,11 @@
 /**
  * Portada.
  *
- * «Destacado» muestra las entradas de la categoría «Destacado» y «Últimas
- * publicaciones», el resto. Las cantidades y las categorías excluidas son
- * opciones del tema. Al final, «Ver más publicaciones» enlaza a la página de
- * entradas si está elegida en Ajustes › Lectura.
+ * «Destacado» muestra las últimas entradas de la categoría «Destacado» y
+ * «Últimas publicaciones», todas las demás, de cualquier categoría (también
+ * destacadas que no han cabido arriba). Las cantidades y las categorías
+ * excluidas son opciones del tema. Al final, «Ver más publicaciones» enlaza
+ * a la página de entradas si está elegida en Ajustes › Lectura.
  *
  * @package ClubEstoril2
  */
@@ -17,7 +18,7 @@ $ce_dias    = ce_opcion_entero('portada_dias_novedad');
 $ce_excluir = ce_opcion_lista('portada_excluir');
 
 $ce_destacadas = ce_entradas_portada(true, ce_opcion_entero('portada_destacadas'), $ce_excluir);
-$ce_anteriores = ce_entradas_portada(false, ce_opcion_entero('portada_anteriores'), $ce_excluir);
+$ce_anteriores = ce_entradas_portada(false, ce_opcion_entero('portada_anteriores'), $ce_excluir, $ce_destacadas);
 ?>
 <div class="ce-contenedor ce-portada">
     <?php if ($ce_destacadas !== []) : ?>

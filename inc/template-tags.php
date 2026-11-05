@@ -238,15 +238,21 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 const CE_CATEGORIA_DESTACADO = 'destacado';
 
 /**
- * Entradas de la portada: las de la categoría de destacados o las demás, sin
- * las categorías excluidas y de la más reciente a la más antigua.
+ * Entradas de la portada, de la más reciente a la más antigua y sin las
+ * categorías excluidas.
  *
- * @param bool $destacadas Entradas de la categoría (true) o fuera de ella (false).
+ * - Con $destacadas, solo las de la categoría de destacados.
+ * - Sin $destacadas, las de cualquier categoría (también destacadas) salvo
+ *   las de $omitir: así «Últimas publicaciones» muestra todo lo que no ha
+ *   cabido en el bloque «Destacado».
+ *
+ * @param bool $destacadas Solo entradas de la categoría de destacados.
  * @param int $cantidad Número máximo de entradas; 0 o menos no devuelve ninguna.
  * @param string[] $excluir Slugs de categorías excluidas.
+ * @param array<mixed> $omitir Entradas (WP_Post) que no se repiten.
  * @return array<mixed>
  */
-function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir): array
+function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir, array $omitir = []): array
 {
     if ($cantidad <= 0) {
         return [];
@@ -259,8 +265,12 @@ function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir): a
             'terms' => [CE_CATEGORIA_DESTACADO],
             'operator' => 'IN',
         ];
-    } else {
-        $excluir[] = CE_CATEGORIA_DESTACADO;
+    }
+    $ids_omitidos = [];
+    foreach ($omitir as $entrada) {
+        if ($entrada instanceof WP_Post) {
+            $ids_omitidos[] = $entrada->ID;
+        }
     }
     if ($excluir !== []) {
         $tax_query[] = [
@@ -277,6 +287,7 @@ function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir): a
             'posts_per_page' => $cantidad,
             'ignore_sticky_posts' => true,
             'no_found_rows' => true,
+            'post__not_in' => $ids_omitidos,
             'tax_query' => $tax_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
         ]
     );
