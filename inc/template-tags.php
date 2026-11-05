@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use ClubEstoril2\Carrusel;
 use ClubEstoril2\Categorias;
 use ClubEstoril2\Novedad;
 use ClubEstoril2\PrimeraImagen;
@@ -375,6 +376,34 @@ function ce_imagen_categoria(string $slug): string
         $fichero = 'assets/img/categorias/generica.svg';
     }
     return add_query_arg('ver', ce_version_recurso($fichero), CE_URI . '/' . $fichero);
+}
+
+/**
+ * Slug de la página cuya galería alimenta el carrusel de la portada.
+ */
+const CE_PAGINA_CARRUSEL = 'carrusel';
+
+/**
+ * Imágenes (identificadores de adjuntos) de la galería de la página
+ * «carrusel», en el orden de la galería. El orden aleatorio lo pone
+ * assets/js/carrusel.js en el navegador, para que cambie aunque la página
+ * esté en caché.
+ *
+ * Admite el shortcode [gallery] y la galería del editor de bloques.
+ *
+ * @return list<int>
+ */
+function ce_imagenes_carrusel(): array
+{
+    $pagina = get_page_by_path(CE_PAGINA_CARRUSEL);
+    if (!$pagina instanceof WP_Post || $pagina->post_status !== 'publish') {
+        return [];
+    }
+    $galeria = get_post_gallery($pagina, false);
+    $ids = is_array($galeria) && isset($galeria['ids']) && is_string($galeria['ids'])
+        ? Carrusel::ids($galeria['ids'])
+        : Carrusel::idsDeContenido($pagina->post_content);
+    return array_values(array_filter($ids, static fn(int $id): bool => wp_attachment_is_image($id)));
 }
 
 /**

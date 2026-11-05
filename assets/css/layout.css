@@ -179,3 +179,94 @@
     margin: var(--ce-space-4) auto;
     max-width: 420px;
 }
+
+/*
+ * Carrusel de la portada, bajo el menú: 1,5 veces la altura del menú en
+ * móvil (44 px) y 3 veces en escritorio (53 px, desde 900 px).
+ */
+.ce-carrusel {
+    --ce-carrusel-alto: calc(1.5 * 44px);
+    position: relative;
+    height: var(--ce-carrusel-alto);
+    /* Pegado al menú: anula el margen superior de <main>. */
+    margin: calc(-1 * var(--ce-space-5)) 0 var(--ce-space-5);
+    overflow-x: auto;
+    background: var(--ce-bg-alt);
+}
+
+@media (min-width: 900px) {
+    .ce-carrusel {
+        --ce-carrusel-alto: calc(3 * 53px);
+    }
+}
+
+/* Con JavaScript el desplazamiento es automático. */
+.ce-carrusel--activo {
+    overflow: hidden;
+}
+
+.ce-carrusel__pista {
+    display: flex;
+    gap: 4px;
+    height: 100%;
+    transition: transform 800ms ease;
+}
+
+.ce-carrusel__imagen {
+    display: block;
+    flex: none;
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ce-carrusel__pausa {
+    position: absolute;
+    right: var(--ce-space-2);
+    bottom: var(--ce-space-2);
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 0.55);
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity var(--ce-transition);
+}
+
+.ce-carrusel__pausa:hover,
+.ce-carrusel__pausa:focus-visible {
+    opacity: 1;
+}
+
+.ce-carrusel__pausa[hidden] {
+    display: none;
+}
+
+.ce-carrusel__pausa .ce-icono {
+    width: 1rem;
+    height: 1rem;
+}
+
+.ce-carrusel__icono-reproducir,
+.ce-carrusel__pausa[aria-pressed="true"] .ce-carrusel__icono-pausa {
+    display: none;
+}
+
+.ce-carrusel__pausa[aria-pressed="true"] .ce-carrusel__icono-reproducir {
+    display: block;
+}
+
+@media (max-width: 899px) {
+    .ce-carrusel__pausa {
+        right: var(--ce-space-1);
+        bottom: var(--ce-space-1);
+        width: 28px;
+        height: 28px;
+    }
+}
+

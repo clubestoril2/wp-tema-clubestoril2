@@ -51,6 +51,17 @@ function ce_encolar_recursos(): void
         ['strategy' => 'defer', 'in_footer' => true]
     );
 
+    if (is_front_page()) {
+        $relativa = 'assets/js/carrusel.js';
+        wp_enqueue_script(
+            'clubestoril2-carrusel',
+            CE_URI . '/' . $relativa,
+            [],
+            ce_version_recurso($relativa),
+            ['strategy' => 'defer', 'in_footer' => true]
+        );
+    }
+
     if (ce_opcion_booleano('mostrar_conmutador')) {
         $relativa = 'assets/js/theme-toggle.js';
         wp_enqueue_script(
