@@ -21,5 +21,6 @@ define('CE_URI', get_template_directory_uri());
 require_once CE_DIR . '/inc/autoload.php';
 require_once CE_DIR . '/inc/options.php';
 require_once CE_DIR . '/inc/setup.php';
+require_once CE_DIR . '/inc/meta.php';
 require_once CE_DIR . '/inc/enqueue.php';
 require_once CE_DIR . '/inc/template-tags.php';
