@@ -30,7 +30,9 @@ function ce_registrar_metadatos(): void
             'default' => Revisado::SIN_REVISAR,
             'show_in_rest' => true,
             'sanitize_callback' => [Revisado::class, 'sanear'],
-            'auth_callback' => static fn(bool $_permitido, string $_clave, int $id): bool
+            // WordPress pasa el permiso previo y la clave, pero solo se necesita el ID.
+            // @phan-suppress-next-line PhanUnusedPublicNoOverrideMethodParameter
+            'auth_callback' => static fn(bool $permitido, string $clave, int $id): bool
                 => current_user_can('edit_post', $id),
         ]
     );

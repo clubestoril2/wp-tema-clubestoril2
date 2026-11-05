@@ -37,9 +37,9 @@ final class Revisado
         foreach ([self::FORMATO, DateTimeInterface::ATOM] as $formato) {
             $zona = $formato === self::FORMATO ? new DateTimeZone('UTC') : null;
             $fecha = DateTimeImmutable::createFromFormat('!' . $formato, $valor, $zona);
-            // Se descartan los desbordamientos («2026-02-30» pasaría a marzo).
-            $errores = DateTimeImmutable::getLastErrors();
-            if ($fecha === false || ($errores !== false && $errores['warning_count'] > 0)) {
+            // Al volver a formatearla debe salir igual: así se descartan los
+            // desbordamientos («2026-02-30» pasaría a marzo).
+            if ($fecha === false || $fecha->format($formato) !== $valor) {
                 continue;
             }
             return self::formatear($fecha);
