@@ -21,7 +21,7 @@ Convenciones: funciones y variables de plantilla con prefijo `ce_`, clases CSS `
 
 ## Opciones
 
-Las opciones del tema se guardan como `theme_mod`. Sus valores por defecto y su saneamiento están en `src/Opciones.php`; se leen con `ce_opcion_entero()`, `ce_opcion_texto()` y similares. El panel del Personalizador se añadirá en una fase posterior.
+Las opciones del tema se guardan como `theme_mod`. Sus valores por defecto y su saneamiento están en `src/Opciones.php`; se leen con `ce_opcion_entero()`, `ce_opcion_texto()` y similares. Las más importantes se editan en Apariencia › Personalizar › «Tema Club Estoril II» (`inc/customizer.php`).
 
 ## Metadatos
 
