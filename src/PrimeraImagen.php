@@ -48,4 +48,26 @@ final class PrimeraImagen
         }
         return ['id' => $id, 'src' => $src];
     }
+
+    /**
+     * Indica si la URL de una imagen corresponde al fichero de un adjunto.
+     *
+     * La clase «wp-image-N» no basta: al copiar contenido de otra entrada (o al
+     * importarlo con una plantilla) se conserva la clase aunque cambie la imagen.
+     * Se comparan las rutas sin dominio ni consulta y sin los sufijos que añade
+     * WordPress a los tamaños intermedios («-300x200») y a las imágenes grandes
+     * («-scaled»).
+     *
+     * @param string $src URL de la imagen en el contenido.
+     * @param string $urlAdjunto URL del fichero original del adjunto.
+     */
+    public static function esDelAdjunto(string $src, string $urlAdjunto): bool
+    {
+        $normalizar = static function (string $url): string {
+            $ruta = (string) parse_url($url, PHP_URL_PATH);
+            return (string) preg_replace('/(?:-\d+x\d+|-scaled)+(\.[a-z0-9]+)$/i', '$1', $ruta);
+        };
+        $ruta = $normalizar($src);
+        return $ruta !== '' && $ruta === $normalizar($urlAdjunto);
+    }
 }
