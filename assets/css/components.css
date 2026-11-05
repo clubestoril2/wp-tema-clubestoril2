@@ -132,6 +132,7 @@
 .ce-tarjeta__imagen {
     display: block;
     aspect-ratio: 16 / 9;
+    overflow: hidden; /* sin él, una imagen alta estira la caja y rompe la proporción */
     background: var(--ce-bg-alt);
 }
 
