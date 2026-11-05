@@ -45,7 +45,8 @@ function ce_configurar_tema(): void
 
     register_nav_menus(
         [
-            'principal' => __('Menú principal', 'clubestoril2'),
+            // «primary»: WordPress le asigna el menú principal del tema anterior al cambiar de tema.
+            'primary' => __('Menú principal', 'clubestoril2'),
             'accesos' => __('Accesos rápidos (barra superior)', 'clubestoril2'),
             'pie' => __('Pie de página', 'clubestoril2'),
         ]

@@ -181,8 +181,14 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 
     $imagen = PrimeraImagen::buscar($post->post_content);
     if ($imagen !== null) {
-        // Imagen de la biblioteca de medios: se usa el tamaño pedido con srcset.
-        if ($imagen['id'] !== null && wp_attachment_is_image($imagen['id'])) {
+        // Imagen de la biblioteca de medios: se usa el tamaño pedido con srcset,
+        // solo si la URL de la imagen es de verdad la del adjunto.
+        if (
+            $imagen['id'] !== null
+            && wp_attachment_is_image($imagen['id'])
+            && ($imagen['src'] === null
+                || PrimeraImagen::esDelAdjunto($imagen['src'], (string) wp_get_attachment_url($imagen['id'])))
+        ) {
             $html = wp_get_attachment_image(
                 $imagen['id'],
                 $tamano,
@@ -266,13 +272,14 @@ function ce_paginacion(): void
 
 /**
  * Menú de respaldo cuando no hay un menú asignado a la ubicación principal:
- * muestra las páginas publicadas. WordPress le pasa los argumentos de
- * wp_nav_menu(), que no se necesitan.
+ * muestra solo las páginas de primer nivel. WordPress le pasa los argumentos
+ * de wp_nav_menu(), que no se necesitan.
  */
 function ce_menu_respaldo(): void
 {
     wp_page_menu(
         [
+            'depth' => 1,
             'container' => '',
             'before' => '<ul class="ce-menu">',
             'after' => '</ul>',

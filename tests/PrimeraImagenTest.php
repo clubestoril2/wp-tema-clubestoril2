@@ -57,4 +57,25 @@ final class PrimeraImagenTest extends TestCase
     {
         self::assertNull(PrimeraImagen::buscar('<img alt="vacía" src="">'));
     }
+
+    public function testEsDelAdjuntoConTamanoIntermedioYOtroDominio(): void
+    {
+        self::assertTrue(PrimeraImagen::esDelAdjunto(
+            'http://www.ejemplo.es/wp-content/uploads/2023/09/foto-300x300.png?v=2',
+            'https://www.ejemplo.es/wp-content/uploads/2023/09/foto.png'
+        ));
+        self::assertTrue(PrimeraImagen::esDelAdjunto(
+            '/wp-content/uploads/2023/09/foto-scaled-1024x768.jpg',
+            'https://www.ejemplo.es/wp-content/uploads/2023/09/foto-scaled.jpg'
+        ));
+    }
+
+    public function testClaseCopiadaConOtraImagenNoEsDelAdjunto(): void
+    {
+        self::assertFalse(PrimeraImagen::esDelAdjunto(
+            'https://estaticos.ejemplo.es/imagenes/facebook/album.720x1018.jpg',
+            'https://www.ejemplo.es/wp-content/uploads/2023/09/Recordatorio.png'
+        ));
+        self::assertFalse(PrimeraImagen::esDelAdjunto('', 'https://www.ejemplo.es/wp-content/uploads/a.png'));
+    }
 }
