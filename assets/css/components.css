@@ -110,6 +110,30 @@
     object-fit: cover;
 }
 
+/* Fotograma de vídeo: botón de reproducción como en el contenido. */
+.ce-tarjeta__imagen,
+.ce-fila__imagen {
+    position: relative;
+}
+
+:is(.ce-tarjeta__imagen, .ce-fila__imagen):has(.ce-miniatura--video)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(32px, 30%, 64px);
+    aspect-ratio: 1;
+    background: var(--ce-icono-reproducir) center / contain no-repeat;
+    filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.4));
+    transform: translate(-50%, -50%);
+    transition: transform var(--ce-transition);
+    pointer-events: none;
+}
+
+:is(.ce-tarjeta, .ce-fila):hover :is(.ce-tarjeta__imagen, .ce-fila__imagen)::after {
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
 .ce-miniatura--respaldo {
     object-fit: contain;
     padding: 12%;

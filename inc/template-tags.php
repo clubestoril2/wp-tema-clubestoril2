@@ -166,7 +166,9 @@ function ce_meta_entrada(?WP_Post $post = null): void
  * Imagen de la entrada para listados.
  *
  * Por orden: la imagen destacada, la primera imagen del contenido o, si no
- * hay ninguna, el escudo del club.
+ * hay ninguna, el escudo del club. Si la primera imagen es el fotograma de un
+ * vídeo, lleva la clase «ce-miniatura--video» para superponer el botón de
+ * reproducción.
  */
 function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 {
@@ -181,6 +183,7 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 
     $imagen = PrimeraImagen::buscar($post->post_content);
     if ($imagen !== null) {
+        $clase = $imagen['video'] ? 'ce-miniatura ce-miniatura--video' : 'ce-miniatura';
         // Imagen de la biblioteca de medios: se usa el tamaño pedido con srcset,
         // solo si la URL de la imagen es de verdad la del adjunto.
         if (
@@ -193,7 +196,7 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
                 $imagen['id'],
                 $tamano,
                 false,
-                ['class' => 'ce-miniatura', 'loading' => 'lazy']
+                ['class' => $clase, 'loading' => 'lazy']
             );
             if ($html !== '') {
                 // HTML generado y escapado por WordPress.
@@ -205,7 +208,7 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
         // Imagen externa o adjunto ya borrado: se usa la URL tal cual.
         $src = $imagen['src'] ?? '';
         if (esc_url($src) !== '') {
-            printf('<img class="ce-miniatura" src="%1$s" alt="" loading="lazy">', esc_url($src));
+            printf('<img class="%1$s" src="%2$s" alt="" loading="lazy">', esc_attr($clase), esc_url($src));
             return;
         }
     }
