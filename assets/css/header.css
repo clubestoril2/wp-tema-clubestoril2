@@ -415,6 +415,11 @@
         border-radius: 6px;
     }
 
+    /* El contenedor desplegable recorta lo que sobresale: contorno por dentro. */
+    .ce-nav--buscador-plegable .ce-buscador:focus-within {
+        outline-offset: -3px;
+    }
+
     /* Intro busca; el botón del formulario sobra junto a la lupa. */
     .ce-nav--buscador-plegable .ce-buscador__boton {
         display: none;

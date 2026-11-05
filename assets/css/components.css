@@ -250,6 +250,21 @@
 .ce-buscador {
     display: flex;
     max-width: 100%;
+    border-radius: 6px;
+}
+
+/*
+ * El contorno de foco rodea el buscador entero (campo y botón): en el campo
+ * solo, el botón lo tapaba por la derecha.
+ */
+.ce-buscador:focus-within {
+    outline: 3px solid var(--ce-focus);
+    outline-offset: 2px;
+}
+
+.ce-buscador__campo:focus-visible,
+.ce-buscador__boton:focus-visible {
+    outline: none;
 }
 
 .ce-buscador__campo {
