@@ -17,6 +17,9 @@ defined('ABSPATH') || exit;
 
 /**
  * Icono del sprite assets/img/icons.svg, decorativo (oculto a lectores).
+ *
+ * La URL del sprite lleva la versión del tema para que el navegador no siga
+ * usando uno antiguo, sin los iconos nuevos, tras actualizar el tema.
  */
 function ce_icono(string $nombre, string $clase = ''): void
 {
@@ -24,7 +27,10 @@ function ce_icono(string $nombre, string $clase = ''): void
     printf(
         '<svg class="%1$s" aria-hidden="true" focusable="false"><use href="%2$s"></use></svg>',
         esc_attr($clases),
-        esc_url(CE_URI . '/assets/img/icons.svg#' . $nombre)
+        esc_url(
+            add_query_arg('ver', ce_version_recurso('assets/img/icons.svg'), CE_URI . '/assets/img/icons.svg')
+            . '#' . $nombre
+        )
     );
 }
 

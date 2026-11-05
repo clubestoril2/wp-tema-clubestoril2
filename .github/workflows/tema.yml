@@ -1,7 +1,8 @@
 # Integración continua del tema.
 #
 # - Cada commit (cualquier rama): pruebas de calidad y ZIP instalable como
-#   artefacto de la ejecución («wp-tema-clubestoril2.<commit>»).
+#   artefacto de la ejecución («wp-tema-clubestoril2.<commit>»), con la
+#   versión que da «git describe» (p. ej. 1.0.0-beta3-2-gf2bffec).
 # - Cada etiqueta: además, release con el fichero
 #   «wp-tema-clubestoril2.<etiqueta>.zip» y la versión del tema igual a la
 #   etiqueta (sin la «v» inicial).
@@ -57,7 +58,13 @@ jobs:
       version: ${{ steps.datos.outputs.version }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Historia y etiquetas completas para «git describe».
+          fetch-depth: 0
 
+      # Cada commit lleva una versión distinta (p. ej. 1.0.0-beta3-2-gf2bffec)
+      # para que los navegadores no reutilicen el CSS, el JS y los iconos de
+      # otra instalación con la misma versión.
       - name: Calcular nombre y versión
         id: datos
         env:
@@ -68,8 +75,9 @@ jobs:
             echo "nombre=wp-tema-clubestoril2.${REFERENCIA}" >> "$GITHUB_OUTPUT"
             echo "version=${REFERENCIA#v}" >> "$GITHUB_OUTPUT"
           else
+            version=$(git describe --tags --always)
             echo "nombre=wp-tema-clubestoril2.${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
-            echo "version=" >> "$GITHUB_OUTPUT"
+            echo "version=${version#v}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Generar ZIP
