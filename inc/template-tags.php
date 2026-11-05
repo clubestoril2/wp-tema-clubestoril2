@@ -220,6 +220,55 @@ function ce_miniatura(string $tamano, ?WP_Post $post = null): void
 }
 
 /**
+ * Slug de la etiqueta que lleva una entrada a «Destacado» en la portada.
+ */
+const CE_ETIQUETA_DESTACADOS = 'destacados';
+
+/**
+ * Entradas de la portada: las que tienen la etiqueta de destacados o las que
+ * no la tienen, sin las categorías excluidas y de la más reciente a la más
+ * antigua.
+ *
+ * @param bool $destacadas Entradas con la etiqueta (true) o sin ella (false).
+ * @param int $cantidad Número máximo de entradas; 0 o menos no devuelve ninguna.
+ * @param string[] $excluir Slugs de categorías excluidas.
+ * @return array<mixed>
+ */
+function ce_entradas_portada(bool $destacadas, int $cantidad, array $excluir): array
+{
+    if ($cantidad <= 0) {
+        return [];
+    }
+    $tax_query = [
+        [
+            'taxonomy' => 'post_tag',
+            'field' => 'slug',
+            'terms' => [CE_ETIQUETA_DESTACADOS],
+            'operator' => $destacadas ? 'IN' : 'NOT IN',
+        ],
+    ];
+    if ($excluir !== []) {
+        $tax_query[] = [
+            'taxonomy' => 'category',
+            'field' => 'slug',
+            'terms' => $excluir,
+            'operator' => 'NOT IN',
+        ];
+    }
+    $consulta = new WP_Query(
+        [
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'posts_per_page' => $cantidad,
+            'ignore_sticky_posts' => true,
+            'no_found_rows' => true,
+            'tax_query' => $tax_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+        ]
+    );
+    return $consulta->posts;
+}
+
+/**
  * Muestra una lista de entradas con una pieza de plantilla.
  *
  * Prepara cada entrada como la actual (para the_title(), the_permalink()...)

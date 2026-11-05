@@ -27,23 +27,4 @@ final class Novedad
         $limite = DateTimeImmutable::createFromInterface($ahora)->modify(sprintf('-%d days', $dias));
         return $publicacion >= $limite;
     }
-
-    /**
-     * Reparte una lista ordenada de publicaciones entre destacadas y anteriores.
-     *
-     * Las primeras $destacadas van al bloque destacado; el resto, hasta
-     * $anteriores, a la lista de anteriores. Se conserva el orden recibido.
-     *
-     * @param list<mixed> $publicaciones
-     * @return array{destacadas: list<mixed>, anteriores: list<mixed>}
-     */
-    public static function repartir(array $publicaciones, int $destacadas, int $anteriores): array
-    {
-        $destacadas = max(0, $destacadas);
-        $anteriores = max(0, $anteriores);
-        return [
-            'destacadas' => array_slice($publicaciones, 0, $destacadas),
-            'anteriores' => array_slice($publicaciones, $destacadas, $anteriores),
-        ];
-    }
 }
