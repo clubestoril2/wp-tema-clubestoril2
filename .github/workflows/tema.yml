@@ -1,0 +1,121 @@
+# Integración continua del tema.
+#
+# - Cada commit (cualquier rama): pruebas de calidad y ZIP instalable como
+#   artefacto de la ejecución («wp-tema-clubestoril2.<commit>»).
+# - Cada etiqueta: además, release con el fichero
+#   «wp-tema-clubestoril2.<etiqueta>.zip» y la versión del tema igual a la
+#   etiqueta (sin la «v» inicial).
+#
+# El ZIP se instala en WordPress desde Apariencia › Temas › Añadir › Subir tema.
+
+name: Tema
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tema-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
+
+jobs:
+  pruebas:
+    name: Pruebas (PHPUnit, PHPCS y Phan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: ast, mbstring, intl
+          coverage: none
+          tools: composer:v2
+
+      - name: Instalar dependencias de desarrollo
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Ejecutar pruebas
+        run: composer test
+
+  zip:
+    name: ZIP del tema
+    needs: pruebas
+    runs-on: ubuntu-latest
+    outputs:
+      nombre: ${{ steps.datos.outputs.nombre }}
+      version: ${{ steps.datos.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Calcular nombre y versión
+        id: datos
+        env:
+          TIPO: ${{ github.ref_type }}
+          REFERENCIA: ${{ github.ref_name }}
+        run: |
+          if [[ "$TIPO" == "tag" ]]; then
+            echo "nombre=wp-tema-clubestoril2.${REFERENCIA}" >> "$GITHUB_OUTPUT"
+            echo "version=${REFERENCIA#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "nombre=wp-tema-clubestoril2.${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+            echo "version=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generar ZIP
+        env:
+          NOMBRE: ${{ steps.datos.outputs.nombre }}
+          VERSION: ${{ steps.datos.outputs.version }}
+        run: |
+          bin/empaquetar.sh "dist/${NOMBRE}.zip" "$VERSION"
+          unzip -l "dist/${NOMBRE}.zip"
+
+      # GitHub siempre comprime los artefactos: se sube la carpeta del tema ya
+      # extraída para que el ZIP descargado sea directamente instalable.
+      - name: Preparar artefacto
+        env:
+          NOMBRE: ${{ steps.datos.outputs.nombre }}
+        run: unzip -q "dist/${NOMBRE}.zip" -d artefacto
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.datos.outputs.nombre }}
+          path: artefacto/
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Publicar release
+    if: github.ref_type == 'tag'
+    needs: zip
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Generar ZIP de la etiqueta
+        env:
+          NOMBRE: ${{ needs.zip.outputs.nombre }}
+          VERSION: ${{ needs.zip.outputs.version }}
+        run: bin/empaquetar.sh "dist/${NOMBRE}.zip" "$VERSION"
+
+      - name: Crear o actualizar la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIQUETA: ${{ github.ref_name }}
+          NOMBRE: ${{ needs.zip.outputs.nombre }}
+        run: |
+          if gh release view "$ETIQUETA" >/dev/null 2>&1; then
+            gh release upload "$ETIQUETA" "dist/${NOMBRE}.zip" --clobber
+          else
+            gh release create "$ETIQUETA" "dist/${NOMBRE}.zip" \
+              --title "Tema Club Estoril II ${ETIQUETA}" \
+              --generate-notes \
+              --verify-tag
+          fi

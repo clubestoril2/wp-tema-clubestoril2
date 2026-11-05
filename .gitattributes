@@ -1,5 +1,6 @@
 # Ficheros de desarrollo que no forman parte del tema instalable
-# (git archive --format=zip --prefix=clubestoril2/ HEAD > clubestoril2.zip).
+# (los usa bin/empaquetar.sh, que genera el ZIP con git archive).
+/.github             export-ignore
 /.phan               export-ignore
 /bin                 export-ignore
 /tests               export-ignore

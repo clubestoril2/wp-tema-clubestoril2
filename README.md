@@ -47,13 +47,28 @@ docker compose run -e UID=$UID --rm instalacion
 docker compose run -e UID=$UID --rm pruebas
 ```
 
-## Empaquetado
+## Empaquetado e instalación
 
-`.gitattributes` excluye los ficheros de desarrollo, así que el tema instalable sale de:
+El ZIP se instala desde Apariencia › Temas › Añadir › Subir tema. Dentro lleva la carpeta `clubestoril2`, así que cada subida reemplaza la versión instalada.
+
+GitHub Actions lo genera automáticamente:
+
+- **Cada commit:** tras pasar las pruebas, la ejecución del workflow «Tema» guarda el artefacto `wp-tema-clubestoril2.<commit>` durante 30 días. Se descarga desde la pestaña Actions y ya es el ZIP instalable.
+- **Cada etiqueta:** además se crea una release con `wp-tema-clubestoril2.<etiqueta>.zip`. La versión del tema pasa a ser la de la etiqueta sin la «v» inicial.
 
 ```bash
-git archive --format=zip --prefix=clubestoril2/ HEAD > clubestoril2.zip
+git tag v0.2.0
+git push origin v0.2.0
 ```
+
+Para generarlo en local con lo que hay en el último commit:
+
+```bash
+bin/empaquetar.sh dist/clubestoril2.zip            # versión de style.css
+bin/empaquetar.sh dist/clubestoril2.zip 0.2.0      # con otra versión
+```
+
+Solo entran los ficheros versionados; `.gitattributes` deja fuera las herramientas de desarrollo.
 
 ## Licencia
 
