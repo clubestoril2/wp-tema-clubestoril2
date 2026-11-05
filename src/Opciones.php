@@ -70,11 +70,15 @@ final class Opciones
         'boton_socios_url' => ['tipo' => self::URL, 'defecto' => '/informacion-general/cuota-de-socios/'],
         'boton_contacto_texto' => ['tipo' => self::TEXTO, 'defecto' => 'Contacto'],
         'boton_contacto_url' => ['tipo' => self::URL, 'defecto' => '/informacion-general/contacto/'],
+        'red_telegram' => ['tipo' => self::URL, 'defecto' => 'https://t.me/clubestoril2'],
         'red_facebook' => ['tipo' => self::URL, 'defecto' => 'https://www.facebook.com/clubestoril2/'],
-        'red_instagram' => ['tipo' => self::URL, 'defecto' => ''],
-        'red_x' => ['tipo' => self::URL, 'defecto' => ''],
+        'red_instagram' => ['tipo' => self::URL, 'defecto' => 'https://www.instagram.com/clubestoril2/'],
+        'red_maps' => [
+            'tipo' => self::URL,
+            'defecto' => 'https://www.google.com/maps/search/?api=1&query=Club+Estoril+II+M%C3%B3stoles',
+        ],
+        'red_x' => ['tipo' => self::URL, 'defecto' => 'https://x.com/clubestoril2'],
         'red_youtube' => ['tipo' => self::URL, 'defecto' => ''],
-        'red_telegram' => ['tipo' => self::URL, 'defecto' => ''],
         'red_whatsapp' => ['tipo' => self::URL, 'defecto' => ''],
         'red_correo' => ['tipo' => self::CORREO, 'defecto' => ''],
 

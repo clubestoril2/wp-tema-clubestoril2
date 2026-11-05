@@ -32,11 +32,12 @@ function ce_icono(string $nombre, string $clase = ''): void
  * Redes sociales admitidas: sufijo de la opción red_* y nombre visible.
  */
 const CE_REDES_SOCIALES = [
+    'telegram' => 'Telegram',
     'facebook' => 'Facebook',
     'instagram' => 'Instagram',
+    'maps' => 'Google Maps',
     'x' => 'X',
     'youtube' => 'YouTube',
-    'telegram' => 'Telegram',
     'whatsapp' => 'WhatsApp',
 ];
 

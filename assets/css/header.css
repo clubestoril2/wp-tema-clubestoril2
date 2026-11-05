@@ -70,8 +70,13 @@
     text-decoration: none;
 }
 
-.ce-redes__enlace:hover {
+.ce-redes__enlace:hover .ce-redes__texto {
     text-decoration: underline;
+}
+
+.ce-redes__icono {
+    width: 1.125rem;
+    height: 1.125rem;
 }
 
 /* Conmutador de modo de color */
@@ -189,6 +194,38 @@
     .ce-topbar__eslogan,
     .ce-topbar__dato--direccion {
         display: none;
+    }
+
+    /* Teléfono, redes y conmutador caben en una sola línea a 360 px. */
+    .ce-topbar__interior {
+        column-gap: var(--ce-space-1);
+    }
+
+    /* Solo el icono de cada red; el nombre queda para lectores de pantalla. */
+    .ce-redes {
+        gap: 0;
+    }
+
+    .ce-redes__enlace {
+        justify-content: center;
+        min-width: 32px;
+        min-height: 44px;
+        padding-inline: 0;
+    }
+
+    .ce-redes__texto {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .ce-redes__icono {
+        width: 1.25rem;
+        height: 1.25rem;
     }
 }
 
