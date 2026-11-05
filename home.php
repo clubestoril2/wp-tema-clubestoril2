@@ -11,17 +11,16 @@
 get_header();
 ?>
 <div class="ce-contenedor ce-listado">
-    <header class="ce-listado__cabecera">
-        <h1 class="ce-listado__titulo">
-            <?php
-            $ce_titulo = single_post_title('', false);
-            if (!is_string($ce_titulo) || $ce_titulo === '') {
-                $ce_titulo = __('Publicaciones', 'clubestoril2');
-            }
-            echo esc_html($ce_titulo);
-            ?>
-        </h1>
-    </header>
+    <?php // Misma cabecera que los bloques de la portada. ?>
+    <h1 class="ce-titulo-seccion">
+        <?php
+        $ce_titulo = single_post_title('', false);
+        if (!is_string($ce_titulo) || $ce_titulo === '') {
+            $ce_titulo = __('Publicaciones', 'clubestoril2');
+        }
+        echo esc_html($ce_titulo);
+        ?>
+    </h1>
 
     <?php if (have_posts()) : ?>
         <div class="ce-filas">
