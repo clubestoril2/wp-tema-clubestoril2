@@ -5,9 +5,11 @@
  * nombre y el número de publicaciones de cada categoría, en orden
  * alfabético y sin las de la opción «categorias_ocultas».
  *
- * La imagen de cada categoría es assets/img/categorias/<slug>.svg (o
- * generica.svg si no hay una propia). El contenido que se escriba en la
- * página, si lo hay, se muestra encima de las tarjetas.
+ * La primera tarjeta, «Todas», enlaza a la página de entradas (Ajustes ›
+ * Lectura) si está elegida. La imagen de cada categoría es
+ * assets/img/categorias/<slug>.svg (o generica.svg si no hay una propia).
+ * El contenido que se escriba en la página, si lo hay, se muestra encima de
+ * las tarjetas.
  *
  * @package ClubEstoril2
  */
@@ -25,7 +27,22 @@ get_header();
         <?php endif; ?>
     <?php endwhile; ?>
 
-    <?php $ce_categorias = ce_categorias_visibles(); ?>
+    <?php
+    $ce_categorias = ce_categorias_visibles();
+    // «Todas» va la primera y lleva a la página de entradas, si está elegida.
+    $ce_url_todas = ce_url_publicaciones();
+    if ($ce_url_todas !== '') {
+        array_unshift(
+            $ce_categorias,
+            [
+                'slug' => 'todas',
+                'nombre' => __('Todas', 'clubestoril2'),
+                'total' => (int) wp_count_posts('post')->publish,
+                'url' => $ce_url_todas,
+            ]
+        );
+    }
+    ?>
     <?php if ($ce_categorias !== []) : ?>
         <ul class="ce-rejilla ce-rejilla--categorias">
             <?php foreach ($ce_categorias as $ce_categoria) : ?>
