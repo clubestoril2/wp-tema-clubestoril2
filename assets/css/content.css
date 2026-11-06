@@ -357,11 +357,46 @@ figcaption {
     margin: 0.35em 0 0;
 }
 
-/* counter(list-item) respeta «start» y «reversed» de la lista. */
+/*
+ * counter(list-item) respeta «start» y «reversed» de la lista.
+ *
+ * El número va dentro de un círculo; --ce-ol-tipo indica su estilo:
+ * - data-ce-lista: lo añade el tema a partir del atributo «type»
+ *   (Contenido::marcarTiposDeLista), porque en CSS [type="a"] también
+ *   coincide con type="A".
+ * - [type]: respaldo para contenido que no pasa por ese filtro (solo
+ *   minúsculas).
+ * - Estilo en línea «list-style-type» (editor clásico): va el último porque,
+ *   como en el navegador, manda sobre «type». Sin el !important de
+ *   list-style, ese estilo en línea pintaría además el marcador por fuera.
+ */
 .ce-contenido ol {
+    --ce-ol-tipo: decimal;
     padding-left: 0;
-    list-style: none;
+    list-style: none !important;
 }
+
+.ce-contenido ol ol {
+    --ce-ol-tipo: lower-alpha;
+}
+
+.ce-contenido ol[type="a"] { --ce-ol-tipo: lower-alpha; }
+.ce-contenido ol[type="i"] { --ce-ol-tipo: lower-roman; }
+.ce-contenido ol[type="1"] { --ce-ol-tipo: decimal; }
+
+.ce-contenido ol[data-ce-lista="decimal"] { --ce-ol-tipo: decimal; }
+.ce-contenido ol[data-ce-lista="lower-alpha"] { --ce-ol-tipo: lower-alpha; }
+.ce-contenido ol[data-ce-lista="upper-alpha"] { --ce-ol-tipo: upper-alpha; }
+.ce-contenido ol[data-ce-lista="lower-roman"] { --ce-ol-tipo: lower-roman; }
+.ce-contenido ol[data-ce-lista="upper-roman"] { --ce-ol-tipo: upper-roman; }
+
+.ce-contenido ol[style*="decimal"] { --ce-ol-tipo: decimal; }
+.ce-contenido ol[style*="lower-alpha"],
+.ce-contenido ol[style*="lower-latin"] { --ce-ol-tipo: lower-alpha; }
+.ce-contenido ol[style*="upper-alpha"],
+.ce-contenido ol[style*="upper-latin"] { --ce-ol-tipo: upper-alpha; }
+.ce-contenido ol[style*="lower-roman"] { --ce-ol-tipo: lower-roman; }
+.ce-contenido ol[style*="upper-roman"] { --ce-ol-tipo: upper-roman; }
 
 .ce-contenido ol > li {
     position: relative;
@@ -370,7 +405,7 @@ figcaption {
 }
 
 .ce-contenido ol > li::before {
-    content: counter(list-item);
+    content: counter(list-item, var(--ce-ol-tipo));
     position: absolute;
     top: 0.05em;
     left: 0;
@@ -393,7 +428,7 @@ figcaption {
 }
 
 .ce-contenido ol ol > li::before {
-    content: counter(list-item, lower-alpha) ")";
+    content: counter(list-item, var(--ce-ol-tipo)) ")";
     min-width: 0;
     padding: 0;
     background: none;

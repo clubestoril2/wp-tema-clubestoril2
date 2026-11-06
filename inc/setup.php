@@ -150,3 +150,14 @@ function ce_envolver_tablas(mixed $contenido): mixed
 {
     return is_string($contenido) ? \ClubEstoril2\Contenido::envolverTablas($contenido) : $contenido;
 }
+
+add_filter('the_content', 'ce_marcar_tipos_de_lista', 20);
+
+/**
+ * Indica en cada lista numerada su estilo (letras, romanos…) para que
+ * content.css lo pinte dentro del círculo («data-ce-lista»).
+ */
+function ce_marcar_tipos_de_lista(mixed $contenido): mixed
+{
+    return is_string($contenido) ? \ClubEstoril2\Contenido::marcarTiposDeLista($contenido) : $contenido;
+}
