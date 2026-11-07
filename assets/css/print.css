@@ -227,14 +227,31 @@ img {
 }
 
 /* Tablas */
-/* Una tabla que cabe en una página no se parte; las más largas sí, y su
-   cabecera (<thead>) se repite en cada página. */
+/*
+ * Las tablas se pueden partir entre páginas, pero sin dejar solas sus tres
+ * primeras ni sus tres últimas filas: una tabla corta pasa entera a la
+ * página siguiente y una larga se reparte sin desperdiciar papel. Cada trozo
+ * lleva su propio recuadro (box-decoration-break: clone) y la cabecera
+ * (<thead>) se repite. El envoltorio recorta su contenido para que el fondo
+ * de la primera y la última fila no tape el borde en las esquinas.
+ */
 .ce-tabla {
-    overflow: visible !important;
+    overflow: hidden !important;
     border: 0.75pt solid #b5b5b5;
     border-radius: 2mm;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.ce-contenido tbody tr:nth-child(-n+3),
+.ce-contenido tbody tr:nth-last-child(-n+3) {
+    break-before: avoid;
+    page-break-before: avoid;
+}
+
+.ce-contenido tbody tr:nth-child(1) {
+    break-before: auto;
+    page-break-before: auto;
 }
 
 .ce-contenido table {
