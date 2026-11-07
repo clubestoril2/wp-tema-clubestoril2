@@ -8,7 +8,7 @@
 
 get_header();
 ?>
-<div class="ce-contenedor ce-contenedor--estrecho">
+<div class="ce-contenedor">
     <?php
     while (have_posts()) :
         the_post();

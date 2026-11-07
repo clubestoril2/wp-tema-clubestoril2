@@ -11,7 +11,7 @@ Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPre
 | `functions.php` | Arranque: constantes y carga de `inc/`. |
 | `inc/` | Integración con WordPress: soportes, menús, recursos, opciones y funciones de plantilla. |
 | `src/` | Lógica pura sin WordPress (espacio de nombres `ClubEstoril2`), probada con PHPUnit. |
-| `page-templates/` | Plantillas que se eligen en el editor: «Página ancha» (1240 px en lugar de 960 px), para páginas y entradas. |
+| `page-templates/` | Plantillas que se eligen en el editor: «Página estrecha» (960 px en lugar de los 1240 px por defecto), para páginas y entradas. |
 | `template-parts/` | Piezas de plantilla: cabecera, tarjetas, contenido y pie. |
 | `assets/css/` | Hoja de estilos común: `tokens.css` (colores del escudo, modo claro y oscuro), `base`, `layout`, `header`, `components`, `content` y `editor`. |
 | `assets/js/` | Conmutador de modo de color. |

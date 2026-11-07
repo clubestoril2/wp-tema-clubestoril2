@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Template Name: Página ancha
+ * Template Name: Página estrecha
  * Template Post Type: page, post
  *
- * Plantilla con el ancho completo de la cabecera y la portada (1240 px) en
- * lugar del ancho de lectura de páginas y entradas (960 px). Pensada para
- * contenido con tablas anchas, como «Tarifas». Se elige en el editor, en
- * Plantilla.
+ * Plantilla con un ancho de lectura de 960 px en lugar del ancho completo de
+ * la cabecera (1240 px) que usan por defecto páginas y entradas. Pensada
+ * para textos largos sin tablas ni imágenes anchas. Se elige en el editor,
+ * en Plantilla.
  *
  * @package ClubEstoril2
  */
 
 get_header();
 ?>
-<div class="ce-contenedor">
+<div class="ce-contenedor ce-contenedor--estrecho">
     <?php
     while (have_posts()) :
         the_post();
