@@ -23,23 +23,27 @@
 
 /*
  * Páginas y entradas en pantallas muy anchas: el espacio que sobra a los
- * lados, entre el menú y la línea roja del pie, se rellena con el patrón de
- * iconos de la presentación de la portada. El contenido va en una caja con
- * el fondo normal, un borde fino y un margen liso (--ce-caja-margen) que la
- * separa del patrón. La portada (.home) se queda como está.
+ * lados se rellena con el patrón de iconos de la presentación de la portada.
  *
- * Solo cuando sobra sitio: con el ancho por defecto (1240 px) desde 1400 px
- * y con la plantilla «Página estrecha» (960 px) desde 1120 px.
+ * Solo a los lados. La columna del contenido ocupa toda la altura entre el
+ * menú y la línea roja del pie, con el mismo relleno que tiene sin patrón,
+ * así que el contenido no se mueve cuando el patrón aparece; el borde de
+ * 1 px se compensa en el ancho máximo. Entre la columna y el patrón hay una
+ * franja lisa (--ce-columna-margen), pintada con sombras solo horizontales
+ * para que no invada el menú ni el pie. La portada (.home) no cambia.
+ *
+ * Con el ancho por defecto (1240 px) aparece desde 1400 px y con la
+ * plantilla «Página estrecha» (960 px), desde 1120 px.
  */
 .ce-principal {
-    --ce-caja-relleno: 32px;
-    --ce-caja-margen: 10px;
+    --ce-columna-margen: 10px;
 }
 
 @media (min-width: 1400px) {
     :is(.single, .page):not(.home) .ce-principal {
         position: relative;
         isolation: isolate;
+        padding-block: 0;
         background: var(--ce-presentacion-fondo);
     }
 
@@ -54,12 +58,13 @@
     }
 
     :is(.single, .page):not(.home) .ce-principal > .ce-contenedor:not(.ce-contenedor--estrecho) {
-        max-width: calc(var(--ce-width) + 2 * var(--ce-caja-relleno));
-        padding: var(--ce-caja-relleno);
+        max-width: calc(var(--ce-width) + 2 * var(--ce-gutter) + 2px);
+        padding-block: var(--ce-space-5) var(--ce-space-6);
         background: var(--ce-bg);
-        border: 1px solid var(--ce-border);
-        border-radius: var(--ce-radius);
-        box-shadow: 0 0 0 var(--ce-caja-margen) var(--ce-presentacion-fondo), var(--ce-shadow);
+        border-inline: 1px solid var(--ce-border);
+        box-shadow:
+            calc(-1 * var(--ce-columna-margen)) 0 0 var(--ce-presentacion-fondo),
+            var(--ce-columna-margen) 0 0 var(--ce-presentacion-fondo);
     }
 }
 
@@ -67,6 +72,7 @@
     :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php) .ce-principal {
         position: relative;
         isolation: isolate;
+        padding-block: 0;
         background: var(--ce-presentacion-fondo);
     }
 
@@ -82,12 +88,13 @@
 
     :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php)
     .ce-principal > .ce-contenedor--estrecho {
-        max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-caja-relleno));
-        padding: var(--ce-caja-relleno);
+        max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-gutter) + 2px);
+        padding-block: var(--ce-space-5) var(--ce-space-6);
         background: var(--ce-bg);
-        border: 1px solid var(--ce-border);
-        border-radius: var(--ce-radius);
-        box-shadow: 0 0 0 var(--ce-caja-margen) var(--ce-presentacion-fondo), var(--ce-shadow);
+        border-inline: 1px solid var(--ce-border);
+        box-shadow:
+            calc(-1 * var(--ce-columna-margen)) 0 0 var(--ce-presentacion-fondo),
+            var(--ce-columna-margen) 0 0 var(--ce-presentacion-fondo);
     }
 }
 
