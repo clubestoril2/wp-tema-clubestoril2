@@ -21,6 +21,76 @@
     outline: none;
 }
 
+/*
+ * Páginas y entradas en pantallas muy anchas: el espacio que sobra a los
+ * lados, entre el menú y la línea roja del pie, se rellena con el patrón de
+ * iconos de la presentación de la portada. El contenido va en una caja con
+ * el fondo normal, un borde fino y un margen liso (--ce-caja-margen) que la
+ * separa del patrón. La portada (.home) se queda como está.
+ *
+ * Solo cuando sobra sitio: con el ancho por defecto (1240 px) desde 1400 px
+ * y con la plantilla «Página estrecha» (960 px) desde 1120 px.
+ */
+.ce-principal {
+    --ce-caja-relleno: 32px;
+    --ce-caja-margen: 10px;
+}
+
+@media (min-width: 1400px) {
+    :is(.single, .page):not(.home) .ce-principal {
+        position: relative;
+        isolation: isolate;
+        background: var(--ce-presentacion-fondo);
+    }
+
+    :is(.single, .page):not(.home) .ce-principal::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--ce-presentacion-iconos);
+        -webkit-mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
+        mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
+    }
+
+    :is(.single, .page):not(.home) .ce-principal > .ce-contenedor:not(.ce-contenedor--estrecho) {
+        max-width: calc(var(--ce-width) + 2 * var(--ce-caja-relleno));
+        padding: var(--ce-caja-relleno);
+        background: var(--ce-bg);
+        border: 1px solid var(--ce-border);
+        border-radius: var(--ce-radius);
+        box-shadow: 0 0 0 var(--ce-caja-margen) var(--ce-presentacion-fondo), var(--ce-shadow);
+    }
+}
+
+@media (min-width: 1120px) {
+    :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php) .ce-principal {
+        position: relative;
+        isolation: isolate;
+        background: var(--ce-presentacion-fondo);
+    }
+
+    :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php) .ce-principal::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--ce-presentacion-iconos);
+        -webkit-mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
+        mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
+    }
+
+    :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php)
+    .ce-principal > .ce-contenedor--estrecho {
+        max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-caja-relleno));
+        padding: var(--ce-caja-relleno);
+        background: var(--ce-bg);
+        border: 1px solid var(--ce-border);
+        border-radius: var(--ce-radius);
+        box-shadow: 0 0 0 var(--ce-caja-margen) var(--ce-presentacion-fondo), var(--ce-shadow);
+    }
+}
+
 .ce-rejilla {
     display: grid;
     gap: var(--ce-space-4);
