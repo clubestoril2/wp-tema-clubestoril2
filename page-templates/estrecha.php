@@ -4,10 +4,9 @@
  * Template Name: Página estrecha
  * Template Post Type: page, post
  *
- * Plantilla con un ancho de lectura de 960 px en lugar del ancho completo de
- * la cabecera (1240 px) que usan por defecto páginas y entradas. Pensada
- * para textos largos sin tablas ni imágenes anchas. Se elige en el editor,
- * en Plantilla.
+ * Plantilla con un ancho de lectura de 920 px en lugar de los 1120 px que
+ * usan por defecto páginas y entradas. Pensada para textos largos sin
+ * tablas ni imágenes anchas. Se elige en el editor, en Plantilla.
  *
  * @package ClubEstoril2
  */

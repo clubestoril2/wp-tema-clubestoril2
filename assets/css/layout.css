@@ -7,6 +7,11 @@
     padding-inline: var(--ce-gutter);
 }
 
+/* Texto de páginas y entradas: algo más estrecho que la cabecera. */
+.ce-contenedor--pagina {
+    max-width: calc(var(--ce-width-page) + 2 * var(--ce-gutter));
+}
+
 /* Ancho de lectura: plantilla «Página estrecha» y página 404. */
 .ce-contenedor--estrecho {
     max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-gutter));
@@ -23,37 +28,39 @@
 
 /*
  * Páginas y entradas en pantallas muy anchas: el espacio que sobra a los
- * lados se rellena con el patrón de iconos de la presentación de la portada.
+ * lados se rellena con el patrón de iconos de la presentación de la portada,
+ * centrado para que los dos laterales tengan el mismo recorte.
  *
  * Solo a los lados. La columna del contenido ocupa toda la altura entre el
- * menú y la línea roja del pie, con el mismo relleno arriba que sin patrón y
- * el mismo a los lados (--ce-caja-lateral). La columna crece hacia fuera para
- * dejar ese relleno lateral, así que el texto sigue alineado con la cabecera
- * y no se mueve cuando el patrón aparece; el borde de 1 px se compensa en el
- * ancho máximo. Entre la columna y el patrón hay una
- * franja lisa (--ce-columna-margen), pintada con sombras solo horizontales
- * para que no invada el menú ni el pie. El patrón se centra en horizontal
- * (50% 0) para que los dos laterales muestren el mismo recorte de iconos.
- * La portada (.home) no cambia.
+ * menú y la línea roja del pie. Con el ancho por defecto mide 1260 px, de
+ * modo que sus bordes quedan 10 px por fuera del escudo y de los botones de
+ * la cabecera; el texto (1120 px) queda dentro con un margen de
+ * --ce-caja-lateral (70 px) a cada lado. Con «Página estrecha» la columna deja el
+ * mismo margen alrededor del texto (920 px). El texto tiene el mismo ancho
+ * con y sin patrón, así que no se mueve cuando el patrón aparece.
  *
- * Con el ancho por defecto (1240 px) aparece desde 1440 px y con la
- * plantilla «Página estrecha» (960 px), desde 1160 px: así quedan al menos
- * unos 50 px de patrón a cada lado.
+ * Entre la columna y el patrón hay un borde fino y una franja lisa
+ * (--ce-columna-margen), pintada con sombras solo horizontales para que no
+ * invada el menú ni el pie. La portada (.home) y las páginas con listados,
+ * como «Categorías», no cambian.
+ *
+ * Aparece cuando quedan unos 40 px de patrón a cada lado: desde 1380 px con
+ * el ancho por defecto y desde 1180 px con «Página estrecha».
  */
 .ce-principal {
     --ce-columna-margen: 10px;
-    --ce-caja-lateral: var(--ce-space-5);
+    --ce-caja-lateral: calc((var(--ce-width) - var(--ce-width-page)) / 2 + 10px);
 }
 
-@media (min-width: 1440px) {
-    :is(.single, .page):not(.home) .ce-principal {
+@media (min-width: 1380px) {
+    :is(.single, .page):not(.home) .ce-principal:has(> .ce-contenedor--pagina) {
         position: relative;
         isolation: isolate;
         padding-block: 0;
         background: var(--ce-presentacion-fondo);
     }
 
-    :is(.single, .page):not(.home) .ce-principal::before {
+    :is(.single, .page):not(.home) .ce-principal:has(> .ce-contenedor--pagina)::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -63,9 +70,9 @@
         mask: url("../img/patron-presentacion.svg") 50% 0 / 360px 360px repeat;
     }
 
-    :is(.single, .page):not(.home) .ce-principal > .ce-contenedor:not(.ce-contenedor--estrecho) {
-        max-width: calc(var(--ce-width) + 2 * var(--ce-caja-lateral) + 2px);
-        padding: var(--ce-space-5) var(--ce-caja-lateral) var(--ce-space-6);
+    :is(.single, .page):not(.home) .ce-principal:has(> .ce-contenedor--pagina) > .ce-contenedor--pagina {
+        max-width: calc(var(--ce-width-page) + 2 * var(--ce-caja-lateral));
+        padding: var(--ce-space-5) calc(var(--ce-caja-lateral) - 1px) var(--ce-space-6);
         background: var(--ce-bg);
         border-inline: 1px solid var(--ce-border);
         box-shadow:
@@ -74,15 +81,15 @@
     }
 }
 
-@media (min-width: 1160px) {
-    :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php) .ce-principal {
+@media (min-width: 1180px) {
+    :is(.single, .page):not(.home) .ce-principal:has(> .ce-contenedor--estrecho) {
         position: relative;
         isolation: isolate;
         padding-block: 0;
         background: var(--ce-presentacion-fondo);
     }
 
-    :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php) .ce-principal::before {
+    :is(.single, .page):not(.home) .ce-principal:has(> .ce-contenedor--estrecho)::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -92,10 +99,9 @@
         mask: url("../img/patron-presentacion.svg") 50% 0 / 360px 360px repeat;
     }
 
-    :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php)
-    .ce-principal > .ce-contenedor--estrecho {
-        max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-caja-lateral) + 2px);
-        padding: var(--ce-space-5) var(--ce-caja-lateral) var(--ce-space-6);
+    :is(.single, .page):not(.home) .ce-principal:has(> .ce-contenedor--estrecho) > .ce-contenedor--estrecho {
+        max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-caja-lateral));
+        padding: var(--ce-space-5) calc(var(--ce-caja-lateral) - 1px) var(--ce-space-6);
         background: var(--ce-bg);
         border-inline: 1px solid var(--ce-border);
         box-shadow:

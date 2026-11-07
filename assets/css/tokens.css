@@ -58,7 +58,8 @@
     --ce-space-6: clamp(2rem, 6vw, 4rem);
     --ce-gutter: 16px;
     --ce-width: 1240px;
-    --ce-width-narrow: 960px;
+    --ce-width-page: 1120px;        /* texto de páginas y entradas */
+    --ce-width-narrow: 920px;       /* plantilla «Página estrecha» */
     --ce-radius: 8px;
     --ce-radius-small: 4px;
 
