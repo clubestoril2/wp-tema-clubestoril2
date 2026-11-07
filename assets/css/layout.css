@@ -30,7 +30,9 @@
  * así que el contenido no se mueve cuando el patrón aparece; el borde de
  * 1 px se compensa en el ancho máximo. Entre la columna y el patrón hay una
  * franja lisa (--ce-columna-margen), pintada con sombras solo horizontales
- * para que no invada el menú ni el pie. La portada (.home) no cambia.
+ * para que no invada el menú ni el pie. El patrón se centra en horizontal
+ * (50% 0) para que los dos laterales muestren el mismo recorte de iconos.
+ * La portada (.home) no cambia.
  *
  * Con el ancho por defecto (1240 px) aparece desde 1400 px y con la
  * plantilla «Página estrecha» (960 px), desde 1120 px.
@@ -53,8 +55,8 @@
         inset: 0;
         z-index: -1;
         background: var(--ce-presentacion-iconos);
-        -webkit-mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
-        mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
+        -webkit-mask: url("../img/patron-presentacion.svg") 50% 0 / 360px 360px repeat;
+        mask: url("../img/patron-presentacion.svg") 50% 0 / 360px 360px repeat;
     }
 
     :is(.single, .page):not(.home) .ce-principal > .ce-contenedor:not(.ce-contenedor--estrecho) {
@@ -82,8 +84,8 @@
         inset: 0;
         z-index: -1;
         background: var(--ce-presentacion-iconos);
-        -webkit-mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
-        mask: url("../img/patron-presentacion.svg") 0 0 / 360px 360px repeat;
+        -webkit-mask: url("../img/patron-presentacion.svg") 50% 0 / 360px 360px repeat;
+        mask: url("../img/patron-presentacion.svg") 50% 0 / 360px 360px repeat;
     }
 
     :is(.page-template-page-templatesestrecha-php, .post-template-page-templatesestrecha-php)
