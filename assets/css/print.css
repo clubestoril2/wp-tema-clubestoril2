@@ -1,0 +1,300 @@
+/*
+ * Impresión: una vista limpia del contenido.
+ *
+ * Se carga solo para el medio «print» (inc/enqueue.php), después del resto
+ * de hojas, y las ajusta para papel:
+ * - Paleta clara siempre, aunque el visitante esté en modo oscuro.
+ * - Cabecera reducida al escudo, el nombre y el lema del club, sin la barra
+ *   de información, las redes, los botones, el menú ni el buscador.
+ * - Pie reducido a la línea de derechos y la política de privacidad, sin el
+ *   menú del pie ni las redes.
+ * - Sin elementos interactivos: carrusel, presentación de la portada,
+ *   paginación, navegación entre entradas, botones y fondo de motivos.
+ * - Tablas con cabecera en el rojo del club, filas alternas y sin cortes a
+ *   mitad de fila; la cabecera se repite en cada página.
+ */
+
+@page {
+    size: auto;
+    margin: 15mm 14mm 16mm;
+}
+
+/* Paleta clara (gana a data-theme="dark" y a prefers-color-scheme). */
+html:root,
+html:root[data-theme] {
+    color-scheme: light;
+    --ce-bg: #fff;
+    --ce-bg-alt: #f3f3f3;
+    --ce-surface: #fff;
+    --ce-text: #111;
+    --ce-text-muted: #555;
+    --ce-border: #c8c8c8;
+    --ce-link: #8a0a1f;
+    --ce-link-hover: #8a0a1f;
+    --ce-primary: #c8102e;
+    --ce-primary-dark: #8a0a1f;
+    --ce-accent-blue: #0a7bc2;
+    --ce-accent-green: #107038;
+    --ce-accent-yellow: #f2c818;
+    --ce-accent-cream: #f8e8a8;
+    --ce-shadow: none;
+    --ce-shadow-hover: none;
+}
+
+html,
+body {
+    background: #fff !important;
+    color: #111;
+    font-size: 11pt;
+    line-height: 1.45;
+}
+
+/* Los fondos de color (cabecera de tablas, avisos, distintivos) se imprimen. */
+* {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Fuera: todo lo que no es contenido. */
+#wpadminbar,
+#cookie-notice,
+.ce-saltar,
+.ce-topbar,
+.ce-redes,
+.ce-conmutador,
+.ce-marca__botones,
+.ce-nav,
+.ce-buscador,
+.ce-carrusel,
+.ce-presentacion,
+.ce-portada__mas,
+.ce-paginacion,
+.ce-nav-entradas,
+.ce-paginas-entrada,
+.ce-pie__columnas,
+.ce-boton,
+.wp-block-buttons,
+.wp-block-search,
+iframe,
+video,
+audio {
+    display: none !important;
+}
+
+html {
+    margin-top: 0 !important; /* hueco de la barra de administración */
+}
+
+.ce-contenedor {
+    max-width: none !important;
+    padding-inline: 0 !important;
+}
+
+/* Cabecera: escudo, nombre y lema, con la línea roja del club debajo. */
+.ce-cabecera {
+    margin-bottom: 8mm;
+    border-bottom: 2pt solid var(--ce-primary);
+}
+
+.ce-marca,
+.ce-marca__interior {
+    padding: 0 0 3mm !important;
+    background: none !important;
+}
+
+.ce-marca__interior {
+    flex-wrap: nowrap;
+    gap: 4mm;
+}
+
+.ce-marca__logo img,
+.custom-logo {
+    height: 16mm !important;
+    width: auto !important;
+}
+
+.ce-marca__nombre {
+    font-size: 18pt;
+}
+
+.ce-marca__nombre a {
+    color: #111 !important;
+    text-decoration: none;
+}
+
+.ce-marca__lema {
+    display: block !important;
+    color: #555;
+    font-size: 9pt;
+}
+
+/* Zona principal sin el fondo de motivos ni la columna. */
+.ce-principal {
+    padding: 0 !important;
+    background: none !important;
+}
+
+.ce-principal::before {
+    display: none !important;
+}
+
+.ce-principal > .ce-contenedor {
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+}
+
+/* Texto */
+h1,
+h2,
+h3,
+h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+h1 {
+    font-size: 20pt;
+}
+
+h2 {
+    font-size: 15pt;
+}
+
+h3 {
+    font-size: 12.5pt;
+}
+
+p,
+li,
+blockquote {
+    orphans: 3;
+    widows: 3;
+}
+
+a {
+    color: var(--ce-link);
+    text-decoration: underline;
+}
+
+img,
+figure,
+blockquote,
+pre,
+.ce-aviso,
+.ce-contenido [style*="#ffa0a0"],
+.ce-contenido [style*="#FFA0A0"] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+img {
+    max-width: 100% !important;
+}
+
+.ce-articulo__imagen img {
+    max-height: 90mm;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Fotogramas de vídeo: sin el botón de reproducción. */
+.ce-contenido a.video::after {
+    display: none;
+}
+
+/* Álbumes de fotos: miniaturas más pequeñas. */
+.ce-contenido img.album {
+    height: 28mm;
+}
+
+/* Listados de la portada y de categorías: rejillas sin desplazamiento. */
+.ce-rejilla,
+.ce-rejilla--carrusel {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    overflow: visible !important;
+}
+
+.ce-tarjeta,
+.ce-fila {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+/* Tablas */
+/* Una tabla que cabe en una página no se parte; las más largas sí, y su
+   cabecera (<thead>) se repite en cada página. */
+.ce-tabla {
+    overflow: visible !important;
+    border: 0.75pt solid #b5b5b5;
+    border-radius: 2mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.ce-contenido table {
+    font-size: 9.5pt;
+}
+
+.ce-contenido thead {
+    display: table-header-group; /* se repite en cada página */
+}
+
+.ce-contenido tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.ce-contenido th,
+.ce-contenido td {
+    padding: 1.6mm 2.4mm;
+    border-bottom: 0.5pt solid #d0d0d0;
+}
+
+.ce-contenido th + th,
+.ce-contenido td + td,
+.ce-contenido th + td,
+.ce-contenido td + th {
+    border-left: 0.5pt solid #d0d0d0;
+}
+
+.ce-contenido thead th,
+.ce-contenido thead td {
+    background: var(--ce-primary) !important;
+    color: #fff !important;
+}
+
+.ce-contenido tbody tr:nth-child(even) {
+    background: #f3f3f3;
+}
+
+.ce-contenido tbody tr:hover {
+    background: inherit;
+}
+
+/* Pie: solo la línea de derechos y la política de privacidad. */
+.ce-pie {
+    margin-top: 10mm;
+    border-top: 1pt solid var(--ce-primary);
+    background: none !important;
+    font-size: 8.5pt;
+}
+
+.ce-pie__info {
+    border: 0;
+    color: #555;
+}
+
+.ce-pie__info-interior {
+    padding-block: 2.5mm 0 !important;
+}
+
+.ce-pie__info a {
+    color: #555;
+    text-decoration: none;
+}

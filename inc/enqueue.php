@@ -42,6 +42,16 @@ function ce_encolar_recursos(): void
         $anterior = [$handle];
     }
 
+    // Vista limpia para imprimir, después del resto de hojas para poder ajustarlas.
+    $relativa = 'assets/css/print.css';
+    wp_enqueue_style(
+        'clubestoril2-impresion',
+        CE_URI . '/' . $relativa,
+        $anterior,
+        ce_version_recurso($relativa),
+        'print'
+    );
+
     $relativa = 'assets/js/navigation.js';
     wp_enqueue_script(
         'clubestoril2-navegacion',
