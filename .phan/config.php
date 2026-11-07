@@ -23,6 +23,7 @@ return [
         'src/',
         'inc/',
         'template-parts/',
+        'page-templates/',
         'vendor/php-stubs/wordpress-stubs/',
     ],
     // Con PHP < 8.2 falta el atributo AllowDynamicProperties que usan los

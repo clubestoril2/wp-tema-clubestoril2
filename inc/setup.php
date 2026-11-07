@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
 /**
  * Ancho máximo del contenido, en píxeles (incrustados y medios del núcleo).
  */
-$GLOBALS['content_width'] = 760;
+$GLOBALS['content_width'] = 960;
 
 add_action('after_setup_theme', 'ce_configurar_tema');
 

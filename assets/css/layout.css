@@ -7,6 +7,7 @@
     padding-inline: var(--ce-gutter);
 }
 
+/* Ancho de lectura de páginas y entradas. */
 .ce-contenedor--estrecho {
     max-width: calc(var(--ce-width-narrow) + 2 * var(--ce-gutter));
 }
