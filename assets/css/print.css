@@ -254,6 +254,12 @@ img {
     page-break-before: auto;
 }
 
+/* La cabecera nunca se queda sola al pie de la página. */
+.ce-contenido thead + tbody > tr:first-child {
+    break-before: avoid;
+    page-break-before: avoid;
+}
+
 .ce-contenido table {
     font-size: 9.5pt;
 }
