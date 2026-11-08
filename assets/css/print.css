@@ -59,7 +59,8 @@ body {
     animation: none !important;
 }
 
-/* Fuera: todo lo que no es contenido. */
+/* Fuera: todo lo que no es contenido, y lo que lleve .ce-no-imprimir. */
+.ce-no-imprimir,
 #wpadminbar,
 #cookie-notice,
 .ce-saltar,

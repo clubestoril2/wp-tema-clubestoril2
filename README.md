@@ -13,7 +13,7 @@ Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPre
 | `src/` | Lógica pura sin WordPress (espacio de nombres `ClubEstoril2`), probada con PHPUnit. |
 | `page-templates/` | Plantillas que se eligen en el editor: «Página estrecha» (920 px en lugar de los 1120 px por defecto), para páginas y entradas. |
 | `template-parts/` | Piezas de plantilla: cabecera, tarjetas, contenido y pie. |
-| `assets/css/` | Hoja de estilos común: `tokens.css` (colores del escudo, modo claro y oscuro), `base`, `layout`, `header`, `components`, `content` y `editor`. `print.css` se carga solo al imprimir. |
+| `assets/css/` | Hoja de estilos común: `tokens.css` (colores del escudo, modo claro y oscuro), `base`, `layout`, `header`, `components`, `content` y `editor`. `print.css` se carga solo al imprimir; cualquier elemento con la clase `ce-no-imprimir` (en el editor, «Clase(s) CSS adicional(es)» del bloque) no sale en papel. |
 | `assets/js/` | Conmutador de modo de color. |
 | `assets/img/` | Escudo y sprite de iconos. |
 | `theme.json` | Paleta y tipografía para el editor de bloques. |
