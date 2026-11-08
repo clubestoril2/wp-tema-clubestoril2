@@ -230,17 +230,56 @@ img {
 /*
  * Las tablas se pueden partir entre páginas, pero sin dejar solas sus tres
  * primeras ni sus tres últimas filas: una tabla corta pasa entera a la
- * página siguiente y una larga se reparte sin desperdiciar papel. Cada trozo
- * lleva su propio recuadro (box-decoration-break: clone) y la cabecera
- * (<thead>) se repite. El envoltorio recorta su contenido para que el fondo
- * de la primera y la última fila no tape el borde en las esquinas.
+ * página siguiente y una larga se reparte sin desperdiciar papel, con la
+ * cabecera (<thead>) repetida en cada página. El marco va en las celdas y no
+ * en el envoltorio: Chrome alarga hasta el pie de la página la caja que
+ * parte, y un marco en .ce-tabla dejaría un recuadro vacío bajo la última
+ * fila impresa.
  */
 .ce-tabla {
-    overflow: hidden !important;
-    border: 0.75pt solid #b5b5b5;
-    border-radius: 2mm;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
+    overflow: visible !important;
+    border: 0;
+    border-radius: 0;
+}
+
+.ce-contenido table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.ce-contenido tr > :first-child {
+    border-left: 0.75pt solid #b5b5b5;
+}
+
+.ce-contenido tr > :last-child {
+    border-right: 0.75pt solid #b5b5b5;
+}
+
+.ce-contenido thead > tr:first-child > *,
+.ce-contenido table:not(:has(> thead)) > tbody:first-of-type > tr:first-child > * {
+    border-top: 0.75pt solid #b5b5b5;
+}
+
+.ce-contenido thead > tr:first-child > :first-child,
+.ce-contenido table:not(:has(> thead)) > tbody:first-of-type > tr:first-child > :first-child {
+    border-top-left-radius: 2mm;
+}
+
+.ce-contenido thead > tr:first-child > :last-child,
+.ce-contenido table:not(:has(> thead)) > tbody:first-of-type > tr:first-child > :last-child {
+    border-top-right-radius: 2mm;
+}
+
+.ce-contenido table > :last-child > tr:last-child > * {
+    border-bottom: 0.75pt solid #b5b5b5;
+}
+
+.ce-contenido table > :last-child > tr:last-child > :first-child {
+    border-bottom-left-radius: 2mm;
+}
+
+.ce-contenido table > :last-child > tr:last-child > :last-child {
+    border-bottom-right-radius: 2mm;
 }
 
 .ce-contenido tbody tr:nth-child(-n+3),
@@ -292,8 +331,8 @@ img {
     color: #fff !important;
 }
 
-.ce-contenido tbody tr:nth-child(even) {
-    background: #f3f3f3;
+.ce-contenido tbody tr:nth-child(even) > * {
+    background: #f3f3f3; /* en las celdas, para que respete sus esquinas */
 }
 
 .ce-contenido tbody tr:hover {
