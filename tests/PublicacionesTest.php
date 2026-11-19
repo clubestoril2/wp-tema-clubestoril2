@@ -20,6 +20,7 @@ final class PublicacionesTest extends TestCase
                 'hijas' => true,
                 'dias' => Publicaciones::DIAS_DEL_TEMA,
                 'destacadas' => 0,
+                'categoria_destacada' => [],
                 'titulo_destacadas' => null,
                 'titulo_anteriores' => null,
             ],
@@ -38,6 +39,7 @@ final class PublicacionesTest extends TestCase
                 'hijas' => 'no',
                 'dias' => '7',
                 'destacadas' => '2',
+                'categoria_destacada' => 'menu-del-dia',
                 'titulo_destacadas' => ' Lo mejor ',
                 'titulo_anteriores' => '',
             ]
@@ -49,8 +51,24 @@ final class PublicacionesTest extends TestCase
         self::assertFalse($resultado['hijas']);
         self::assertSame(7, $resultado['dias']);
         self::assertSame(2, $resultado['destacadas']);
+        self::assertSame(['menu-del-dia'], $resultado['categoria_destacada']);
         self::assertSame('Lo mejor', $resultado['titulo_destacadas']);
         self::assertSame('', $resultado['titulo_anteriores']);
+    }
+
+    public function testTextoDestacadoYTextoPublicacionesSonAliasDeLosTitulos(): void
+    {
+        $resultado = Publicaciones::sanear(
+            ['texto_destacado' => 'Menús del día', 'texto_publicaciones' => 'Más noticias']
+        );
+        self::assertSame('Menús del día', $resultado['titulo_destacadas']);
+        self::assertSame('Más noticias', $resultado['titulo_anteriores']);
+
+        // Si se dan los dos nombres, manda titulo_*.
+        $resultado = Publicaciones::sanear(
+            ['titulo_destacadas' => 'A', 'texto_destacado' => 'B']
+        );
+        self::assertSame('A', $resultado['titulo_destacadas']);
     }
 
     public function testDestacadasSeLimitaAlRango(): void

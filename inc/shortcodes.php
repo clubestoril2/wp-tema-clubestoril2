@@ -17,6 +17,12 @@
  *   [ce_publicaciones categoria="restauracion" cantidad="6" formato="fila"]
  *   [ce_publicaciones etiqueta="padel" hijas="no" dias="0"]
  *   [ce_publicaciones categoria="restauracion" destacadas="3" cantidad="6"]
+ *   [ce_publicaciones categoria="restauracion" categoria_destacada="menu-del-dia"
+ *       texto_destacado="Menús del día" destacadas="4" cantidad="6"]
+ *
+ * Con «categoria_destacada», la primera sección la forman esas categorías en
+ * vez de la de destacados, y la segunda excluye esas categorías: así
+ * «Restauración» puede abrir con los menús del día y seguir con el resto.
  *
  * @package ClubEstoril2
  */
@@ -51,7 +57,13 @@ function ce_shortcode_publicaciones(array|string $atributos): string
 
     // Como la portada: destacadas en tarjetas y el resto, sin repetir, en filas.
     $destacadas = ce_entradas_shortcode($atributos, true, $atributos['destacadas']);
-    $anteriores = ce_entradas_shortcode($atributos, false, $atributos['cantidad'], $destacadas);
+    $anteriores = ce_entradas_shortcode(
+        $atributos,
+        false,
+        $atributos['cantidad'],
+        $destacadas,
+        $atributos['categoria_destacada']
+    );
     if ($destacadas === [] && $anteriores === []) {
         return '';
     }
@@ -118,21 +130,30 @@ function ce_publicaciones_filas(array $entradas, int $dias): string
     return (string) ob_get_clean();
 }
 
+// phpcs:disable Generic.Files.LineLength.TooLong -- la forma del array del docblock va en una línea.
+
 /**
  * Entradas que pide el shortcode, de la más reciente a la más antigua.
  *
  * Si se indican categorías y etiquetas, la entrada debe cumplir ambas. Con
- * $destacadas, además debe estar en la categoría de destacados. La
- * publicación en la que se escribe el shortcode nunca se lista a sí misma.
+ * $destacadas, además debe estar en categoria_destacada o, si está vacía, en
+ * la categoría de destacados. La publicación en la que se escribe el
+ * shortcode nunca se lista a sí misma.
  *
- * @param array{categoria: list<string>, etiqueta: list<string>, hijas: bool} $atributos
- * @param bool $destacadas Solo entradas de la categoría de destacados.
+ * @param array{categoria: list<string>, etiqueta: list<string>, hijas: bool, categoria_destacada: list<string>} $atributos
+ * @param bool $destacadas Solo entradas de la categoría de destacados (o de categoria_destacada).
  * @param int $cantidad Número máximo de entradas; 0 o menos no devuelve ninguna.
  * @param array<mixed> $omitir Entradas (WP_Post) que no se repiten.
+ * @param list<string> $sin_categorias Slugs de categorías que se excluyen.
  * @return array<mixed>
  */
-function ce_entradas_shortcode(array $atributos, bool $destacadas, int $cantidad, array $omitir = []): array
-{
+function ce_entradas_shortcode(
+    array $atributos,
+    bool $destacadas,
+    int $cantidad,
+    array $omitir = [],
+    array $sin_categorias = []
+): array {
     if ($cantidad <= 0) {
         return [];
     }
@@ -141,7 +162,17 @@ function ce_entradas_shortcode(array $atributos, bool $destacadas, int $cantidad
         $tax_query[] = [
             'taxonomy' => 'category',
             'field' => 'slug',
-            'terms' => [CE_CATEGORIA_DESTACADO],
+            'terms' => $atributos['categoria_destacada'] !== []
+                ? $atributos['categoria_destacada']
+                : [CE_CATEGORIA_DESTACADO],
+        ];
+    }
+    if ($sin_categorias !== []) {
+        $tax_query[] = [
+            'taxonomy' => 'category',
+            'field' => 'slug',
+            'terms' => $sin_categorias,
+            'operator' => 'NOT IN',
         ];
     }
     if ($atributos['categoria'] !== []) {
@@ -187,3 +218,5 @@ function ce_entradas_shortcode(array $atributos, bool $destacadas, int $cantidad
     );
     return $consulta->posts;
 }
+
+// phpcs:enable Generic.Files.LineLength.TooLong

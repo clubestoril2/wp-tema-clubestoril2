@@ -44,11 +44,16 @@ final class Publicaciones
      * - destacadas: con más de 0, como en la portada: una sección «Destacado»
      *   con hasta ese número de publicaciones de la categoría de destacados
      *   (en tarjetas) y otra con las demás, sin repetir (en filas).
+     * - categoria_destacada: slugs de categorías, separados por comas, que
+     *   forman la primera sección en vez de la categoría de destacados (p. ej.
+     *   «menu-del-dia»); la segunda sección no incluye esas categorías.
+     *   Vacío es «la categoría de destacados del tema».
      * - titulo_destacadas, titulo_anteriores: títulos de las dos secciones;
      *   vacío no imprime título. Sin indicarlos (null) se usan los del tema.
+     *   También se admiten como texto_destacado y texto_publicaciones.
      *
      * @param array<string|int, mixed> $atributos Atributos tal como llegan del shortcode.
-     * @return array{categoria: list<string>, etiqueta: list<string>, cantidad: int, formato: string, hijas: bool, dias: int, destacadas: int, titulo_destacadas: ?string, titulo_anteriores: ?string}
+     * @return array{categoria: list<string>, etiqueta: list<string>, cantidad: int, formato: string, hijas: bool, dias: int, destacadas: int, categoria_destacada: list<string>, titulo_destacadas: ?string, titulo_anteriores: ?string}
      */
     public static function sanear(array $atributos): array
     {
@@ -60,8 +65,13 @@ final class Publicaciones
             'hijas' => self::booleano($atributos['hijas'] ?? null, true),
             'dias' => self::dias($atributos['dias'] ?? null),
             'destacadas' => self::destacadas($atributos['destacadas'] ?? null),
-            'titulo_destacadas' => self::titulo($atributos['titulo_destacadas'] ?? null),
-            'titulo_anteriores' => self::titulo($atributos['titulo_anteriores'] ?? null),
+            'categoria_destacada' => self::slugs($atributos['categoria_destacada'] ?? ''),
+            'titulo_destacadas' => self::titulo(
+                $atributos['titulo_destacadas'] ?? $atributos['texto_destacado'] ?? null
+            ),
+            'titulo_anteriores' => self::titulo(
+                $atributos['titulo_anteriores'] ?? $atributos['texto_publicaciones'] ?? null
+            ),
         ];
     }
 

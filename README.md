@@ -45,7 +45,8 @@ Está registrado para todos los tipos de contenido y se puede leer y escribir po
 | `hijas` | `si` o `no`: si se incluyen las subcategorías. | `si` |
 | `dias` | Días con el distintivo «Novedad»; `0` lo quita. | La opción «Días con el distintivo “Novedad”» de la portada |
 | `destacadas` | De 0 a 6. Con más de 0 se comporta como la portada: una sección «Destacado» con hasta ese número de publicaciones que además estén en la categoría `destacado`, en tarjetas, y otra «Últimas publicaciones» con `cantidad` de las demás, sin repetir, en filas. `formato` no se aplica. | 0 (una sola lista) |
-| `titulo_destacadas`, `titulo_anteriores` | Títulos de las dos secciones; vacío (`""`) no imprime título. | «Destacado» y «Últimas publicaciones» |
+| `categoria_destacada` | Slugs de categorías, separados por comas, que forman la primera sección en vez de `destacado` (p. ej. `menu-del-dia`). La segunda sección no incluye esas categorías. | `destacado` |
+| `titulo_destacadas`, `titulo_anteriores` | Títulos de las dos secciones; vacío (`""`) no imprime título. También valen `texto_destacado` y `texto_publicaciones`. | «Destacado» y «Últimas publicaciones» |
 
 Ejemplos:
 
@@ -54,7 +55,10 @@ Ejemplos:
 [ce_publicaciones categoria="restauracion" cantidad="6" formato="fila"]
 [ce_publicaciones etiqueta="padel" hijas="no" dias="0"]
 [ce_publicaciones categoria="restauracion" destacadas="3" cantidad="6"]
+[ce_publicaciones categoria="restauracion" categoria_destacada="menu-del-dia" texto_destacado="Menús del día" destacadas="4" cantidad="6"]
 ```
+
+El último ejemplo abre «Restauración» con los cuatro últimos menús del día y sigue con «Últimas publicaciones» de restauración que no sean menús.
 
 Los títulos de las secciones llevan la clase `ce-titulo-seccion`, la misma que los de la portada (texto en mayúsculas y línea roja hasta el margen derecho). Para escribir un título así en cualquier página, en un bloque «Título» (h2) se pone `ce-titulo-seccion` en «Clase(s) CSS adicional(es)», en el panel Avanzado del bloque.
 
