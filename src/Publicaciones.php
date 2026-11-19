@@ -19,6 +19,11 @@ final class Publicaciones
     public const CANTIDAD_MAXIMA = 24;
 
     /**
+     * Máximo de publicaciones en la sección «Destacado»; 0 la desactiva.
+     */
+    public const DESTACADAS_MAXIMO = 6;
+
+    /**
      * Valor de «dias» que indica «usar la opción del tema».
      */
     public const DIAS_DEL_TEMA = -1;
@@ -36,9 +41,14 @@ final class Publicaciones
      * - hijas: si se incluyen las subcategorías («si»/«no»; por defecto, sí).
      * - dias: plazo del distintivo «Novedad»; 0 lo quita y sin indicarlo se
      *   usa la opción del tema (DIAS_DEL_TEMA).
+     * - destacadas: con más de 0, como en la portada: una sección «Destacado»
+     *   con hasta ese número de publicaciones de la categoría de destacados
+     *   (en tarjetas) y otra con las demás, sin repetir (en filas).
+     * - titulo_destacadas, titulo_anteriores: títulos de las dos secciones;
+     *   vacío no imprime título. Sin indicarlos (null) se usan los del tema.
      *
      * @param array<string|int, mixed> $atributos Atributos tal como llegan del shortcode.
-     * @return array{categoria: list<string>, etiqueta: list<string>, cantidad: int, formato: string, hijas: bool, dias: int}
+     * @return array{categoria: list<string>, etiqueta: list<string>, cantidad: int, formato: string, hijas: bool, dias: int, destacadas: int, titulo_destacadas: ?string, titulo_anteriores: ?string}
      */
     public static function sanear(array $atributos): array
     {
@@ -49,6 +59,9 @@ final class Publicaciones
             'formato' => self::formato($atributos['formato'] ?? null),
             'hijas' => self::booleano($atributos['hijas'] ?? null, true),
             'dias' => self::dias($atributos['dias'] ?? null),
+            'destacadas' => self::destacadas($atributos['destacadas'] ?? null),
+            'titulo_destacadas' => self::titulo($atributos['titulo_destacadas'] ?? null),
+            'titulo_anteriores' => self::titulo($atributos['titulo_anteriores'] ?? null),
         ];
     }
 
@@ -117,6 +130,33 @@ final class Publicaciones
             return false;
         }
         return $defecto;
+    }
+
+    /**
+     * Publicaciones en «Destacado»: de 0 (sin sección, por defecto) a
+     * DESTACADAS_MAXIMO.
+     */
+    public static function destacadas(mixed $valor): int
+    {
+        if (is_string($valor) && is_numeric($valor)) {
+            $valor = (int) $valor;
+        }
+        if (!is_int($valor)) {
+            return 0;
+        }
+        return max(0, min(self::DESTACADAS_MAXIMO, $valor));
+    }
+
+    /**
+     * Título de una sección: la cadena sin espacios sobrantes, o null si no
+     * se ha indicado (para usar el del tema).
+     */
+    public static function titulo(mixed $valor): ?string
+    {
+        if (!is_string($valor)) {
+            return null;
+        }
+        return trim($valor);
     }
 
     /**

@@ -19,6 +19,9 @@ final class PublicacionesTest extends TestCase
                 'formato' => Publicaciones::FORMATO_TARJETA,
                 'hijas' => true,
                 'dias' => Publicaciones::DIAS_DEL_TEMA,
+                'destacadas' => 0,
+                'titulo_destacadas' => null,
+                'titulo_anteriores' => null,
             ],
             Publicaciones::sanear([])
         );
@@ -34,6 +37,9 @@ final class PublicacionesTest extends TestCase
                 'formato' => 'Fila',
                 'hijas' => 'no',
                 'dias' => '7',
+                'destacadas' => '2',
+                'titulo_destacadas' => ' Lo mejor ',
+                'titulo_anteriores' => '',
             ]
         );
         self::assertSame(['restauracion', 'menu-del-dia'], $resultado['categoria']);
@@ -42,6 +48,26 @@ final class PublicacionesTest extends TestCase
         self::assertSame(Publicaciones::FORMATO_FILA, $resultado['formato']);
         self::assertFalse($resultado['hijas']);
         self::assertSame(7, $resultado['dias']);
+        self::assertSame(2, $resultado['destacadas']);
+        self::assertSame('Lo mejor', $resultado['titulo_destacadas']);
+        self::assertSame('', $resultado['titulo_anteriores']);
+    }
+
+    public function testDestacadasSeLimitaAlRango(): void
+    {
+        self::assertSame(0, Publicaciones::destacadas(null));
+        self::assertSame(0, Publicaciones::destacadas('-2'));
+        self::assertSame(0, Publicaciones::destacadas('muchas'));
+        self::assertSame(3, Publicaciones::destacadas('3'));
+        self::assertSame(Publicaciones::DESTACADAS_MAXIMO, Publicaciones::destacadas(99));
+    }
+
+    public function testTituloNuloSiNoSeIndica(): void
+    {
+        self::assertNull(Publicaciones::titulo(null));
+        self::assertNull(Publicaciones::titulo(3));
+        self::assertSame('', Publicaciones::titulo('  '));
+        self::assertSame('Novedades', Publicaciones::titulo(' Novedades '));
     }
 
     public function testSlugsDescartaLosNoValidosYLosRepetidos(): void
