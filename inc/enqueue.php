@@ -72,6 +72,30 @@ function ce_encolar_recursos(): void
         );
     }
 
+    if (ce_usa_visor()) {
+        $relativa = 'assets/js/visor.js';
+        wp_enqueue_script(
+            'clubestoril2-visor',
+            CE_URI . '/' . $relativa,
+            [],
+            ce_version_recurso($relativa),
+            ['strategy' => 'defer', 'in_footer' => true]
+        );
+        wp_add_inline_script(
+            'clubestoril2-visor',
+            'window.ceVisor = ' . wp_json_encode(
+                [
+                    'visor' => __('Visor de imágenes', 'clubestoril2'),
+                    'cerrar' => __('Cerrar', 'clubestoril2'),
+                    'anterior' => __('Anterior', 'clubestoril2'),
+                    'siguiente' => __('Siguiente', 'clubestoril2'),
+                    'original' => __('Abrir a tamaño completo', 'clubestoril2'),
+                ]
+            ) . ';',
+            'before'
+        );
+    }
+
     if (ce_opcion_booleano('mostrar_conmutador')) {
         $relativa = 'assets/js/theme-toggle.js';
         wp_enqueue_script(
@@ -82,6 +106,29 @@ function ce_encolar_recursos(): void
             ['strategy' => 'defer', 'in_footer' => true]
         );
     }
+}
+
+/**
+ * Marcas que delatan en el contenido una galería que el visor sabe abrir:
+ * las clases del tema, la galería de bloques y la galería clásica.
+ */
+const CE_MARCAS_VISOR = ['ce-galeria', 'ce-visor', 'wp-block-gallery', '[gallery'];
+
+/**
+ * Si la página o entrada que se muestra puede usar el visor de imágenes.
+ */
+function ce_usa_visor(): bool
+{
+    if (!is_singular()) {
+        return false;
+    }
+    $contenido = (string) get_post_field('post_content', get_queried_object_id());
+    foreach (CE_MARCAS_VISOR as $marca) {
+        if (str_contains($contenido, $marca)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 add_action('wp_head', 'ce_script_modo_color', 1);

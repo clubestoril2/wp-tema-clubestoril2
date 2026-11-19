@@ -208,6 +208,20 @@ img {
     display: none;
 }
 
+/* Galerías de tarjetas: sin la lupa, sin el visor y con tres por fila. */
+.ce-contenido ul.ce-galeria a::after,
+dialog.ce-visor {
+    display: none !important;
+}
+
+.ce-contenido ul.ce-galeria {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.ce-contenido ul.ce-galeria li {
+    break-inside: avoid;
+}
+
 /* Álbumes de fotos: miniaturas más pequeñas. */
 .ce-contenido img.album {
     height: 28mm;

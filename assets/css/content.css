@@ -631,6 +631,347 @@ ul.clubestoril2-album li a {
     }
 }
 
+/*
+ * Enlace de descarga de un fichero: <a class="ce-descarga" href="….pdf">.
+ * Lleva delante un icono según la extensión del enlace (PDF, DOC, XLS, ZIP o
+ * uno genérico); un <small> dentro del enlace da el detalle (formato y
+ * tamaño) en una segunda línea.
+ */
+.ce-contenido a.ce-descarga {
+    display: inline-grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: var(--ce-space-3);
+    max-width: 100%;
+    padding: 0.7rem 1.25rem 0.7rem 0.9rem;
+    border: 1px solid var(--ce-border);
+    border-left: 4px solid var(--ce-primary);
+    border-radius: var(--ce-radius);
+    background: var(--ce-surface);
+    box-shadow: var(--ce-shadow);
+    color: var(--ce-text);
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+    transition: transform var(--ce-transition), box-shadow var(--ce-transition), border-color var(--ce-transition);
+}
+
+.ce-contenido a.ce-descarga::before {
+    content: "";
+    grid-row: 1 / span 2;
+    width: 2.25rem;
+    aspect-ratio: 40 / 48;
+    background: var(--ce-descarga-icono, var(--ce-icono-descarga)) center / contain no-repeat;
+}
+
+.ce-contenido a.ce-descarga[href$=".pdf" i] {
+    --ce-descarga-icono: var(--ce-icono-pdf);
+}
+
+.ce-contenido a.ce-descarga:is([href$=".doc" i], [href$=".docx" i], [href$=".odt" i]) {
+    --ce-descarga-icono: var(--ce-icono-doc);
+}
+
+.ce-contenido a.ce-descarga:is([href$=".xls" i], [href$=".xlsx" i], [href$=".ods" i], [href$=".csv" i]) {
+    --ce-descarga-icono: var(--ce-icono-xls);
+}
+
+.ce-contenido a.ce-descarga:is([href$=".zip" i], [href$=".rar" i], [href$=".7z" i]) {
+    --ce-descarga-icono: var(--ce-icono-zip);
+}
+
+.ce-contenido a.ce-descarga small {
+    grid-column: 2;
+    color: var(--ce-text-muted);
+    font-size: var(--ce-font-size-small);
+    font-weight: 400;
+}
+
+.ce-contenido a.ce-descarga:hover,
+.ce-contenido a.ce-descarga:focus-visible {
+    border-color: var(--ce-primary);
+    box-shadow: var(--ce-shadow-hover);
+    color: var(--ce-link);
+    transform: translateY(-2px);
+}
+
+/*
+ * Galería de tarjetas: imágenes con título que se amplían en el visor
+ * (assets/js/visor.js). Vale para las páginas de un documento (la carta),
+ * fotos de instalaciones, carteles, planos…
+ * <ul class="ce-galeria"><li><a href="grande.jpg"><img …><span>Título</span></a></li>…</ul>
+ * El <span> es opcional. Ancho máximo de las tarjetas: --ce-galeria-ancho
+ * (212 px), o las variantes ce-galeria--pequena y ce-galeria--grande.
+ */
+.ce-contenido ul.ce-galeria {
+    --ce-galeria-ancho: 212px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), var(--ce-galeria-ancho)));
+    gap: var(--ce-space-4) var(--ce-space-3);
+    margin: var(--ce-space-4) 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ce-contenido ul.ce-galeria--pequena {
+    --ce-galeria-ancho: 150px;
+
+    grid-template-columns: repeat(auto-fill, minmax(min(110px, 100%), var(--ce-galeria-ancho)));
+}
+
+.ce-contenido ul.ce-galeria--grande {
+    --ce-galeria-ancho: 360px;
+
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), var(--ce-galeria-ancho)));
+}
+
+.ce-contenido ul.ce-galeria li {
+    margin: 0;
+    padding: 0;
+}
+
+.ce-contenido ul.ce-galeria li::before,
+.ce-contenido ul.ce-galeria li::marker {
+    content: none;
+}
+
+.ce-contenido ul.ce-galeria a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--ce-border);
+    border-radius: var(--ce-radius);
+    background: var(--ce-surface);
+    box-shadow: var(--ce-shadow);
+    color: var(--ce-text);
+    text-decoration: none;
+    transition: transform var(--ce-transition), box-shadow var(--ce-transition), border-color var(--ce-transition);
+}
+
+.ce-contenido ul.ce-galeria img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+.ce-contenido ul.ce-galeria span {
+    display: block;
+    padding: 0.55rem 0.7rem 0.65rem;
+    border-top: 3px solid var(--ce-primary);
+    font-size: var(--ce-font-size-small);
+    margin-top: auto; /* los títulos quedan alineados aunque las imágenes midan distinto */
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: normal;
+}
+
+.ce-contenido ul.ce-galeria a::after {
+    content: "";
+    position: absolute;
+    top: var(--ce-space-2);
+    right: var(--ce-space-2);
+    width: 2rem;
+    aspect-ratio: 1;
+    background: var(--ce-icono-lupa) center / contain no-repeat;
+    opacity: 0.85;
+    transition: transform var(--ce-transition), opacity var(--ce-transition);
+    pointer-events: none;
+}
+
+.ce-contenido ul.ce-galeria a:hover,
+.ce-contenido ul.ce-galeria a:focus-visible {
+    border-color: var(--ce-primary);
+    box-shadow: var(--ce-shadow-hover);
+    color: var(--ce-link);
+    transform: translateY(-3px);
+}
+
+.ce-contenido ul.ce-galeria a:hover::after,
+.ce-contenido ul.ce-galeria a:focus-visible::after {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+@media (max-width: 479px) {
+    .ce-contenido ul.ce-galeria {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--ce-space-3) var(--ce-space-2);
+    }
+
+    .ce-contenido ul.ce-galeria--pequena {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ce-contenido ul.ce-galeria--grande {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/*
+ * Visor de imágenes en primer plano (assets/js/visor.js). Siempre oscuro,
+ * como una sala de proyección, en los dos modos de color.
+ */
+html.ce-visor-abierto {
+    overflow: hidden;
+}
+
+dialog.ce-visor {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(12 12 14 / 0.96);
+    color: #fff;
+}
+
+dialog.ce-visor[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+}
+
+dialog.ce-visor::backdrop {
+    background: rgb(0 0 0 / 0.8);
+}
+
+.ce-visor__barra {
+    display: flex;
+    align-items: center;
+    gap: var(--ce-space-2);
+    padding: var(--ce-space-2) var(--ce-space-2) var(--ce-space-2) var(--ce-space-3);
+}
+
+.ce-visor__contador {
+    flex: none;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--ce-primary);
+    font-size: var(--ce-font-size-small);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.ce-visor__titulo {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ce-visor__boton {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.12);
+    color: #fff;
+    cursor: pointer;
+    transition: background var(--ce-transition);
+}
+
+.ce-visor__boton:hover,
+.ce-visor__boton:focus-visible {
+    background: var(--ce-primary);
+    color: #fff;
+}
+
+.ce-visor__boton:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.ce-visor__boton[hidden] {
+    display: none;
+}
+
+.ce-visor__boton:disabled {
+    opacity: 0.3;
+    cursor: default;
+    background: rgb(255 255 255 / 0.12);
+}
+
+.ce-visor__pista {
+    display: flex;
+    overflow: auto hidden;
+    overscroll-behavior: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    outline: 0;
+}
+
+.ce-visor__pista::-webkit-scrollbar {
+    display: none;
+}
+
+.ce-visor__lamina {
+    display: grid;
+    flex: 0 0 100%;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    min-width: 0;
+    padding: 0 var(--ce-space-2) var(--ce-space-3);
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+}
+
+.ce-visor__lamina img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    border-radius: var(--ce-radius-small);
+    box-shadow: 0 8px 40px rgb(0 0 0 / 0.6);
+    cursor: zoom-in;
+}
+
+/* Ampliada (un clic o toque en la imagen): a lo ancho y con desplazamiento vertical. */
+.ce-visor__lamina--ampliada {
+    grid-template-rows: auto;
+    align-items: start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.ce-visor__lamina--ampliada img {
+    max-height: none;
+    cursor: zoom-out;
+}
+
+.ce-visor__anterior,
+.ce-visor__siguiente {
+    position: absolute;
+    top: 50%;
+    width: 48px;
+    height: 48px;
+    background: rgb(0 0 0 / 0.55);
+    transform: translateY(-50%);
+}
+
+.ce-visor__anterior {
+    left: var(--ce-space-2);
+}
+
+.ce-visor__siguiente {
+    right: var(--ce-space-2);
+}
+
 .todo-junto {
     white-space: nowrap;
 }

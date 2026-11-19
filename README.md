@@ -64,6 +64,43 @@ Los títulos de las secciones llevan la clase `ce-titulo-seccion`, la misma que 
 
 La publicación donde se escribe el shortcode nunca se lista a sí misma. Los atributos se sanean en `src/Publicaciones.php` y la consulta está en `inc/shortcodes.php`.
 
+## Descargas, galerías y visor de imágenes
+
+Tres piezas para el contenido de cualquier página o entrada. Las dos primeras se escriben en un bloque «HTML personalizado».
+
+**Enlace de descarga** (`ce-descarga`): tarjeta con un icono según la extensión del enlace. Un `<small>` opcional da el detalle en una segunda línea.
+
+```html
+<a class="ce-descarga" href="https://…/normativa.pdf">Normativa de la piscina <small>PDF · 240 kB</small></a>
+```
+
+| Extensión del enlace | Icono |
+|---|---|
+| `.pdf` | PDF (rojo) |
+| `.doc`, `.docx`, `.odt` | DOC (azul) |
+| `.xls`, `.xlsx`, `.ods`, `.csv` | XLS (verde) |
+| `.zip`, `.rar`, `.7z` | ZIP (gris) |
+| Cualquier otra | Documento con flecha de descarga |
+
+**Galería de tarjetas** (`ce-galeria`): rejilla de imágenes con título, para las páginas de un documento (la carta del restaurante), fotos de instalaciones, carteles o planos. Cada enlace apunta a la imagen grande; el `<span>` con el título es opcional.
+
+```html
+<ul class="ce-galeria">
+<li><a href="https://…/01.jpg"><img src="https://…/01-miniatura.jpg" alt="Portada" loading="lazy"><span>1. Portada</span></a></li>
+<li>…</li>
+</ul>
+```
+
+Las tarjetas miden como mucho 212 px de ancho. `ce-galeria ce-galeria--pequena` las deja en 150 px y `ce-galeria ce-galeria--grande`, en 360 px; para otro ancho, `style="--ce-galeria-ancho: 280px"` en el `<ul>`. En móvil van dos por fila (tres las pequeñas y una las grandes).
+
+**Visor** (`assets/js/visor.js`): al pulsar una miniatura, la imagen grande se abre en primer plano. Se pasa de una a otra con los botones, con las flechas del teclado o deslizando con el dedo; un toque en la imagen la amplía a lo ancho para leerla, y Esc, el botón de cerrar o un toque fuera la cierran. Funciona en:
+
+- las galerías de tarjetas `ce-galeria`;
+- las galerías de WordPress (bloque «Galería» y galería clásica) cuyas imágenes enlacen al archivo de medios;
+- cualquier contenedor con la clase `ce-visor` (en el editor, «Clase(s) CSS adicional(es)» de un bloque «Grupo» o «Columnas», por ejemplo).
+
+Solo actúa sobre enlaces a ficheros de imagen (`jpg`, `png`, `webp`, `avif`, `gif`) que lleven una miniatura dentro; los demás enlaces siguen funcionando como siempre. El título que muestra es el texto alternativo de la miniatura o, si no tiene, su pie. El script solo se carga en las páginas y entradas cuyo contenido tiene alguna de esas galerías; sin JavaScript los enlaces abren la imagen directamente.
+
 ## Imágenes de las entradas
 
 La imagen destacada (o, si no hay, la primera del contenido) se recorta en los listados a **1,91:1**. Es la proporción de las vistas previas de enlaces en Facebook, X/Twitter, WhatsApp, Telegram y LinkedIn, así que la misma imagen sirve para la web y para compartir.
