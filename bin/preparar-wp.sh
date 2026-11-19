@@ -111,7 +111,7 @@ pagina "Colecciones de fotos" "$CLUB" "<p>Fotos.</p>" >/dev/null
 
 # Menú principal a partir de la jerarquía de páginas.
 wp menu create "Menú principal"
-wp menu location assign "Menú principal" principal
+wp menu location assign "Menú principal" primary
 wp menu item add-custom "Menú principal" "Portada" "$(wp option get home)/" >/dev/null
 anadir_rama() { # ID de página, ID de elemento padre del menú (0 = raíz)
     local item hija

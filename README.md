@@ -15,7 +15,7 @@ Tema del sitio https://www.clubestoril2.es/. Solo depende del núcleo de WordPre
 | `template-parts/` | Piezas de plantilla: cabecera, tarjetas, contenido y pie. |
 | `assets/css/` | Hoja de estilos común: `tokens.css` (colores del escudo, modo claro y oscuro), `base`, `layout`, `header`, `components`, `content` y `editor`. `print.css` se carga solo al imprimir; cualquier elemento con la clase `ce-no-imprimir` (en el editor, «Clase(s) CSS adicional(es)» del bloque) no sale en papel. |
 | `assets/js/` | Conmutador de modo de color. |
-| `assets/img/` | Escudo y sprite de iconos. |
+| `assets/img/` | Escudo, sprite de iconos de la interfaz (`icons.svg`) y sprite de iconos del menú (`iconos-menu.svg`, generado). |
 | `theme.json` | Paleta y tipografía para el editor de bloques. |
 
 Convenciones: funciones y variables de plantilla con prefijo `ce_`, clases CSS `.ce-*`, dominio de traducción `clubestoril2`. Estilo PHP PSR-12 más las reglas de seguridad de WordPress (escapado, nonces, entrada saneada).
@@ -31,6 +31,25 @@ Las opciones del tema se guardan como `theme_mod`. Sus valores por defecto y su 
 | `ce_revisado` | Fecha de la última revisión en UTC, `AAAA-MM-DDTHH:MM:SSZ` (p. ej. `2026-11-05T11:30:00Z`). | `""`: nunca revisado. |
 
 Está registrado para todos los tipos de contenido y se puede leer y escribir por la API REST (campo `meta.ce_revisado`, con permiso de edición de la publicación). Al guardarlo, las fechas con desplazamiento horario (`2026-11-05T12:30:00+01:00`) se pasan a UTC, y cualquier otro valor (`0`, `"0"`, `-1`, `false`, una fecha imposible) se guarda como `""`. Desde PHP: `ce_revisado()` devuelve la fecha o `null`, y `ce_marcar_revisado($id)` guarda la fecha actual.
+
+## Iconos del menú
+
+Cada elemento del menú principal puede llevar un icono, que se elige en cualquiera de estos dos sitios:
+
+- **En el editor de la página o entrada**, en el recuadro «Icono del menú» de la barra lateral, como con el tema Vantage. Lo usan todos los elementos del menú que enlazan a esa página.
+- **En Apariencia › Menús**, al desplegar el elemento, en el campo «Icono». Sirve también para categorías y enlaces. En los elementos que enlazan a una página, si se deja en «El de la página» se usa el del editor; si se elige otro, tiene prioridad.
+
+Los dos selectores son un buscador (`assets/js/selector-iconos.js`): al escribir se filtran los iconos por su nombre, sin distinguir mayúsculas ni tildes, en una lista con nombres y en una cuadrícula de dibujos con desplazamiento, y se elige con un clic o con las flechas e Intro. Al lado se ve el icono elegido. Sin JavaScript queda un desplegable normal. El enlace a la portada lleva el icono «Inicio» si no tiene otro y la opción «Icono "Inicio" en el enlace a la portada» del Personalizador está activada.
+
+El icono se guarda en el metadato `_ce_icono` de la página o del elemento del menú, que también se puede leer y escribir por la API REST con permiso para editar esa página o el tema. Solo se admiten los nombres del catálogo de `src/IconosMenu.php`.
+
+Los dibujos son de [Tabler Icons](https://tabler.io/icons) (licencia MIT) y están en `assets/img/iconos-menu.svg`. Para añadir uno, se pone su nombre de Tabler y su etiqueta en `src/IconosMenu.php` y se vuelve a generar el sprite:
+
+```bash
+php bin/iconos-menu.php
+```
+
+La primera vez que se carga el escritorio con el tema activo, los iconos elegidos con el tema Vantage, guardados en cada página como clases de Font Awesome 4, se copian al metadato del tema de esas mismas páginas. Los que no tienen equivalente en el catálogo quedan sin icono. El metadato de Vantage no se modifica y la copia no se repite.
 
 ## Shortcodes
 
@@ -167,3 +186,5 @@ Solo entran los ficheros versionados; `.gitattributes` deja fuera las herramient
 ## Licencia
 
 GPL-3.0 o posterior (ver `LICENSE`).
+
+Los iconos del menú (`assets/img/iconos-menu.svg`) son de Tabler Icons, © 2020-2024 Paweł Kuna, con licencia MIT.

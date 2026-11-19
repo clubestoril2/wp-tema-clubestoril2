@@ -267,6 +267,14 @@
     text-decoration: none;
 }
 
+/* Icono opcional de cada elemento (Apariencia › Menús). */
+.ce-nav .ce-menu .ce-icono--menu {
+    width: 1.15em;
+    height: 1.15em;
+    margin-right: 0.45em;
+    vertical-align: -0.2em;
+}
+
 .ce-nav .ce-menu > li > a:hover,
 .ce-nav .ce-menu > .current-menu-item > a,
 .ce-nav .ce-menu > .current-menu-ancestor > a,

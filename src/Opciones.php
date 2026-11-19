@@ -87,7 +87,7 @@ final class Opciones
         'mostrar_conmutador' => ['tipo' => self::BOOLEANO, 'defecto' => true],
         'menu_icono_inicio' => ['tipo' => self::BOOLEANO, 'defecto' => true],
         'menu_fijo' => ['tipo' => self::BOOLEANO, 'defecto' => true],
-        'menu_ancho_desplegable' => ['tipo' => self::ENTERO, 'defecto' => 18, 'min' => 12, 'max' => 40],
+        'menu_ancho_desplegable' => ['tipo' => self::ENTERO, 'defecto' => 20, 'min' => 12, 'max' => 40],
 
         // Listados.
         'extracto_palabras' => ['tipo' => self::ENTERO, 'defecto' => 40, 'min' => 10, 'max' => 120],

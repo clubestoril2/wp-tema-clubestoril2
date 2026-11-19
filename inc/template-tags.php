@@ -19,21 +19,36 @@ defined('ABSPATH') || exit;
 
 /**
  * Icono del sprite assets/img/icons.svg, decorativo (oculto a lectores).
- *
- * La URL del sprite lleva la versión del tema para que el navegador no siga
- * usando uno antiguo, sin los iconos nuevos, tras actualizar el tema.
  */
 function ce_icono(string $nombre, string $clase = ''): void
 {
-    $clases = trim('ce-icono ' . $clase);
-    printf(
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapado en ce_icono_html().
+    echo ce_icono_html($nombre, $clase);
+}
+
+/**
+ * HTML de un icono de un sprite de assets/img/, decorativo (oculto a lectores).
+ *
+ * El sprite es «icons» (interfaz) o «iconos-menu» (Tabler Icons para el
+ * menú). Su URL lleva la versión del tema para que el navegador no siga
+ * usando uno antiguo, sin los iconos nuevos, tras actualizar el tema.
+ */
+function ce_icono_html(string $nombre, string $clase = '', string $sprite = 'icons'): string
+{
+    return sprintf(
         '<svg class="%1$s" aria-hidden="true" focusable="false"><use href="%2$s"></use></svg>',
-        esc_attr($clases),
-        esc_url(
-            add_query_arg('ver', ce_version_recurso('assets/img/icons.svg'), CE_URI . '/assets/img/icons.svg')
-            . '#' . $nombre
-        )
+        esc_attr(trim('ce-icono ' . $clase)),
+        esc_url(ce_url_sprite($sprite) . '#' . $nombre)
     );
+}
+
+/**
+ * URL versionada de un sprite de assets/img/ («icons» o «iconos-menu»).
+ */
+function ce_url_sprite(string $sprite): string
+{
+    $relativa = 'assets/img/' . $sprite . '.svg';
+    return add_query_arg('ver', ce_version_recurso($relativa), CE_URI . '/' . $relativa);
 }
 
 /**
