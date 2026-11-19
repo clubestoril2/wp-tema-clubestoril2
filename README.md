@@ -32,6 +32,29 @@ Las opciones del tema se guardan como `theme_mod`. Sus valores por defecto y su 
 
 Está registrado para todos los tipos de contenido y se puede leer y escribir por la API REST (campo `meta.ce_revisado`, con permiso de edición de la publicación). Al guardarlo, las fechas con desplazamiento horario (`2026-11-05T12:30:00+01:00`) se pasan a UTC, y cualquier otro valor (`0`, `"0"`, `-1`, `false`, una fecha imposible) se guarda como `""`. Desde PHP: `ce_revisado()` devuelve la fecha o `null`, y `ce_marcar_revisado($id)` guarda la fecha actual.
 
+## Shortcodes
+
+`[ce_publicaciones]` muestra las últimas publicaciones de una o varias categorías o etiquetas con las mismas tarjetas y filas que la portada. Sirve para que una página como «Restauración» enseñe sus últimas entradas: se escribe en un bloque «Shortcode» del editor. Si no hay publicaciones que mostrar, no imprime nada.
+
+| Atributo | Valores | Por defecto |
+|---|---|---|
+| `categoria` | Slugs de categorías separados por comas. | Cualquiera |
+| `etiqueta` | Slugs de etiquetas separados por comas. Con `categoria`, la publicación debe cumplir ambos. | Cualquiera |
+| `cantidad` | De 1 a 24. | 4 |
+| `formato` | `tarjeta` (rejilla, como «Destacado») o `fila` (lista, como «Últimas publicaciones»). | `tarjeta` |
+| `hijas` | `si` o `no`: si se incluyen las subcategorías. | `si` |
+| `dias` | Días con el distintivo «Novedad»; `0` lo quita. | La opción «Días con el distintivo “Novedad”» de la portada |
+
+Ejemplos:
+
+```
+[ce_publicaciones categoria="restauracion"]
+[ce_publicaciones categoria="restauracion" cantidad="6" formato="fila"]
+[ce_publicaciones etiqueta="padel" hijas="no" dias="0"]
+```
+
+La publicación donde se escribe el shortcode nunca se lista a sí misma. Los atributos se sanean en `src/Publicaciones.php` y la consulta está en `inc/shortcodes.php`.
+
 ## Imágenes de las entradas
 
 La imagen destacada (o, si no hay, la primera del contenido) se recorta en los listados a **1,91:1**. Es la proporción de las vistas previas de enlaces en Facebook, X/Twitter, WhatsApp, Telegram y LinkedIn, así que la misma imagen sirve para la web y para compartir.

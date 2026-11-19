@@ -24,4 +24,5 @@ require_once CE_DIR . '/inc/setup.php';
 require_once CE_DIR . '/inc/meta.php';
 require_once CE_DIR . '/inc/enqueue.php';
 require_once CE_DIR . '/inc/template-tags.php';
+require_once CE_DIR . '/inc/shortcodes.php';
 require_once CE_DIR . '/inc/customizer.php';
