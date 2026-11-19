@@ -62,6 +62,7 @@
     --ce-width-narrow: 920px;       /* plantilla «Página estrecha» */
     --ce-radius: 8px;
     --ce-radius-small: 4px;
+    --ce-menu-desplegable: 18rem;   /* ancho mínimo; lo cambia la opción menu_ancho_desplegable */
 
     /* Placa detrás del escudo: solo visible en modo oscuro. */
     --ce-logo-fondo: transparent;

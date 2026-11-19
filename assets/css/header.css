@@ -282,7 +282,7 @@
     top: 100%;
     left: 0;
     z-index: 100;
-    min-width: 16rem;
+    min-width: var(--ce-menu-desplegable);
     padding: var(--ce-space-2) 0;
     background: var(--ce-surface);
     color: var(--ce-text);

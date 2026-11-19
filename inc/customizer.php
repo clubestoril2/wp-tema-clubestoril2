@@ -126,6 +126,14 @@ function ce_personalizador_secciones(): array
                     __('El que se usa si el visitante no ha elegido otro con el conmutador.', 'clubestoril2'),
                 ],
                 'mostrar_conmutador' => [__('Mostrar el conmutador de modo claro / oscuro', 'clubestoril2')],
+                'menu_ancho_desplegable' => [
+                    __('Ancho mínimo de los menús desplegables (rem)', 'clubestoril2'),
+                    __(
+                        // phpcs:ignore Generic.Files.LineLength.TooLong -- cadena traducible en una sola pieza.
+                        'Recomendado entre 16 y 24 (por defecto, 18). Por debajo de 16 los nombres largos se parten en dos líneas; por encima de 24 el desplegable queda demasiado ancho y tapa el contenido. Auméntalo si algún elemento del menú se parte. 1 rem son 16 píxeles.',
+                        'clubestoril2'
+                    ),
+                ],
             ],
         ],
         'pie' => [

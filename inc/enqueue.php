@@ -42,6 +42,12 @@ function ce_encolar_recursos(): void
         $anterior = [$handle];
     }
 
+    // Ancho mínimo de los desplegables del menú, configurable en el Personalizador.
+    $ancho = ce_opcion_entero('menu_ancho_desplegable');
+    if ($ancho !== ClubEstoril2\Opciones::defecto('menu_ancho_desplegable')) {
+        wp_add_inline_style('clubestoril2-tokens', sprintf(':root{--ce-menu-desplegable:%drem}', $ancho));
+    }
+
     // Vista limpia para imprimir, después del resto de hojas para poder ajustarlas.
     $relativa = 'assets/css/print.css';
     wp_enqueue_style(
