@@ -91,7 +91,7 @@ Tres piezas para el contenido de cualquier página o entrada. Las dos primeras s
 </ul>
 ```
 
-Las tarjetas miden como mucho 212 px de ancho. `ce-galeria ce-galeria--pequena` las deja en 150 px y `ce-galeria ce-galeria--grande`, en 360 px; para otro ancho, `style="--ce-galeria-ancho: 280px"` en el `<ul>`. En móvil van dos por fila (tres las pequeñas y una las grandes).
+Las tarjetas van centradas en la página, también las de una última fila incompleta, y miden 208 px de ancho: caben cinco por fila. `ce-galeria ce-galeria--pequena` las deja en 150 px y `ce-galeria ce-galeria--grande`, en 360 px; para otro ancho, `style="--ce-galeria-ancho: 280px"` en el `<ul>`. En móvil van dos por fila (tres las pequeñas y una las grandes).
 
 **Visor** (`assets/js/visor.js`): al pulsar una miniatura, la imagen grande se abre en primer plano. Se pasa de una a otra con los botones, con las flechas del teclado o deslizando con el dedo; un toque en la imagen la amplía a lo ancho para leerla, y Esc, el botón de cerrar o un toque fuera la cierran. Funciona en:
 

@@ -215,7 +215,7 @@ dialog.ce-visor {
 }
 
 .ce-contenido ul.ce-galeria {
-    grid-template-columns: repeat(3, 1fr);
+    --ce-galeria-ancho: 30%;
 }
 
 .ce-contenido ul.ce-galeria li {

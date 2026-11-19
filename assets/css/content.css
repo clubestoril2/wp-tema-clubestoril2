@@ -700,15 +700,19 @@ ul.clubestoril2-album li a {
  * (assets/js/visor.js). Vale para las páginas de un documento (la carta),
  * fotos de instalaciones, carteles, planos…
  * <ul class="ce-galeria"><li><a href="grande.jpg"><img …><span>Título</span></a></li>…</ul>
- * El <span> es opcional. Ancho máximo de las tarjetas: --ce-galeria-ancho
- * (212 px), o las variantes ce-galeria--pequena y ce-galeria--grande.
+ * El <span> es opcional. Las tarjetas van centradas, también las de una
+ * última fila incompleta. Ancho de cada tarjeta: --ce-galeria-ancho (208 px,
+ * con el que caben cinco por fila en una página), o las variantes
+ * ce-galeria--pequena y ce-galeria--grande.
  */
 .ce-contenido ul.ce-galeria {
-    --ce-galeria-ancho: 212px;
+    --ce-galeria-ancho: 208px;
+    --ce-galeria-hueco: var(--ce-space-3);
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), var(--ce-galeria-ancho)));
-    gap: var(--ce-space-4) var(--ce-space-3);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--ce-space-4) var(--ce-galeria-hueco);
     margin: var(--ce-space-4) 0;
     padding: 0;
     list-style: none;
@@ -716,17 +720,16 @@ ul.clubestoril2-album li a {
 
 .ce-contenido ul.ce-galeria--pequena {
     --ce-galeria-ancho: 150px;
-
-    grid-template-columns: repeat(auto-fill, minmax(min(110px, 100%), var(--ce-galeria-ancho)));
 }
 
 .ce-contenido ul.ce-galeria--grande {
     --ce-galeria-ancho: 360px;
-
-    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), var(--ce-galeria-ancho)));
 }
 
 .ce-contenido ul.ce-galeria li {
+    flex: 0 0 auto;
+    width: var(--ce-galeria-ancho);
+    max-width: 100%;
     margin: 0;
     padding: 0;
 }
@@ -765,7 +768,7 @@ ul.clubestoril2-album li a {
     padding: 0.55rem 0.7rem 0.65rem;
     border-top: 3px solid var(--ce-primary);
     font-size: var(--ce-font-size-small);
-    margin-top: auto; /* los títulos quedan alineados aunque las imágenes midan distinto */
+    flex: 1; /* el título ocupa lo que sobre: la línea roja queda pegada a la imagen */
     font-weight: 700;
     line-height: 1.3;
     overflow-wrap: normal;
@@ -798,18 +801,21 @@ ul.clubestoril2-album li a {
     transform: scale(1.15);
 }
 
+/* En móvil: dos por fila (tres las pequeñas y una las grandes). */
 @media (max-width: 479px) {
     .ce-contenido ul.ce-galeria {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: var(--ce-space-3) var(--ce-space-2);
+        --ce-galeria-hueco: var(--ce-space-2);
+        --ce-galeria-ancho: calc((100% - var(--ce-galeria-hueco)) / 2);
+
+        row-gap: var(--ce-space-3);
     }
 
     .ce-contenido ul.ce-galeria--pequena {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        --ce-galeria-ancho: calc((100% - 2 * var(--ce-galeria-hueco)) / 3);
     }
 
     .ce-contenido ul.ce-galeria--grande {
-        grid-template-columns: minmax(0, 1fr);
+        --ce-galeria-ancho: 100%;
     }
 }
 
